@@ -16,7 +16,7 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
 
   override def create(name: String, value: Object): String = {
     value match {
-      case untypedMap:Map[_, _] =>
+      case untypedMap: Map[_, _] =>
         val map = untypedMap.asInstanceOf[Map[AnyRef, AnyRef]]
         lookForId(map) match {
           case Some(id) =>
@@ -39,21 +39,36 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
     }
   }
 
-  def lookForId(map:Map[AnyRef,AnyRef]):Option[String] = {
+  def lookForId(map: Map[AnyRef, AnyRef]): Option[String] = {
     map.get("id") match {
       case Some(id) => Some(id.toString)
       case None => None
     }
   }
 
-  def addId(map:Map[AnyRef,AnyRef], id:String):Map[_,_] = {
+  def addId(map: Map[AnyRef, AnyRef], id: String): Map[_, _] = {
     val newMap = map + ("id" -> id)
     newMap
   }
 
 
   override def create(name: String, value: Object, id: String) {
-    replace(name, id, value)
+    value match {
+      case untypedMap: Map[_, _] =>
+        val map = untypedMap.asInstanceOf[Map[AnyRef, AnyRef]]
+        idNumbers += name -> (idNumbers(name) + 1)
+        val idNumber = idNumbers(name)
+        val id = idNumber.toString
+        val valueWithId = addId(map, id)
+        data = data.updated(name, data(name).updated(id, valueWithId))
+        id
+      case notMap =>
+        idNumbers += name -> (idNumbers(name) + 1)
+        val idNumber = idNumbers(name)
+        val id = idNumber.toString
+        data = data.updated(name, data(name).updated(id, value))
+        id
+    }
   }
 
   override def list(name: String): Seq[String] = {

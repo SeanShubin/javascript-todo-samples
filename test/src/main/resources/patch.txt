@@ -2,28 +2,28 @@ get /color
 200 []
 
 post /color { "name": "reed", "wavelength": 650 }
-201 "/color/1"
+201 { "name": "reed", "wavelength": 650, "id": "1" }
 
 patch /color/1 { "name": "red" }
-200 "/color/1"
+200 { "name": "red", "wavelength": 650, "id": "1" }
 
 get /color/1
-200 { "name": "red", "wavelength": 650 }
+200 { "name": "red", "wavelength": 650, "id": "1" }
 
 post /color { "name": "green", "wavelength": 510 }
-201 "/color/2"
+201 { "name": "green", "wavelength": 510, "id":"2" }
 
 patch /color/2 { "isPrimary":true }
-200 "/color/2"
+200 { "name": "green", "wavelength": 510, "isPrimary":true, "id":"2" }
 
 get /color/2
-200 { "name": "green", "wavelength": 510, "isPrimary":true }
+200 { "name": "green", "wavelength": 510, "isPrimary":true, "id":"2" }
 
 post /color { "name": "blue", "wavelength": 475 }
-201 "/color/3"
+201 { "name": "blue", "wavelength": 475, "id":"3" }
 
 patch /color/3 { "wavelength":null }
-200 "/color/3"
+200 { "name": "blue", "id":"3" }
 
 get /color/3
-200 { "name": "blue" }
+200 { "name": "blue", "id":"3" }

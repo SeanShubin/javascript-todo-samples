@@ -8,7 +8,7 @@ import com.seanshubin.web.core.notifications.Notifications
 
 class DataStoreServer(dataStore: DataStore,
                       jsonMarshaller: JsonMarshaller,
-                      notifications:Notifications,
+                      notifications: Notifications,
                       charsetName: String) extends Server {
   val dataStoreContentType: String = "application/json"
 
@@ -20,7 +20,7 @@ class DataStoreServer(dataStore: DataStore,
       val (statusCode, dataStoreResult) = (method, path) match {
         case Get(name) =>
           def loadDocument(id: String) = dataStore.find(name, id)
-          val documents:Seq[AnyRef] = dataStore.list(name).map(loadDocument)
+          val documents: Seq[AnyRef] = dataStore.list(name).map(loadDocument)
           (200, documents)
         case Post(name) =>
           val jsonString = extractRequestBody(maybeRequestContent)

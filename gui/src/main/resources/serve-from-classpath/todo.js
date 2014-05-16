@@ -1,18 +1,7 @@
-define(['backbone'], function (Backbone) {
+define(['backbone', 'jquery'], function (Backbone, $) {
     'use strict';
     function createTodoApplication() {
-        var ListView, listView, List, Model, View, oldBackboneSync ;
-
-        oldBackboneSync = Backbone.sync;
-        Backbone.sync = function( method, model, options ) {
-            console.log('method');
-            console.log(method);
-            console.log('model');
-            console.log(model);
-            console.log('options');
-            console.log(options);
-            return oldBackboneSync.apply(this, [method, model, options]);
-        };
+        var ListView, listView, List, Model, View;
 
         Model = Backbone.Model.extend({
             defaults: {
@@ -22,9 +11,10 @@ define(['backbone'], function (Backbone) {
         });
 
         View = Backbone.View.extend({
-            tagName: 'li',
+            templateString: '<li><%= model.name %> <%= model.number %></li>',
             render: function () {
-                this.$el.append(this.model.get('name') + ' ' + this.model.get('number'));
+                this.template = _.template(this.templateString);
+                this.$el.append(this.template({model: this.model.toJSON()}));
                 return this;
             }
         });
@@ -41,33 +31,32 @@ define(['backbone'], function (Backbone) {
             initialize: function () {
                 this.counter = 1;
                 this.collection = new List();
-                this.collection.bind('add', this.addItemToView, this);
+                this.collection.on('add', this.addItemToView, this);
             },
             render: function () {
+                this.listItemContainer = $('<ul></ul>');
                 this.$el.append('<button class="add">Add list item</button>');
-                this.$el.append('<ul></ul>');
-                this.collection.fetch();
+                this.$el.append(this.listItemContainer);
                 return this;
             },
             addItemToModel: function () {
-                var item = new Model();
-                item.set({
-                    number: this.counter
-                });
+                var item = new Model({number: this.counter});
                 this.counter++;
                 this.collection.add(item);
+                item.save();
             },
             addItemToView: function (model) {
-                var view = new View({
-                    model: model
-                });
-                this.$('ul').append(view.render().el);
-                model.save();
+                new View({
+                    model: model,
+                    el: this.listItemContainer
+                }).render();
             }
         });
 
         listView = new ListView();
-        return listView.render().$el;
+        listView.render();
+        listView.collection.fetch();
+        return listView.$el;
     }
 
     return createTodoApplication;

@@ -10,7 +10,7 @@
 <div class="application"></div>
 <script type="application/javascript">
     require(['lib/domReady!', 'jquery', 'todo'], function (dom, $, createTodoApplication) {
-        $('.application').append(createTodoApplication());
+        $(dom).find('.application').append(createTodoApplication());
     });
 </script>
 </body>

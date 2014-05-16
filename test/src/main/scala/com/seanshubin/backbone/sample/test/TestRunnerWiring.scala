@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.Handler
 import com.seanshubin.backbone.sample.core.server.DataStoreServer
 import com.seanshubin.backbone.sample.core.http.{Client, Server}
 import com.seanshubin.backbone.sample.server.{ServerToJettyHandler, JettyServer, HttpServer}
-import com.seanshubin.web.core.notifications.{Notifications, LineEmittingNotifications}
+import com.seanshubin.web.core.notifications.Notifications
 
 trait TestRunnerWiring {
   def name: String
@@ -22,8 +22,7 @@ trait TestRunnerWiring {
   lazy val scenarioLoader: ScenarioLoader = new ScenarioLoaderImpl(webSettings)
   lazy val environment: TestEnvironment = TestEnvironment(client, jsonMarshaller)
   lazy val dataStore: DataStore = new MemoryDataStore(jsonMarshaller)
-  lazy val emitLine:String => Unit = println
-  lazy val notifications:Notifications = new LineEmittingNotifications(emitLine)
+  lazy val notifications: Notifications = new SilentNotifications()
   lazy val dataStoreServer: Server = new DataStoreServer(dataStore, jsonMarshaller, notifications, charsetName)
   lazy val dataStoreHandler: Handler = new ServerToJettyHandler(dataStoreServer)
   lazy val httpServer: HttpServer = new JettyServer(port, dataStoreHandler)
