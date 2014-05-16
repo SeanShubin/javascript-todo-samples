@@ -12,7 +12,7 @@ object Content {
     Content(value.getBytes(charsetName), Some(charsetName), contentType)
   }
 
-  def fromBytes(bytes:Array[Byte], maybeCharsetName:Option[String], contentType:String):Option[Content] = {
+  def fromBytes(bytes: Array[Byte], maybeCharsetName: Option[String], contentType: String): Option[Content] = {
     if (bytes.length == 0) None else Some(Content(bytes, maybeCharsetName, contentType))
   }
 }

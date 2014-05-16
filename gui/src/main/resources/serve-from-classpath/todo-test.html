@@ -12,6 +12,7 @@
 <div id="qunit-fixture"></div>
 <script type="application/javascript">
     require(['lib/domReady!', 'jquery', 'qunit', 'todo'], function (dom, $, qunit, createTodoApplication) {
+        'use strict';
         qunit.test('start with no items', function () {
             var $el = createTodoApplication();
             qunit.equal($el.find('li').length, 0, 'no items');

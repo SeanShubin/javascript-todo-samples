@@ -2,7 +2,6 @@ package com.seanshubin.backbone.sample.test
 
 import com.seanshubin.backbone.sample.client.HttpImpl
 import com.seanshubin.backbone.sample.core.{DataStore, MemoryDataStore, JsonMarshaller, JsonMarshallerImpl}
-import com.seanshubin.backbone.sample.server.ServerToJettyHandler
 import org.eclipse.jetty.server.Handler
 import com.seanshubin.backbone.sample.core.server.DataStoreServer
 import com.seanshubin.backbone.sample.core.http.{Client, Server}

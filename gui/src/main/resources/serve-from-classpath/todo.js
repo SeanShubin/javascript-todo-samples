@@ -1,4 +1,5 @@
-define(['backbone'], function(Backbone) {
+define(['backbone'], function (Backbone) {
+    'use strict';
     function createTodoApplication() {
         var ListView, listView, List, Model, View;
 

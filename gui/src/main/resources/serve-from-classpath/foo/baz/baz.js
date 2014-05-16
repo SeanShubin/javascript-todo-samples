@@ -1,4 +1,5 @@
-require(['lib/domReady!', 'bar/bar', 'jquery'], function(dom, bar, $) {
+require(['lib/domReady!', 'bar/bar', 'jquery'], function (dom, bar, $) {
+    'use strict';
     var body, $dom;
     $dom = $(dom);
     body = $dom.find('body');

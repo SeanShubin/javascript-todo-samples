@@ -46,7 +46,7 @@ class JsonMarshallerImpl extends JsonMarshaller {
 
   override def merge(aObject: AnyRef, bObject: AnyRef): AnyRef = {
     val merged = (aObject, bObject) match {
-      case (mapA: Map[_,_], mapB: Map[_, _]) =>
+      case (mapA: Map[_, _], mapB: Map[_, _]) =>
         val checkedMapA = mapA.asInstanceOf[Map[AnyRef, AnyRef]]
         val checkedMapB = mapB.asInstanceOf[Map[AnyRef, AnyRef]]
         checkedMapB.foldLeft(checkedMapA)(mergeEntry)
