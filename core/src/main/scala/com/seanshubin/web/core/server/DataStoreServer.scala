@@ -4,12 +4,17 @@ import com.seanshubin.backbone.sample.core.{ExceptionInfo, JsonMarshaller, DataS
 import com.seanshubin.backbone.sample.core.http._
 import com.seanshubin.backbone.sample.core.http.Response
 import com.seanshubin.backbone.sample.core.http.Request
+import com.seanshubin.web.core.notifications.Notifications
 
-class DataStoreServer(dataStore: DataStore, jsonMarshaller: JsonMarshaller, charsetName: String) extends Server {
+class DataStoreServer(dataStore: DataStore,
+                      jsonMarshaller: JsonMarshaller,
+                      notifications:Notifications,
+                      charsetName: String) extends Server {
   val dataStoreContentType: String = "application/json"
 
   override def handle(request: Request): Option[Response] = {
     import Verb._
+    notifications.dataStoreServerRequest(request)
     val Request(method, path, maybeRequestContent) = request
     val response = try {
       val (statusCode, dataStoreResult) = (method, path) match {
@@ -47,6 +52,7 @@ class DataStoreServer(dataStore: DataStore, jsonMarshaller: JsonMarshaller, char
     } catch {
       case ex: Exception => marshallResponse(ex, 500)
     }
+    notifications.dataStoreServerResponse(response)
     Some(response)
   }
 
