@@ -1,7 +1,18 @@
 define(['backbone'], function (Backbone) {
     'use strict';
     function createTodoApplication() {
-        var ListView, listView, List, Model, View;
+        var ListView, listView, List, Model, View, oldBackboneSync ;
+
+        oldBackboneSync = Backbone.sync;
+        Backbone.sync = function( method, model, options ) {
+            console.log('method');
+            console.log(method);
+            console.log('model');
+            console.log(model);
+            console.log('options');
+            console.log(options);
+            return oldBackboneSync.apply(this, [method, model, options]);
+        };
 
         Model = Backbone.Model.extend({
             defaults: {
@@ -19,7 +30,8 @@ define(['backbone'], function (Backbone) {
         });
 
         List = Backbone.Collection.extend({
-            model: Model
+            model: Model,
+            url: 'item'
         });
 
         ListView = Backbone.View.extend({
@@ -34,6 +46,7 @@ define(['backbone'], function (Backbone) {
             render: function () {
                 this.$el.append('<button class="add">Add list item</button>');
                 this.$el.append('<ul></ul>');
+                this.collection.fetch();
                 return this;
             },
             addItemToModel: function () {
@@ -49,6 +62,7 @@ define(['backbone'], function (Backbone) {
                     model: model
                 });
                 this.$('ul').append(view.render().el);
+                model.save();
             }
         });
 
