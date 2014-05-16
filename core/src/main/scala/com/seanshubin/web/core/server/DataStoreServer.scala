@@ -19,34 +19,40 @@ class DataStoreServer(dataStore: DataStore,
     val response = try {
       val (statusCode, dataStoreResult) = (method, path) match {
         case Get(name) =>
-          def qualify(id: String) = s"/$name/$id"
-          (200, dataStore.list(name).map(qualify))
+          def loadDocument(id: String) = dataStore.find(name, id)
+          val documents:Seq[AnyRef] = dataStore.list(name).map(loadDocument)
+          (200, documents)
         case Post(name) =>
           val jsonString = extractRequestBody(maybeRequestContent)
-          val jsonObject = jsonMarshaller.fromJson(jsonString, classOf[AnyRef])
-          val id = dataStore.create(name, jsonObject)
-          (201, s"/$name/$id")
+          val storedJsonObject = jsonMarshaller.fromJson(jsonString, classOf[AnyRef])
+          val id = dataStore.create(name, storedJsonObject)
+          val loadedJsonObject = dataStore.find(name, id)
+          (201, loadedJsonObject)
         case Post(name, id) =>
           val jsonString = extractRequestBody(maybeRequestContent)
           val jsonObject = jsonMarshaller.fromJson(jsonString, classOf[AnyRef])
           dataStore.create(name, jsonObject, id)
-          (201, s"/$name/$id")
+          val newObject = dataStore.find(name, id)
+          (201, newObject)
         case Get(name, id) => (200, dataStore.find(name, id))
         case Put(name, id) =>
           val jsonString: String = extractRequestBody(maybeRequestContent)
           val jsonObject = jsonMarshaller.fromJson(jsonString, classOf[AnyRef])
           dataStore.replace(name, id, jsonObject)
-          (200, s"/$name/$id")
+          val newObject = dataStore.find(name, id)
+          (200, newObject)
         case Delete(name, id) =>
+          val jsonObject = dataStore.find(name, id)
           dataStore.delete(name, id)
-          (200, s"/$name/$id")
+          (200, jsonObject)
         case Patch(name, id) =>
           val jsonString: String = extractRequestBody(maybeRequestContent)
           val oldObject = dataStore.find(name, id)
           val mergeObject = jsonMarshaller.fromJson(jsonString, classOf[AnyRef])
           val newObject = jsonMarshaller.merge(oldObject, mergeObject)
           dataStore.replace(name, id, newObject)
-          (200, s"/$name/$id")
+          val foundObject = dataStore.find(name, id)
+          (200, foundObject)
       }
       marshallResponse(dataStoreResult, statusCode)
     } catch {
