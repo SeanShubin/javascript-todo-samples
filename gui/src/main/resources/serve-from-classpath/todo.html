@@ -1,99 +1,16 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="lib/jquery-2.1.1.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/backbone.js"></script>
-    <script src="lib/qunit-1.14.0.js"></script>
-    <link rel="stylesheet" type="text/css" href="lib/qunit-1.14.0.css">
+    <script src="require-config.js"></script>
+    <script src="require.js"></script>
     <title>Sample</title>
 </head>
 <body>
 <div class="application"></div>
-<div id="qunit"></div>
-<div id="qunit-fixture"></div>
 <script type="application/javascript">
-    function createTodoApplication() {
-        var ListView, listView, List, Model, View;
-
-        Model = Backbone.Model.extend({
-            defaults: {
-                name: 'item',
-                number: 0
-            }
-        });
-
-        View = Backbone.View.extend({
-            tagName: 'li',
-            render: function () {
-                this.$el.append(this.model.get('name') + ' ' + this.model.get('number'));
-                return this;
-            }
-        });
-
-        List = Backbone.Collection.extend({
-            model: Model
-        });
-
-        ListView = Backbone.View.extend({
-            events: {
-                'click button.add': 'addItemToModel'
-            },
-            initialize: function () {
-                this.counter = 1;
-                this.collection = new List();
-                this.collection.bind('add', this.addItemToView, this);
-            },
-            render: function () {
-                this.$el.append('<button class="add">Add list item</button>');
-                this.$el.append('<ul></ul>');
-                return this;
-            },
-            addItemToModel: function () {
-                var item = new Model();
-                item.set({
-                    number: this.counter
-                });
-                this.counter++;
-                this.collection.add(item);
-            },
-            addItemToView: function (model) {
-                var view = new View({
-                    model: model
-                });
-                this.$('ul').append(view.render().el);
-            }
-        });
-
-        listView = new ListView();
-        return listView.render().$el;
-    }
-
-    $('.application').append(createTodoApplication());
-
-    test('start with no items', function () {
-        var $el = createTodoApplication();
-        equal($el.find('li').length, 0, 'no items');
-    });
-    test('add item', function () {
-        var $el = createTodoApplication();
-        $el.find('.add').click();
-        equal($el.find('li').length, 1, 'one item added');
-        equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
-    });
-    test('add many items', function () {
-        var $el, addButton;
-        $el = createTodoApplication();
-        addButton = $el.find('.add');
-        addButton.click();
-        addButton.click();
-        addButton.click();
-        equal($el.find('li').length, 3, 'three items added');
-        equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
-        equal($($el.find('li')[1]).text(), 'item 2', 'item 2');
-        equal($($el.find('li')[2]).text(), 'item 3', 'item 3');
+    require(['lib/domReady!', 'jquery', 'todo'], function (dom, $, createTodoApplication) {
+        $('.application').append(createTodoApplication());
     });
 </script>
 </body>
