@@ -1,0 +1,17 @@
+get /color
+200 []
+
+post /color { "name": "red", "wavelength": 650 }
+201 "/color/1"
+
+post /color { "name": "green", "wavelength": 510 }
+201 "/color/2"
+
+post /color { "name": "blue", "wavelength": 475 }
+201 "/color/3"
+
+delete /color/2
+200 "/color/2"
+
+get /color
+200 ["/color/1", "/color/3"]

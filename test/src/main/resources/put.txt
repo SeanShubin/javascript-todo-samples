@@ -1,0 +1,14 @@
+get /color
+200 []
+
+post /color/red { "name": "reed", "intensity": 650 }
+201 "/color/red"
+
+put /color/red { "name": "red", "wavelength": 650 }
+200 "/color/red"
+
+get /color
+200 ["/color/red"]
+
+get /color/red
+200 { "name": "red", "wavelength": 650 }

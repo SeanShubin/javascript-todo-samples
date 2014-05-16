@@ -1,0 +1,33 @@
+{
+    "searchPaths": [
+        [ "server", "target", "server.jar" ]
+    ],
+    "styleSheet": [ "dependency-analysis.css" ],
+    "relevantDependencyPattern": {
+        "includeRegex": [ "com/seanshubin/.*"],
+        "excludeRegex": [ "com/seanshubin/web/server/ServerApplication", "com/seanshubin/web/server/ServerApplication\\$" ]
+    },
+    "trimRegex": "^com/seanshubin/web/",
+    "classFileNamePattern": {
+        "includeRegex": [ ".*\\.class" ],
+        "excludeRegex": [ ]
+    },
+    "zipFileNamePattern": {
+        "includeRegex": [ ".*\\.zip", ".*\\.war", ".*\\.jar" ],
+        "excludeRegex": [ ]
+    },
+    "generatedReportDirectory": [ "target", "dependency-report" ],
+    "classLimits": {
+        "depth": 10,
+        "complexity": 20,
+        "cycleCount": 0
+    },
+    "packageLimits": {
+        "depth": 10,
+        "complexity": 10,
+        "cycleCount": 0
+    },
+    "expectedClassCycles": [ ],
+    "expectedPackageCycles": [ ],
+    "failIfAnyLimitExceeded": true
+}
