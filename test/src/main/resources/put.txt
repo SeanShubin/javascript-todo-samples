@@ -2,13 +2,13 @@ get /color
 200 []
 
 post /color/red { "name": "reed", "intensity": 650 }
-201 { "name" : "reed", "intensity" : 650, "id" : "1" }
+201 { "name" : "reed", "intensity" : 650, "id" : "red" }
 
 put /color/red { "name": "red", "wavelength": 650 }
-200 { "name" : "red", "wavelength" : 650, "id" : "1" }
+200 { "name" : "red", "wavelength" : 650, "id" : "red" }
 
 get /color
-200 [ { "name" : "red", "wavelength" : 650, "id" : "1" } ]
+200 [ { "name" : "red", "wavelength" : 650, "id" : "red" } ]
 
 get /color/red
-200 { "name": "red", "wavelength": 650, "id" : "1" }
+200 { "name": "red", "wavelength": 650, "id" : "red" }

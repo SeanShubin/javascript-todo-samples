@@ -14,10 +14,10 @@ post /color { "name": "green", "wavelength": 510 }
 201 { "name": "green", "wavelength": 510, "id":"2" }
 
 patch /color/2 { "isPrimary":true }
-200 { "name": "green", "wavelength": 510, "isPrimary":true, "id":"2" }
+200 { "name": "green", "wavelength": 510, "id":"2", "isPrimary":true }
 
 get /color/2
-200 { "name": "green", "wavelength": 510, "isPrimary":true, "id":"2" }
+200 { "name": "green", "wavelength": 510, "id":"2", "isPrimary":true }
 
 post /color { "name": "blue", "wavelength": 475 }
 201 { "name": "blue", "wavelength": 475, "id":"3" }

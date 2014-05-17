@@ -1,5 +1,9 @@
 package com.seanshubin.backbone.sample.core
-
+/*
+todo:
+This class has gotten a bit out of hand because its original behavior is so much different than what had to be adapted
+to model the expectations of backbone.js.  At this point my intention is to simply rewrite it when I have the time.
+ */
 class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
   private var data: Map[String, Map[String, AnyRef]] = Map().withDefaultValue(Map())
   private var idNumbers: Map[String, Long] = Map().withDefaultValue(0L)
@@ -9,7 +13,14 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
   }
 
   override def replace(name: String, id: String, value: Object) {
-    data = data.updated(name, data(name).updated(id, value))
+    value match {
+      case untypedMap: Map[_, _] =>
+        val map = untypedMap.asInstanceOf[Map[AnyRef, AnyRef]]
+        val valueWithId = addId(map, id)
+        data = data.updated(name, data(name).updated(id, valueWithId))
+      case notMap =>
+        data = data.updated(name, data(name).updated(id, value))
+    }
   }
 
   override def find(name: String, id: String): AnyRef = data(name)(id)
@@ -51,23 +62,17 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
     newMap
   }
 
-
   override def create(name: String, value: Object, id: String) {
     value match {
       case untypedMap: Map[_, _] =>
         val map = untypedMap.asInstanceOf[Map[AnyRef, AnyRef]]
-        idNumbers += name -> (idNumbers(name) + 1)
-        val idNumber = idNumbers(name)
-        val id = idNumber.toString
         val valueWithId = addId(map, id)
         data = data.updated(name, data(name).updated(id, valueWithId))
-        id
       case notMap =>
         idNumbers += name -> (idNumbers(name) + 1)
         val idNumber = idNumbers(name)
         val id = idNumber.toString
         data = data.updated(name, data(name).updated(id, value))
-        id
     }
   }
 
