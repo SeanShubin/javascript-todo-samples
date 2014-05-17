@@ -9,7 +9,7 @@
 <body>
 <div class="application"></div>
 <script type="application/javascript">
-    require(['lib/domReady!', 'jquery', 'todo/createTodoApplication'], function (dom, $, createTodoApplication) {
+    require(['lib/domReady!', 'jquery', 'todo/jquery/createTodoApplication'], function (dom, $, createTodoApplication) {
         $(dom).find('.application').append(createTodoApplication());
     });
 </script>

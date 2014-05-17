@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="require-config.js"></script>
+    <script src="require.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/qunit-1.14.0.css">
+    <title>Sample</title>
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script type="application/javascript">
+    require(['lib/domReady!',
+        'jquery',
+        'qunit',
+        'sinon',
+        'todo/jquery/createTodoApplication'], function (dom, $, qunit, sinon, createTodoApplication) {
+        'use strict';
+        var createFakeJsonOverHttp = function(calls) {
+            var callIndex;
+            callIndex = 0;
+            return function (options, callback) {
+                qunit.equal(options.uri, calls[callIndex].request.uri);
+                qunit.equal(options.method, calls[callIndex].request.method)
+                qunit.equal(options.body, calls[callIndex].request.body)
+                callback(calls(callIndex.response));
+                callIndex++;
+            };
+        };
+        qunit.test('start with no items', function () {
+            var $el, jsonOverHttp;
+            jsonOverHttp = createFakeJsonOverHttp([
+                { request: {uri: 'item', method: 'GET'}},
+                { response: { status:200, body:[] }}]);
+            $el = createTodoApplication(jsonOverHttp);
+            qunit.equal($el.find('li').length, 0, 'no items');
+
+        });
+        qunit.test('add item', function () {
+            var $el;
+            $el = createTodoApplication();
+            $el.find('.add').click();
+            qunit.equal($el.find('li').length, 1, 'one item added');
+            qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
+        });
+        qunit.test('add many items', function () {
+            var $el, addButton;
+            $el = createTodoApplication();
+            addButton = $el.find('.add');
+            addButton.click();
+            addButton.click();
+            addButton.click();
+            qunit.equal($el.find('li').length, 3, 'three items added');
+            qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
+            qunit.equal($($el.find('li')[1]).text(), 'item 2', 'item 2');
+            qunit.equal($($el.find('li')[2]).text(), 'item 3', 'item 3');
+        });
+        qunit.load();
+        qunit.start();
+    });
+</script>
+</body>
+</html>
