@@ -4,7 +4,7 @@ import com.seanshubin.backbone.sample.core.{ExceptionInfo, JsonMarshaller, DataS
 import com.seanshubin.backbone.sample.core.http._
 import com.seanshubin.backbone.sample.core.http.Response
 import com.seanshubin.backbone.sample.core.http.Request
-import com.seanshubin.web.core.notifications.Notifications
+import com.seanshubin.backbone.sample.core.notifications.Notifications
 
 class DataStoreServer(dataStore: DataStore,
                       jsonMarshaller: JsonMarshaller,

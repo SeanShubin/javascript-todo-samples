@@ -1,4 +1,4 @@
-package com.seanshubin.web.core.notifications
+package com.seanshubin.backbone.sample.core.notifications
 
 import com.seanshubin.backbone.sample.core.http.{Response, Request}
 

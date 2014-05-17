@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.Handler
 import com.seanshubin.backbone.sample.core.server.DataStoreServer
 import com.seanshubin.backbone.sample.core.http.{Client, Server}
 import com.seanshubin.backbone.sample.server.{ServerToJettyHandler, JettyServer, HttpServer}
-import com.seanshubin.web.core.notifications.Notifications
+import com.seanshubin.backbone.sample.core.notifications.Notifications
 
 trait TestRunnerWiring {
   def name: String

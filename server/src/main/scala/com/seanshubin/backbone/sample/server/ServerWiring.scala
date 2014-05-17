@@ -5,7 +5,7 @@ import com.seanshubin.backbone.sample.core.{JsonMarshaller, JsonMarshallerImpl, 
 import com.seanshubin.backbone.sample.core.server.DataStoreServer
 import com.seanshubin.backbone.sample.core.http.Server
 import com.seanshubin.backbone.sample.{ClassLoaderHandler, ClassOnSameLoaderAsResources}
-import com.seanshubin.web.core.notifications.{LineEmittingNotifications, Notifications}
+import com.seanshubin.backbone.sample.core.notifications.{LineEmittingNotifications, Notifications}
 
 trait ServerWiring {
   def port: Int
