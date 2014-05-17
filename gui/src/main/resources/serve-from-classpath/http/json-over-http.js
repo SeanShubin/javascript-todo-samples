@@ -9,7 +9,7 @@ define([], function () {
         function handler() {
             var callbackOptions;
             if (this.readyState === this.DONE) {
-                if(this.response === '') {
+                if (this.response === '') {
                     callbackOptions = {
                         status: this.status
                     };

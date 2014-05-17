@@ -1,4 +1,5 @@
 package com.seanshubin.backbone.sample.core
+
 /*
 todo:
 This class has gotten a bit out of hand because its original behavior is so much different than what had to be adapted
