@@ -5,7 +5,8 @@ var require = {
         'underscore': 'lib/underscore',
         'backbone': 'lib/backbone',
         'qunit': 'lib/qunit-1.14.0',
-        'sinon': 'lib/sinon-1.9.1'
+        'sinon': 'lib/sinon-1.9.1',
+        'q': 'lib/q'
     },
     shim: {
         'jquery': {
@@ -30,6 +31,9 @@ var require = {
         },
         'sinon': {
             exports: 'sinon'
+        },
+        'q': {
+            exports: 'Q'
         }
     }
 };

@@ -9,8 +9,13 @@
 <body>
 <div class="application"></div>
 <script type="application/javascript">
-    require(['lib/domReady!', 'jquery', 'todo/jquery/createTodoApplication'], function (dom, $, createTodoApplication) {
-        $(dom).find('.application').append(createTodoApplication());
+    require(['lib/domReady!',
+        'jquery',
+        'todo/jquery/createTodoApplication',
+        'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
+        createTodoApplication(jsonOverHttp).then(function(app){
+            $(dom).find('.application').append(app.dom);
+        });
     });
 </script>
 </body>
