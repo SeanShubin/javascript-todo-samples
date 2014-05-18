@@ -11,24 +11,29 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
         list = application.dom.append('<ul></ul>');
         counter = 1;
         addItemToModel = function () {
-            var item;
+            var item, promisePost, promiseAddedItem;
             item = {name: 'item', number: counter};
             counter++;
-            return jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addedItemToModel);
+            promisePost = jsonOverHttp({uri: 'item', method: 'POST', body: item});
+            promiseAddedItem = promisePost.then(addedItemToModel);
+            return promiseAddedItem;
         };
         addedItemToModel = function (response) {
-            var appDelegate = addItemToView(response.body);
-            return appDelegate;
+            var promise = addItemToView(response.body);
+            return promise;
         };
         addItemToView = function (item) {
-            var text = '<li>' + item.name + ' ' + item.number + '</li>';
+            var text, promise;
+            text = '<li>' + item.name + ' ' + item.number + '</li>';
             list.append($(text));
-            return Q.fcall(returnApp);
+            promise = Q.fcall(returnApp);
+            return promise;
         };
         refreshItemList = function (itemListResponse) {
-            console.log('refresh item list');
+            var promise;
             _.each(itemListResponse.body, addItemToView);
-            return application;
+            promise = Q.fcall(returnApp);
+            return promise;
         };
         addButton.on('click', addItemToModel);
         application.pressAddButton = addItemToModel;
@@ -38,3 +43,11 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
 
     return createTodoApplication;
 });
+/*
+contract
+    outgoing
+        addItem
+    incoming
+        itemAdded
+        refreshItems
+ */
