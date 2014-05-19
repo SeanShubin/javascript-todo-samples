@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.seanshubin</groupId>
-        <artifactId>sean-backbone-sample</artifactId>
+        <artifactId>javascript-todo-samples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sean-backbone-sample-gui</artifactId>
-    <name>sean-backbone-sample-gui</name>
+    <artifactId>javascript-todo-samples-gui</artifactId>
+    <name>javascript-todo-samples-gui</name>
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>

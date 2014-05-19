@@ -2,20 +2,20 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.seanshubin</groupId>
-        <artifactId>sean-backbone-sample</artifactId>
+        <artifactId>javascript-todo-samples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sean-backbone-sample-test</artifactId>
-    <name>sean-backbone-sample-test</name>
+    <artifactId>javascript-todo-samples-test</artifactId>
+    <name>javascript-todo-samples-test</name>
     <dependencies>
         <dependency>
             <groupId>com.seanshubin</groupId>
-            <artifactId>sean-backbone-sample-server</artifactId>
+            <artifactId>javascript-todo-samples-server</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.seanshubin</groupId>
-            <artifactId>sean-backbone-sample-client</artifactId>
+            <artifactId>javascript-todo-samples-client</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
