@@ -23,7 +23,7 @@ define(['qunit', 'q'], function (qunit, Q) {
         }, millisecondsToWait);
         promiseThree = deferThree.promise;
         promiseThree.then(function (value) {
-            qunit.equal(value, 3);
+            qunit.equal(value, 3, 'x equals 3');
             qunit.start();
         });
     });
