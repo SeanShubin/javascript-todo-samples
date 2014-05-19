@@ -11,18 +11,13 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
         list = application.dom.append('<ul></ul>');
         counter = 1;
         addItemToModel = function () {
-            var item, promisePost, promiseAddedItem;
+            var item;
             item = {name: 'item', number: counter};
             counter++;
-            promisePost = jsonOverHttp({uri: 'item', method: 'POST', body: item});
-            promiseAddedItem = promisePost.then(function(response) {
-                return addedItemToModel(response)
-            });
-            return promiseAddedItem;
+            return jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addedItemToModel);
         };
         addedItemToModel = function (response) {
-            var promise = addItemToView(response.body);
-            return promise;
+            return addItemToView(response.body);
         };
         addItemToView = function (item) {
             var text, promise;
