@@ -1,4 +1,4 @@
-Backbone Sample
+Javascript Todo Samples
 =
 This sample demonstrates the following combination
 
