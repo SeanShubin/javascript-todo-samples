@@ -15,7 +15,9 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
             item = {name: 'item', number: counter};
             counter++;
             promisePost = jsonOverHttp({uri: 'item', method: 'POST', body: item});
-            promiseAddedItem = promisePost.then(addedItemToModel);
+            promiseAddedItem = promisePost.then(function(response) {
+                return addedItemToModel(response)
+            });
             return promiseAddedItem;
         };
         addedItemToModel = function (response) {
