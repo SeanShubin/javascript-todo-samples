@@ -13,7 +13,7 @@
         'jquery',
         'todo/jquery/createTodoApplication',
         'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
-        createTodoApplication(jsonOverHttp).then(function(app){
+        createTodoApplication(jsonOverHttp).then(function (app) {
             $(dom).find('.application').append(app.dom);
         });
     });

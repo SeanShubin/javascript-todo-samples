@@ -4,6 +4,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler
 import org.eclipse.jetty.server.Request
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import IoUtil.feedInputStreamToOutputStream
+import java.io.InputStream
 
 class ClassLoaderHandler(classLoader: ClassLoader, prefix: String) extends AbstractHandler {
   val contentTypeByExtension = Map(
@@ -22,13 +23,11 @@ class ClassLoaderHandler(classLoader: ClassLoader, prefix: String) extends Abstr
   }
 
   override def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) {
-    val resourceName =
-      if (request.getRequestURI == "/") prefix + request.getRequestURI + "index.html"
-      else prefix + request.getRequestURI
-    val inputStream = classLoader.getResourceAsStream(resourceName)
-    if (inputStream == null) {
-      baseRequest.setHandled(false)
-    } else {
+    def redirect() {
+      baseRequest.setHandled(true)
+      response.sendRedirect("index.html")
+    }
+    def found(inputStream: InputStream) {
       baseRequest.setHandled(true)
       getExtension(target).flatMap(contentTypeByExtension.get).foreach(response.setContentType)
       try {
@@ -37,6 +36,20 @@ class ClassLoaderHandler(classLoader: ClassLoader, prefix: String) extends Abstr
         outputStream.flush()
       } finally {
         inputStream.close()
+      }
+    }
+    def notFound() {
+      baseRequest.setHandled(false)
+    }
+    if (request.getRequestURI == "/") {
+      redirect()
+    } else {
+      val resourceName = prefix + request.getRequestURI
+      val inputStream = classLoader.getResourceAsStream(resourceName)
+      if (inputStream == null) {
+        notFound()
+      } else {
+        found(inputStream)
       }
     }
   }
