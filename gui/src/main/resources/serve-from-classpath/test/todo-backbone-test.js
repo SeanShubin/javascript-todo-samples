@@ -3,7 +3,7 @@ define(['lib/domReady!',
     'qunit',
     'sinon',
     'backbone',
-    'todo/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
+    'todo/sean/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
     'use strict';
     qunit.module('todo-backbone-test');
     qunit.test('learn sinon fake server', function () {
