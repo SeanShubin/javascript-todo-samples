@@ -6,33 +6,9 @@ define(['lib/domReady!',
     'todo/sean/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
     'use strict';
     qunit.module('todo-backbone-test');
-    qunit.test('learn sinon fake server', function () {
-        var server = sinon.fakeServer.create();
-        server.respondWith(
-            "GET",
-            "document/12345",
-            [
-                200,
-                {"Content-Type": "application/json"},
-                JSON.stringify({"name": "paul" })
-            ]
-        );
-        var MyDocument = Backbone.Model.extend({
-            url: function () {
-                return 'document/' + this.id;
-            }
-        });
-        var myDoc = new MyDocument({ id: 12345 });
-        myDoc.fetch();
-        server.respond();
-        qunit.equal(myDoc.get('name'), 'paul', 'name is paul');
-    });
     qunit.test('start with no items', function () {
         var $el, server, responseString;
-
-        //returning an item when the test expects none should fail the test
         responseString = JSON.stringify([]);
-
         server = sinon.fakeServer.create();
         $el = createTodoApplication();
         server.respondWith('GET', 'item', [200, { "Content-Type": "application/json" }, responseString]);
