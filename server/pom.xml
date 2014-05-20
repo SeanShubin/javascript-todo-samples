@@ -75,7 +75,7 @@
                     <execution>
                         <configuration>
                             <mainClass>
-                                com.seanshubin.backbone.sample.server.ServerApplication
+                                com.seanshubin.todo.sample.server.ServerApplication
                             </mainClass>
                             <filename>server.jar</filename>
                         </configuration>
