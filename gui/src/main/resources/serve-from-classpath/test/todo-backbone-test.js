@@ -61,5 +61,6 @@ define(['lib/domReady!',
         qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
         qunit.equal($($el.find('li')[1]).text(), 'item 2', 'item 2');
         qunit.equal($($el.find('li')[2]).text(), 'item 3', 'item 3');
+        server.restore();
     });
 });
