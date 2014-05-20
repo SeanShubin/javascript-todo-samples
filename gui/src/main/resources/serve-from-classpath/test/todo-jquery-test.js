@@ -76,7 +76,7 @@ define(['lib/domReady!',
             }
         ]);
 
-        pressAddButton = function(app) {
+        pressAddButton = function (app) {
             return app.pressAddButton();
         };
 
