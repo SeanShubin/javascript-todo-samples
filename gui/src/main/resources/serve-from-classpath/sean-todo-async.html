@@ -11,7 +11,7 @@
 <script type="application/javascript">
     require(['lib/domReady!',
         'jquery',
-        'todo/sean/jquery/createTodoApplication',
+        'todo/sean/async/createTodoApplication',
         'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
         createTodoApplication(jsonOverHttp).then(function (app) {
             $(dom).find('.application').append(app.dom);

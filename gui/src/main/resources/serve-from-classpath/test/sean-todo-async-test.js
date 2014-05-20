@@ -2,7 +2,7 @@ define(['lib/domReady!',
     'jquery',
     'qunit',
     'q',
-    'todo/sean/jquery/createTodoApplication'], function (dom, $, qunit, Q, createTodoApplication) {
+    'todo/sean/async/createTodoApplication'], function (dom, $, qunit, Q, createTodoApplication) {
     'use strict';
     qunit.module('todo-jquery-test');
     var createFakeJsonOverHttp = function (calls) {
