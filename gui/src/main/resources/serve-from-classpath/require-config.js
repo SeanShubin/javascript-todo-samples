@@ -5,25 +5,12 @@ var require = {
         'underscore': 'lib/underscore',
         'backbone': 'lib/backbone',
         'qunit': 'lib/qunit-1.14.0',
-        'sinon': 'lib/sinon-1.9.1',
+        'sinon': 'lib/sinon-1.10.0',
         'react': 'lib/react-with-addons-0.10.0',
         'superagent': 'lib/superagent-0.18.0',
         'q': 'lib/q'
     },
     shim: {
-        'jquery': {
-            exports: '$'
-        },
-        'underscore': {
-            exports: '_'
-        },
-        'backbone': {
-            deps: [
-                'underscore',
-                'jquery'
-            ],
-            exports: 'Backbone'
-        },
         'qunit': {
             exports: 'QUnit',
             init: function () {
@@ -33,9 +20,6 @@ var require = {
         },
         'sinon': {
             exports: 'sinon'
-        },
-        'q': {
-            exports: 'Q'
         }
     }
 };
