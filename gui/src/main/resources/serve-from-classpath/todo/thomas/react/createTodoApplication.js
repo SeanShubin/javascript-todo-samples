@@ -29,7 +29,7 @@ define(["react", "superagent"], function(React, Agent) {
         },
 
         todoItem: function(todo) {
-            return dom.li({key: todo}, this.todoName(todo));
+            return dom.li({}, this.todoName(todo));
         },
 
         render: function() {
