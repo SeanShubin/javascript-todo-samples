@@ -15,10 +15,10 @@
         'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
         var listener, app, addItemToView, setItemsInView;
         addItemToView = function (response) {
-            app.addItemToView(response.body);
+            app.addItemToView(response);
         };
         setItemsInView = function (response) {
-            app.setItemsInView(response.body);
+            app.setItemsInView(response);
         };
         listener = {
             addItemToModel: function (item) {

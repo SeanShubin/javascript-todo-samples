@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="require-config.js"></script>
+    <script src="require.js"></script>
+    <title>Sample</title>
+</head>
+<body>
+<div class="application"></div>
+<script type="application/javascript">
+    require(['lib/domReady!',
+        'jquery',
+        'todo/sean/latest-attempt/createTodoApplication',
+        'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
+        var app;
+        app = createTodoApplication(jsonOverHttp);
+        $(dom).find('.application').append(app);
+    });
+</script>
+</body>
+</html>

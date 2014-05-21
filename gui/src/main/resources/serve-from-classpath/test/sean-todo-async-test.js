@@ -4,7 +4,7 @@ define(['lib/domReady!',
     'q',
     'todo/sean/async/createTodoApplication'], function (dom, $, qunit, Q, createTodoApplication) {
     'use strict';
-    qunit.module('todo-async-test');
+    qunit.module('sean-todo-async-test');
     var createFakeJsonOverHttp = function (calls) {
         var callIndex;
         callIndex = 0;
