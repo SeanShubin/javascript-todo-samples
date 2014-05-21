@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="require-config.js"></script>
+    <script src="require.js"></script>
+    <title>Sample</title>
+</head>
+<body>
+<div class="application"></div>
+<script type="application/javascript">
+    require(['lib/domReady!',
+        'jquery',
+        'todo/sean/sync/createTodoApplication',
+        'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
+        var listener, app, addItemToView, setItemsInView;
+        addItemToView = function (response) {
+            app.addItemToView(response.body);
+        };
+        setItemsInView = function (response) {
+            app.setItemsInView(response.body);
+        };
+        listener = {
+            addItemToModel: function (item) {
+                jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addItemToView);
+            },
+            loadItemsFromModel: function () {
+                jsonOverHttp({uri: 'item', method: 'GET'}).then(setItemsInView);
+            }
+        };
+        app = createTodoApplication(listener);
+        $(dom).find('.application').append(app.dom);
+    });
+</script>
+</body>
+</html>
