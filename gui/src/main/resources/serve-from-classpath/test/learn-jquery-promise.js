@@ -1,6 +1,18 @@
 define(['qunit', 'jquery'], function (qunit, $) {
     'use strict';
     qunit.module('learn-jquery-promise');
+    qunit.test('test promise synchronously', function () {
+        var  deferred, asyncValue, doAsyncWork;
+        deferred = $.Deferred();
+        doAsyncWork = function (x) {
+            asyncValue+=x;
+        };
+        asyncValue = 1;
+        deferred.then(doAsyncWork);
+        qunit.equal(asyncValue, 1, 'asyncValue equals 1');
+        deferred.resolve(3);
+        qunit.equal(asyncValue, 4, 'asyncValue equals 4');
+    });
     qunit.asyncTest('simple promise', function () {
         var  deferred, assertResult;
         assertResult = function (x) {
