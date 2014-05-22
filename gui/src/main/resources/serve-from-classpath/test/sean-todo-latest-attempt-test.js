@@ -3,8 +3,7 @@ define(['lib/domReady!',
     'qunit',
     'todo/sean/latest-attempt/createTodoApplication'], function (dom, $, qunit, createTodoApplication) {
     'use strict';
-    var createFake;
-    createFake = function () {
+    var createFake = function () {
         var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expect, expectedRequest, resolveResponse;
         requestCount = 0;
         jsonOverHttp = function (actualRequest) {
