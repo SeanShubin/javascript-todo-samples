@@ -36,21 +36,26 @@ define(['lib/domReady!',
     qunit.test('start with no items', function () {
         var dom, fake;
         fake = createFake();
+
         fake.expect({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
+
         qunit.equal(fake.getRequestCount(), 1, 'one request was made');
         qunit.equal(dom.find('li').length, 0, 'no items in list');
     });
     qunit.test('add item', function () {
         var dom, fake;
         fake = createFake();
+
         fake.expect({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
+
         fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 1 }});
+
         qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
         qunit.equal(dom.find('li').length, 1, 'one item added');
         qunit.equal($(dom.find('li')[0]).text(), 'item 1', 'item 1');
@@ -58,18 +63,23 @@ define(['lib/domReady!',
     qunit.test('add many items', function () {
         var dom, fake;
         fake = createFake();
+
         fake.expect({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
+
         fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 1 }});
+
         fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 2 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 2 }});
+
         fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 3 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 3 }});
+
         qunit.equal(fake.getRequestCount(), 4, 'four requests were made');
         qunit.equal(dom.find('li').length, 3, 'three items added');
         qunit.equal($(dom.find('li')[0]).text(), 'item 1', 'item 1');
