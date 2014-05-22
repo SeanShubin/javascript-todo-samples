@@ -41,7 +41,7 @@ define(["react", "qunit", "todo/thomas/react/createTodoApplication"], function (
             button = find(app, "button");
         click(button);
         qunit.equal(todos.length, 1, 'a single item is added');
-        qunit.deepEqual(todos[0], {number: 1, name: "item"}, 'a todo makes it into our test store');
+        qunit.deepEqual(todos[0].number, 1, 'a todo makes it into our test store');
         qunit.equal(scry(app, "li").length, todos.length, 'a li is rendered for each todo');
     });
 
