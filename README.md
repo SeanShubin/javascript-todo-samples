@@ -34,7 +34,7 @@ Application Requirements
  - All existing items in the data store are displayed in the browser
 - (optional) implement a full [todo](http://todomvc.com) app
 
-Metrics
+Values (in priority order)
 =
 - Meet customer need
 - Can confidently refactor

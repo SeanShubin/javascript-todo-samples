@@ -4,7 +4,7 @@ define(['lib/domReady!',
     'todo/sean/latest-attempt/createTodoApplication'], function (dom, $, qunit, createTodoApplication) {
     'use strict';
     var createFake = function () {
-        var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expect, expectedRequest, resolveResponse;
+        var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expectRequest, expectedRequest, resolveResponse;
         requestCount = 0;
         jsonOverHttp = function (actualRequest) {
             requestCount++;
@@ -17,7 +17,7 @@ define(['lib/domReady!',
         getRequestCount = function () {
             return requestCount;
         };
-        expect = function (newExpectedRequest) {
+        expectRequest = function (newExpectedRequest) {
             expectedRequest = newExpectedRequest;
             asyncResponse = $.Deferred();
         };
@@ -27,7 +27,7 @@ define(['lib/domReady!',
         return {
             jsonOverHttp: jsonOverHttp,
             getRequestCount: getRequestCount,
-            expect: expect,
+            expectRequest: expectRequest,
             resolveResponse: resolveResponse
         };
     };
@@ -36,7 +36,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expect({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -47,11 +47,11 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expect({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
-        fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
+        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 1 }});
 
@@ -63,19 +63,19 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expect({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'item', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
-        fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
+        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 1 }});
 
-        fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 2 }});
+        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 2 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 2 }});
 
-        fake.expect({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 3 }});
+        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { "name": "item", "number": 3 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { "name": "item", "number": 3 }});
 
@@ -86,3 +86,9 @@ define(['lib/domReady!',
         qunit.equal($(dom.find('li')[2]).text(), 'item 3', 'item 3');
     });
 });
+/*
+Noteworthy features
+* fake does exactly what we need, and we can tell how it works by looking at it
+* 'requestCount' ensures we don't get a false positive if an event is not fired
+* behavior of jquery deferred allows test to be synchronous
+*/
