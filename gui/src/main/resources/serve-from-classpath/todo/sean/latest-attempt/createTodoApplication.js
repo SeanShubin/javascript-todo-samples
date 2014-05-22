@@ -7,14 +7,12 @@ define(['jquery', 'underscore'], function ($, _) {
         list = dom.append('<ul></ul>');
         counter = 1;
         sendAddItemRequest = function () {
-            var item;
-            item = {name: 'item', number: counter};
+            var item = {name: 'item', number: counter};
             counter++;
             jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(respondToItemAdded);
         };
         appendItemToView = function (item) {
-            var text;
-            text = '<li>' + item.name + ' ' + item.number + '</li>';
+            var text = '<li>' + item.name + ' ' + item.number + '</li>';
             list.append($(text));
         };
         respondToItemAdded = function (response) {

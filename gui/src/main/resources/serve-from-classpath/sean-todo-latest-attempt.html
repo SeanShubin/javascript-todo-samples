@@ -13,8 +13,7 @@
         'jquery',
         'todo/sean/latest-attempt/createTodoApplication',
         'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
-        var app;
-        app = createTodoApplication(jsonOverHttp);
+        var app = createTodoApplication(jsonOverHttp);
         $(dom).find('.application').append(app);
     });
 </script>

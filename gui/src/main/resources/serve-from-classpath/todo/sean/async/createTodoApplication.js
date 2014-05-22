@@ -40,11 +40,3 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
 
     return createTodoApplication;
 });
-/*
-contract
-    outgoing
-        addItem
-    incoming
-        itemAdded
-        refreshItems
- */
