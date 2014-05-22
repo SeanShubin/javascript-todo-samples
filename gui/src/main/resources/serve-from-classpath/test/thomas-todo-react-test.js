@@ -26,7 +26,7 @@ define(["react", "qunit", "todo/thomas/react/createTodoApplication"], function (
         find = React.addons.TestUtils.findRenderedDOMComponentWithTag,
         click = React.addons.TestUtils.Simulate.click;
 
-    qunit.module('todo-react-test');
+    qunit.module('thomas-todo-react-test');
 
     qunit.test('start with no items', function () {
         var todos = [],
