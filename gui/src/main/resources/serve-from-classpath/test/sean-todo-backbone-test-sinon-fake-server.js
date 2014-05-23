@@ -5,7 +5,7 @@ define(['lib/domReady!',
     'backbone',
     'todo/sean/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
     'use strict';
-    qunit.module('sean-todo-backbone-test');
+    qunit.module('sean-todo-backbone-test-sinon-fake-server');
     qunit.test('start with no items', function () {
         var $el, server, responseString;
         responseString = JSON.stringify([]);
