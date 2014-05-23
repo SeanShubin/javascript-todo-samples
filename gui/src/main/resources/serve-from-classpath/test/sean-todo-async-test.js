@@ -43,8 +43,8 @@ define(['lib/domReady!',
                 response: { status: 200, body: []}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { "name": "item", "number": 1}},
-                response: { status: 200, body: { "name": "item", "number": 1, id: "1"}}
+                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 1}},
+                response: { status: 200, body: { 'name': 'item', 'number': 1, id: '1'}}
             }
         ]);
         createTodoApplication(jsonOverHttp).then(function (app) {
@@ -63,16 +63,16 @@ define(['lib/domReady!',
                 response: { status: 200, body: []}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { "name": "item", "number": 1}},
-                response: { status: 200, body: { "name": "item", "number": 1, id: "1"}}
+                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 1}},
+                response: { status: 200, body: { 'name': 'item', 'number': 1, id: '1'}}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { "name": "item", "number": 2}},
-                response: { status: 200, body: { "name": "item", "number": 2, id: "2"}}
+                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 2}},
+                response: { status: 200, body: { 'name': 'item', 'number': 2, id: '2'}}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { "name": "item", "number": 3}},
-                response: { status: 200, body: { "name": "item", "number": 3, id: "3"}}
+                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 3}},
+                response: { status: 200, body: { 'name': 'item', 'number': 3, id: '3'}}
             }
         ]);
 
