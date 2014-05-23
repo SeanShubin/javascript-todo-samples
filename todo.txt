@@ -3,3 +3,5 @@ Try out Mocha for javascript testing
 
 Add clojurescript example
     https://github.com/clojure/clojurescript
+
+Automatically fail the build if a javascript test fails
