@@ -6,4 +6,6 @@ trait Notifications {
   def dataStoreServerRequest(request: Request)
 
   def dataStoreServerResponse(response: Response)
+
+  def errorWithConfiguration(errorReport: Seq[String])
 }

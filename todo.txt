@@ -1,0 +1,5 @@
+Try out Mocha for javascript testing
+    http://visionmedia.github.io/mocha/
+
+Add clojurescript example
+    https://github.com/clojure/clojurescript

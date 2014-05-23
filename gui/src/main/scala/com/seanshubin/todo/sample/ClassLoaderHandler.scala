@@ -4,9 +4,9 @@ import org.eclipse.jetty.server.handler.AbstractHandler
 import org.eclipse.jetty.server.Request
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import IoUtil.feedInputStreamToOutputStream
-import java.io.InputStream
+import java.io.{FileNotFoundException, FileInputStream, InputStream}
 
-class ClassLoaderHandler(classLoader: ClassLoader, prefix: String) extends AbstractHandler {
+class ClassLoaderHandler(classLoader: ClassLoader, prefix: String, overridePath:Option[String]) extends AbstractHandler {
   val contentTypeByExtension = Map(
     ".js" -> "application/json",
     ".css" -> "text/css",
@@ -45,12 +45,26 @@ class ClassLoaderHandler(classLoader: ClassLoader, prefix: String) extends Abstr
       redirect()
     } else {
       val resourceName = prefix + request.getRequestURI
-      val inputStream = classLoader.getResourceAsStream(resourceName)
+      val inputStream = createInputStreamFor(resourceName)
       if (inputStream == null) {
         notFound()
       } else {
         found(inputStream)
       }
+    }
+  }
+
+  private def createInputStreamFor(resourceName:String):InputStream = {
+    overridePath match {
+      case Some(path) =>
+        try {
+          new FileInputStream(path + resourceName)
+        } catch {
+          case ex:FileNotFoundException =>
+            classLoader.getResourceAsStream(resourceName)
+        }
+      case None =>
+        classLoader.getResourceAsStream(resourceName)
     }
   }
 }

@@ -54,7 +54,7 @@ define(["react", "qunit", "todo/thomas/react/createTodoApplication"], function (
         click(button);
         qunit.equal(todos.length, 3, '3 items are added');
         qunit.equal(scry(app, "li").length, todos.length, 'a li is rendered for each todo');
-        scry(app, "li").forEach(function(li, i) {
+        scry(app, "li").forEach(function (li, i) {
             var todo = todos[i],
                 expected = todo.name + " " + todo.number;
             qunit.equal(li.props.children, expected, "todo is rendered " + todo.number);

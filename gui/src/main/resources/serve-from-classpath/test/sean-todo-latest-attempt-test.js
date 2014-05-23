@@ -87,8 +87,8 @@ define(['lib/domReady!',
     });
 });
 /*
-Noteworthy features
-* fake does exactly what we need, and we can tell how it works by looking at it
-* 'requestCount' ensures we don't get a false positive if an event is not fired
-* behavior of jquery deferred allows test to be synchronous
-*/
+ Noteworthy features
+ * fake does exactly what we need, and we can tell how it works by looking at it
+ * 'requestCount' ensures we don't get a false positive if an event is not fired
+ * behavior of jquery deferred allows test to be synchronous
+ */

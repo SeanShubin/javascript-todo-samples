@@ -20,6 +20,10 @@ Open a browser and navigate to
 
     http://localhost:12345
 
+If you would like to give your filesystem resources priority, launch like this:
+
+    java -jar server/target/server.jar 12345 gui/src/main/resources/
+
 Don't like the way I did it?
 =
 My samples are in the [sean](https://github.com/SeanShubin/javascript-todo-samples/tree/master/gui/src/main/resources/serve-from-classpath/todo/sean) directory.  

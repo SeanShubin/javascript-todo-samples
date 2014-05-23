@@ -10,4 +10,8 @@ class LineEmittingNotifications(emitLine: String => Unit) extends Notifications 
   override def dataStoreServerResponse(response: Response): Unit = {
     emitLine(response.toString)
   }
+
+  override def errorWithConfiguration(errorReport: Seq[String]): Unit = {
+    errorReport.foreach(emitLine)
+  }
 }

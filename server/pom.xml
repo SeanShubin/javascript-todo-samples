@@ -75,7 +75,7 @@
                     <execution>
                         <configuration>
                             <mainClass>
-                                com.seanshubin.todo.sample.server.ServerApplication
+                                com.seanshubin.todo.sample.server.ConsoleApplication
                             </mainClass>
                             <filename>server.jar</filename>
                         </configuration>

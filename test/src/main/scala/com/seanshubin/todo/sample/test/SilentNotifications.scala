@@ -7,4 +7,6 @@ class SilentNotifications extends Notifications {
   override def dataStoreServerRequest(request: Request): Unit = {}
 
   override def dataStoreServerResponse(response: Response): Unit = {}
+
+  override def errorWithConfiguration(errorReport: Seq[String]): Unit = {}
 }
