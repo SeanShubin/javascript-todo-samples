@@ -9,7 +9,33 @@
 <body>
 <div class="application"></div>
 <script type="application/javascript">
-    require(['lib/domReady!', 'jquery', 'todo/sean/backbone/createTodoApplication'], function (dom, $, createTodoApplication) {
+    require(['lib/domReady!', 'jquery', 'todo/sean/backbone/createTodoApplication', 'backbone', 'sinon'], function (dom, $, createTodoApplication, Backbone, sinon) {
+        var oldBackboneSync, oldBackboneAjax, displayAjaxResult;
+        displayAjaxResult = function() {
+            console.log('ajax result = ' + sinon.format(arguments));
+        };
+        oldBackboneSync = Backbone.sync;
+        Backbone.sync = function(method, model, options) {
+            var result = oldBackboneSync.apply(Backbone, arguments);
+            console.log('backbone sync');
+            console.log('method = ' + sinon.format(method));
+            console.log('model = ' + sinon.format(model));
+            console.log('options = ' + sinon.format(options));
+            console.log('result = ' + sinon.format(result));
+            console.log('------------------------------------');
+            return result;
+        };
+        oldBackboneAjax = Backbone.ajax;
+        Backbone.ajax = function(url, settings){
+            var result = oldBackboneAjax.apply(Backbone, arguments);
+            console.log('backbone ajax');
+            console.log('url = ' + sinon.format(url));
+            console.log('settings = ' + sinon.format(settings));
+            console.log('result = ' + sinon.format(result));
+            result.then(displayAjaxResult);
+            console.log('------------------------------------');
+            return result;
+        };
         $(dom).find('.application').append(createTodoApplication());
     });
 </script>
