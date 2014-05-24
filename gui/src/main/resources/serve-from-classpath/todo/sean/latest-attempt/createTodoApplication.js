@@ -34,7 +34,8 @@ define(['jquery', 'underscore'], function ($, _) {
  * no anonymous functions, you can tell what each does by its name
  * multiple vars in same scope not initialized when declared, so can set breakpoint on each assignment
  * single vars in same scope initialized when declared
- * collaborator is constructor injected, so easy to fake without squire
+ * collaborator is constructor injected, so easy to fake
  * each async call names its destination, so it is easy to follow the code flow
  * no knowledge of parent element, or its location in dom, or even if it is attached to the dom
+ * avoided the need to use 'this' or 'bind'
  */
