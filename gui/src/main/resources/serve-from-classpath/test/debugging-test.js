@@ -1,8 +1,9 @@
-define(['qunit', 'debugging/inspect', 'sinon'], function (qunit, inspect, sinon) {
+define(['qunit', 'sinon'], function (qunit, sinon) {
     'use strict';
     qunit.module('debugging-test');
     qunit.test('arguments to lines', function () {
         var foo, debugString;
+        debugString = 'debug string not set';
         foo = function () {
             debugString = sinon.format(arguments);
         };
