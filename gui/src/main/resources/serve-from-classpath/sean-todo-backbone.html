@@ -11,14 +11,14 @@
 <script type="application/javascript">
     require(['lib/domReady!', 'jquery', 'todo/sean/backbone/createTodoApplication', 'backbone', 'sinon'], function (dom, $, createTodoApplication, Backbone, sinon) {
         var oldBackboneSync, oldBackboneAjax, displayAjaxResult, displaySyncResult;
-        displayAjaxResult = function() {
+        displayAjaxResult = function () {
             console.log('ajax result = ' + sinon.format(arguments));
         };
-        displaySyncResult = function() {
+        displaySyncResult = function () {
             console.log('sync result = ' + sinon.format(arguments));
         };
         oldBackboneSync = Backbone.sync;
-        Backbone.sync = function(method, model, options) {
+        Backbone.sync = function (method, model, options) {
             var result = oldBackboneSync.apply(Backbone, arguments);
             console.log('backbone sync');
             console.log('method = ' + sinon.format(method));
@@ -30,7 +30,7 @@
             return result;
         };
         oldBackboneAjax = Backbone.ajax;
-        Backbone.ajax = function(url, settings){
+        Backbone.ajax = function (url, settings) {
             var result = oldBackboneAjax.apply(Backbone, arguments);
             console.log('backbone ajax');
             console.log('url = ' + sinon.format(url));
