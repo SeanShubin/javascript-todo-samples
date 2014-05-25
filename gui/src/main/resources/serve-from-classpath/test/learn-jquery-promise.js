@@ -13,11 +13,11 @@ define(['qunit', 'jquery'], function (qunit, $) {
         deferred.resolve(3);
         qunit.equal(asyncValue, 4, 'asyncValue equals 4');
     });
-    qunit.asyncTest('simple promise', function () {
+    qunit.test('simple promise', function () {
         var deferred, assertResult;
+        qunit.expect(1);
         assertResult = function (x) {
             qunit.equal(x, 3, 'x equals 3');
-            qunit.start();
         };
         deferred = $.Deferred();
         deferred.then(assertResult);
@@ -64,5 +64,38 @@ define(['qunit', 'jquery'], function (qunit, $) {
         $.when(returnTwo, returnThree).then(multiply).then(assertResult);
         returnTwo.resolve(2);
         returnThree.resolve(3);
+    });
+    qunit.test('simulate async', function () {
+        var createFake, fake, callback, args;
+        args = [];
+        callback = function () {
+            args = arguments;
+        };
+        createFake = function () {
+            var makeCall, resolve, deferred, theCallback, invokeCallback;
+            invokeCallback = function (d, e, f) {
+                return theCallback(d, e, f);
+            };
+            deferred = $.Deferred();
+            makeCall = function (a, b, c, callback) {
+                theCallback = callback;
+            };
+            deferred.then(invokeCallback);
+            resolve = function (d, e, f) {
+                deferred.resolve(d, e, f);
+            };
+            return {
+                makeCall: makeCall,
+                resolve: resolve
+            }
+        };
+        fake = createFake();
+        fake.makeCall(1, 2, 3, callback);
+        qunit.equal(args.length, 0);
+        fake.resolve(4, 5, 6);
+        qunit.equal(args.length, 3);
+        qunit.equal(args[0], 4);
+        qunit.equal(args[1], 5);
+        qunit.equal(args[2], 6);
     });
 });
