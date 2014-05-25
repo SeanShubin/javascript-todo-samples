@@ -10,7 +10,7 @@ define(["react", "qunit", "todo/thomas/react/createTodoApplication"], function (
             get: function (callback) {
                 callback({todos: todos});
             }
-        }
+        };
     }
 
     function TestApp(todos) {

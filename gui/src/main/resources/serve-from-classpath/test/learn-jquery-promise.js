@@ -29,7 +29,7 @@ define(['qunit', 'jquery'], function (qunit, $) {
         millisecondsToWait = 1;
         deferred = $.Deferred();
         setTimeout(function () {
-            deferred.resolve(3)
+            deferred.resolve(3);
         }, millisecondsToWait);
         promise = deferred.promise();
         promise.then(function (value) {
@@ -87,7 +87,7 @@ define(['qunit', 'jquery'], function (qunit, $) {
             return {
                 makeCall: makeCall,
                 resolve: resolve
-            }
+            };
         };
         fake = createFake();
         fake.makeCall(1, 2, 3, callback);

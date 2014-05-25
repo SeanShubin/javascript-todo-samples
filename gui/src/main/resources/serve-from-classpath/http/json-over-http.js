@@ -8,15 +8,15 @@ define(['q'], function (Q) {
         deferred = Q.defer();
         function handler() {
             var valueForDeferred;
-            if (this.readyState === this.DONE) {
-                if (this.response === '') {
+            if (client.readyState === client.DONE) {
+                if (client.response === '') {
                     valueForDeferred = {
-                        status: this.status
+                        status: client.status
                     };
                 } else {
                     valueForDeferred = {
-                        status: this.status,
-                        body: JSON.parse(this.response)
+                        status: client.status,
+                        body: JSON.parse(client.response)
                     };
                 }
                 deferred.resolve(valueForDeferred);

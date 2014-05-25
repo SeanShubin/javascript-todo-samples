@@ -19,7 +19,7 @@ define(['qunit', 'q'], function (qunit, Q) {
         millisecondsToWait = 1;
         deferThree = Q.defer();
         setTimeout(function () {
-            deferThree.resolve(3)
+            deferThree.resolve(3);
         }, millisecondsToWait);
         promiseThree = deferThree.promise;
         promiseThree.then(function (value) {

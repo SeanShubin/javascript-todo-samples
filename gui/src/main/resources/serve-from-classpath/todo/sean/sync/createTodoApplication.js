@@ -16,7 +16,7 @@ define(['jquery', 'underscore'], function ($, _) {
             addItemToView(response.body);
         };
         addItemToView = function (item) {
-            var text
+            var text;
             text = '<li>' + item.name + ' ' + item.number + '</li>';
             list.append($(text));
         };

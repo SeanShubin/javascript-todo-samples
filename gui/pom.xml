@@ -30,22 +30,28 @@
                 <artifactId>scalatest-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.dstovall</groupId>
-                <artifactId>onejar-maven-plugin</artifactId>
-                <version>1.4.4</version>
+                <groupId>com.cj.jshintmojo</groupId>
+                <artifactId>jshint-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <configuration>
-                            <mainClass>
-                                com.seanshubin.serve_from_classpath.gui.ServerApplication
-                            </mainClass>
-                            <filename>server.jar</filename>
-                        </configuration>
                         <goals>
-                            <goal>one-jar</goal>
+                            <goal>lint</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <version>2.4.1</version>
+                    <configFile>jshint.conf.json</configFile>
+                    <directories>
+                        <directory>src/main/resources/serve-from-classpath/</directory>
+                    </directories>
+                    <excludes>
+                        <exclude>src/main/resources/serve-from-classpath/lib/</exclude>
+                    </excludes>
+                    <reporter>jslint</reporter>
+                    <reportFile>target/jshint.xml</reportFile>
+                    <failOnError>true</failOnError>
+                </configuration>
             </plugin>
         </plugins>
     </build>
