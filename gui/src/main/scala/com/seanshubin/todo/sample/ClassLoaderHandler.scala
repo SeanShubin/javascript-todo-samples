@@ -5,8 +5,13 @@ import org.eclipse.jetty.server.Request
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import IoUtil.feedInputStreamToOutputStream
 import java.io.{FileNotFoundException, FileInputStream, InputStream}
+import com.seanshubin.todo.sample.core.notifications.Notifications
 
-class ClassLoaderHandler(classLoader: ClassLoader, prefix: String, overridePath:Option[String]) extends AbstractHandler {
+class ClassLoaderHandler(classLoader: ClassLoader,
+                         prefix: String,
+                         overridePath:Option[String],
+                         notifications:Notifications,
+                         charsetName:String) extends AbstractHandler {
   val contentTypeByExtension = Map(
     ".js" -> "application/json",
     ".css" -> "text/css",
@@ -23,13 +28,16 @@ class ClassLoaderHandler(classLoader: ClassLoader, prefix: String, overridePath:
   }
 
   override def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) {
+    def updateResponseWithContentTypeAndCharset(contentType:String) {
+      response.setContentType(s"$contentType; charset=$charsetName")
+    }
     def redirect() {
       baseRequest.setHandled(true)
       response.sendRedirect("index.html")
     }
     def found(inputStream: InputStream) {
       baseRequest.setHandled(true)
-      getExtension(target).flatMap(contentTypeByExtension.get).foreach(response.setContentType)
+      getExtension(target).flatMap(contentTypeByExtension.get).foreach(updateResponseWithContentTypeAndCharset)
       try {
         val outputStream = response.getOutputStream
         feedInputStreamToOutputStream(inputStream, outputStream)
@@ -58,13 +66,19 @@ class ClassLoaderHandler(classLoader: ClassLoader, prefix: String, overridePath:
     overridePath match {
       case Some(path) =>
         try {
-          new FileInputStream(path + resourceName)
+          val result = new FileInputStream(path + resourceName)
+          notifications.servedResource(s"file system ($path)", resourceName)
+          result
         } catch {
           case ex:FileNotFoundException =>
-            classLoader.getResourceAsStream(resourceName)
+            val result = classLoader.getResourceAsStream(resourceName)
+            notifications.servedResource("class path", resourceName)
+            result
         }
       case None =>
-        classLoader.getResourceAsStream(resourceName)
+        val result = classLoader.getResourceAsStream(resourceName)
+        notifications.servedResource("class path", resourceName)
+        result
     }
   }
 }

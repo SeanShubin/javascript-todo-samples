@@ -9,6 +9,11 @@
     <name>javascript-todo-samples-gui</name>
     <dependencies>
         <dependency>
+            <groupId>com.seanshubin</groupId>
+            <artifactId>javascript-todo-samples-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
         </dependency>

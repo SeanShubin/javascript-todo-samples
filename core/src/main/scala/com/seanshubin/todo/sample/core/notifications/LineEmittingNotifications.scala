@@ -14,4 +14,8 @@ class LineEmittingNotifications(emitLine: String => Unit) extends Notifications 
   override def errorWithConfiguration(errorReport: Seq[String]): Unit = {
     errorReport.foreach(emitLine)
   }
+
+  override def servedResource(source: String, name: String): Unit = {
+    emitLine(s"served $name from $source")
+  }
 }

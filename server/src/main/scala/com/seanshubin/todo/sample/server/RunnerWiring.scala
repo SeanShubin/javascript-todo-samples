@@ -23,7 +23,7 @@ trait RunnerWiring {
   lazy val classLoader: ClassLoader = classOnSameLoaderAsResources.getClassLoader
   lazy val onlyServeResourcesFrom: String = "serve-from-classpath"
   lazy val classLoaderHandler: Handler =
-    new ClassLoaderHandler(classLoader, onlyServeResourcesFrom, configuration.maybeServeFromPath)
+    new ClassLoaderHandler(classLoader, onlyServeResourcesFrom, configuration.maybeServeFromPath, notifications, charsetName)
   lazy val allHandlers: Seq[Handler] = Seq(classLoaderHandler, serversHandler)
   lazy val compositeHandler: Handler = new CompositeHandler(allHandlers)
   lazy val jettyServer: HttpServer = new JettyServer(configuration.port, compositeHandler)
