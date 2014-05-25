@@ -32,6 +32,9 @@ define(['lib/domReady!',
         };
     };
     qunit.module('sean-todo-latest-attempt-test');
+    qunit.test('broken test', function () {
+        qunit.equal(1,2);
+    });
     qunit.test('start with no items', function () {
         var dom, fake;
         fake = createFake();

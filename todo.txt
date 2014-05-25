@@ -5,3 +5,5 @@ Add clojurescript example
     https://github.com/clojure/clojurescript
 
 Automatically fail the build if a javascript test fails
+    tried integrating qunit-maven-plugin, doesn't work yet
+    also created JavascriptUnitTests, but they only render the page, they don't run javascript
