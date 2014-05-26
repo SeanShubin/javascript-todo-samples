@@ -17,12 +17,12 @@ define(['jquery',
         };
         addButtonPressed = function () {
             var toAdd, todo;
-            toAdd = userInput.val();
-            if (!_s.isBlank(_s.trim(toAdd))) {
+            toAdd = _s.trim(userInput.val());
+            if (!_s.isBlank(toAdd)) {
                 userInput.val('');
+                userInput.focus();
                 todo = { name: toAdd, done: false };
                 jsonOverHttp({uri: 'todo', method: 'POST', body: todo}).then(respondToTodoAdded);
-                userInput.focus();
             }
         };
         appendItemToView = function (todo) {
