@@ -1,6 +1,6 @@
 define(['jquery', 'underscore'], function ($, _) {
     'use strict';
-    function createTodoApplication(jsonOverHttp) {
+    function createPrototypeTodoApplication(jsonOverHttp) {
         var dom, sendAddItemRequest, counter, addButton, list, appendItemToView, respondToItemAdded, respondToRefreshItems;
         dom = $("<div></div>");
         addButton = dom.append('<button class="add">Add list item</button>');
@@ -26,7 +26,7 @@ define(['jquery', 'underscore'], function ($, _) {
         return dom;
     }
 
-    return createTodoApplication;
+    return createPrototypeTodoApplication;
 });
 /*
  Noteworthy features

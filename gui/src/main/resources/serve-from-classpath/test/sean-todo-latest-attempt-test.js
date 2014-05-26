@@ -1,7 +1,7 @@
 define(['lib/domReady!',
     'jquery',
     'qunit',
-    'todo/sean/latest-attempt/createTodoApplication'], function (dom, $, qunit, createTodoApplication) {
+    'todo/sean/latest-attempt/createPrototypeTodoApplication'], function (dom, $, qunit, createTodoApplication) {
     'use strict';
     var createFake = function () {
         var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expectRequest, expectedRequest, resolveResponse;
@@ -32,9 +32,6 @@ define(['lib/domReady!',
         };
     };
     qunit.module('sean-todo-latest-attempt-test');
-    qunit.test('broken test', function () {
-        qunit.equal(1,2);
-    });
     qunit.test('start with no items', function () {
         var dom, fake;
         fake = createFake();
