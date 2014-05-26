@@ -9,9 +9,9 @@ import com.seanshubin.todo.sample.core.notifications.Notifications
 
 class ClassLoaderHandler(classLoader: ClassLoader,
                          prefix: String,
-                         overridePath:Option[String],
-                         notifications:Notifications,
-                         charsetName:String) extends AbstractHandler {
+                         overridePath: Option[String],
+                         notifications: Notifications,
+                         charsetName: String) extends AbstractHandler {
   val contentTypeByExtension = Map(
     ".js" -> "application/json",
     ".css" -> "text/css",
@@ -28,7 +28,7 @@ class ClassLoaderHandler(classLoader: ClassLoader,
   }
 
   override def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) {
-    def updateResponseWithContentTypeAndCharset(contentType:String) {
+    def updateResponseWithContentTypeAndCharset(contentType: String) {
       response.setContentType(s"$contentType; charset=$charsetName")
     }
     def redirect() {
@@ -62,7 +62,7 @@ class ClassLoaderHandler(classLoader: ClassLoader,
     }
   }
 
-  private def createInputStreamFor(resourceName:String):InputStream = {
+  private def createInputStreamFor(resourceName: String): InputStream = {
     overridePath match {
       case Some(path) =>
         try {
@@ -70,7 +70,7 @@ class ClassLoaderHandler(classLoader: ClassLoader,
           notifications.servedResource(s"file system ($path)", resourceName)
           result
         } catch {
-          case ex:FileNotFoundException =>
+          case ex: FileNotFoundException =>
             val result = classLoader.getResourceAsStream(resourceName)
             notifications.servedResource("class path", resourceName)
             result

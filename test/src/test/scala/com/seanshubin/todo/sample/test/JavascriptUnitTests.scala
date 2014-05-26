@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import com.seanshubin.todo.sample.server.{Configuration, RunnerWiring}
 import com.seanshubin.todo.sample.client.HttpImpl
 import com.seanshubin.todo.sample.core.http.Client
+
 //import com.gargoylesoftware.htmlunit.WebClient
 //import com.gargoylesoftware.htmlunit.html.HtmlPage
 
