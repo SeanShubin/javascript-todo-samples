@@ -2,14 +2,14 @@ define(['jquery',
     'underscore',
     'underscore.string',
     'text!todo/sean/page-template.html',
-    'text!todo/sean/item-template.html'], function ($, _, _s, pageTemplate, itemTemplate) {
+    'text!todo/sean/todo-entry-template.html'], function ($, _, _s, pageTemplate, todoEntryTemplate) {
     'use strict';
     function createPrototypeTodoApplication(jsonOverHttp) {
-        var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendItemToView, respondToTodoAdded, respondToRefreshItems;
+        var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendTodoEntryToView, respondToTodoAdded, respondToRefreshTodoEntries;
         dom = $(pageTemplate);
-        addButton = dom.find('.add-todo-item-button');
+        addButton = dom.find('.add-todo-entry-button');
         userInput = dom.find('.user-input');
-        list = dom.find('.todo-items-list');
+        list = dom.find('.todo-entries-list');
         keyPressed = function (event) {
             if (event.which === 13) {
                 addButtonPressed();
@@ -25,12 +25,12 @@ define(['jquery',
                 jsonOverHttp({uri: 'todo', method: 'POST', body: todo}).then(respondToTodoAdded);
             }
         };
-        appendItemToView = function (todo) {
+        appendTodoEntryToView = function (todoEntry) {
             var todoElement;
-            todoElement = $(itemTemplate);
-            todoElement.find('.todo-id').val(todo.id);
-            todoElement.find('.todo-name').text(todo.name);
-            if (todo.done) {
+            todoElement = $(todoEntryTemplate);
+            todoElement.find('.todo-id').val(todoEntry.id);
+            todoElement.find('.todo-name').text(todoEntry.name);
+            if (todoEntry.done) {
                 todoElement.find('.todo-done').attr('checked', 'checked');
             } else {
                 todoElement.find('.todo-done').removeAttr('checked');
@@ -38,14 +38,14 @@ define(['jquery',
             list.append(todoElement);
         };
         respondToTodoAdded = function (response) {
-            appendItemToView(response.body);
+            appendTodoEntryToView(response.body);
         };
-        respondToRefreshItems = function (response) {
-            _.each(response.body, appendItemToView);
+        respondToRefreshTodoEntries = function (response) {
+            _.each(response.body, appendTodoEntryToView);
         };
         addButton.on('click', addButtonPressed);
         userInput.on('keyup', keyPressed);
-        jsonOverHttp({uri: 'todo', method: 'GET'}).then(respondToRefreshItems);
+        jsonOverHttp({uri: 'todo', method: 'GET'}).then(respondToRefreshTodoEntries);
         return dom;
     }
 
