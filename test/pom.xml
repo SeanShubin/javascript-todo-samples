@@ -47,8 +47,8 @@
             <artifactId>scalatest_2.11</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>net.sourceforge.htmlunit</groupId>-->
-            <!--<artifactId>htmlunit</artifactId>-->
+        <!--<groupId>net.sourceforge.htmlunit</groupId>-->
+        <!--<artifactId>htmlunit</artifactId>-->
         <!--</dependency>-->
     </dependencies>
     <build>

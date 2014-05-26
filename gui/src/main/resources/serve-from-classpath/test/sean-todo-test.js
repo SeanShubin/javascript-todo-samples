@@ -51,9 +51,9 @@ define(['lib/domReady!',
         fake.expectRequest({ uri: 'todo', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
-            {id:'todo-1', name:'First thing to do', done:false},
-            {id:'todo-2', name:'Second thing to do', done:true},
-            {id:'todo-3', name:'Third thing to do', done:false},
+            {id: 'todo-1', name: 'First thing to do', done: false},
+            {id: 'todo-2', name: 'Second thing to do', done: true},
+            {id: 'todo-3', name: 'Third thing to do', done: false},
         ]});
 
         qunit.equal(fake.getRequestCount(), 1, 'one request was made');
@@ -95,5 +95,100 @@ define(['lib/domReady!',
         qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
         qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
         qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
+        qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+    });
+
+    qunit.test('add todo entry using enter key', function () {
+        var dom, fake, keyEvent;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        dom = createTodoApplication(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: []});
+
+        dom.find('.user-input').val('First thing to do');
+
+        fake.expectRequest({ uri: 'todo', method: 'POST', 'body': {
+            name: 'First thing to do',
+            done: false
+        }});
+        keyEvent = $.Event('keyup');
+        keyEvent.which = 13;
+        dom.find('.user-input').trigger(keyEvent);
+        fake.resolveResponse({status: 201, body: {
+            id: 'todo-1',
+            name: 'First thing to do',
+            done: false
+        }});
+
+        qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
+        qunit.equal(dom.find('.todo-name').length, 1, 'one todo entry added');
+        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
+        qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
+    });
+
+    qunit.test('do not add item if input is all whitespace', function () {
+        var dom, fake, keyEvent;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        dom = createTodoApplication(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: []});
+
+        dom.find('.user-input').val('   ');
+
+        keyEvent = $.Event('keyup');
+        keyEvent.which = 13;
+        dom.find('.user-input').trigger(keyEvent);
+
+        qunit.equal(fake.getRequestCount(), 1, 'one request was made');
+        qunit.equal(dom.find('.todo-name').length, 0, 'no todo entries added');
+    });
+
+    qunit.test('trim name for todo entry', function () {
+        var dom, fake;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        dom = createTodoApplication(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: []});
+
+        dom.find('.user-input').val('   First thing to do   ');
+
+        fake.expectRequest({ uri: 'todo', method: 'POST', 'body': {
+            name: 'First thing to do',
+            done: false
+        }});
+        dom.find('.add-todo-entry-button').click();
+        fake.resolveResponse({status: 201, body: {
+            id: 'todo-1',
+            name: 'First thing to do',
+            done: false
+        }});
+
+        qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
+        qunit.equal(dom.find('.todo-name').length, 1, 'one todo entry added');
+        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
+        qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
+    });
+
+    qunit.test('ignore non-enter key', function () {
+        var dom, fake, keyEvent;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        dom = createTodoApplication(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: []});
+
+        dom.find('.user-input').val('First thing to do');
+
+        keyEvent = $.Event('keyup');
+        keyEvent.which = 65;
+        dom.find('.user-input').trigger(keyEvent);
+
+        qunit.equal(fake.getRequestCount(), 1, 'one request was made');
+        qunit.equal(dom.find('.todo-name').length, 0, 'no todo entries added');
     });
 });
