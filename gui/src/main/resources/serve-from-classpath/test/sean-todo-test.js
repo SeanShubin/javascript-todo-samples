@@ -51,20 +51,20 @@ define(['lib/domReady!',
         fake.expectRequest({ uri: 'todo', method: 'GET'});
         dom = createTodoApplication(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
-            {id: 'todo-1', name: 'First thing to do', done: false},
-            {id: 'todo-2', name: 'Second thing to do', done: true},
-            {id: 'todo-3', name: 'Third thing to do', done: false},
+            {id: '1', name: 'First thing to do', done: false},
+            {id: '2', name: 'Second thing to do', done: true},
+            {id: '3', name: 'Third thing to do', done: false}
         ]});
 
         qunit.equal(fake.getRequestCount(), 1, 'one request was made');
-        qunit.equal(dom.find('.todo-name').length, 3, 'three todo entries added');
-        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal(dom.find('.todo-entry').length, 3, 'three todo entries added');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
         qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
         qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
-        qunit.equal($(dom.find('.todo-id')[1]).val(), 'todo-2', 'second id matches');
+        qunit.ok($(dom.find('.todo-entry')[1]).hasClass('todo-id-2'), 'second id matches');
         qunit.equal($(dom.find('.todo-name')[1]).text(), 'Second thing to do', 'second text matches');
         qunit.equal($(dom.find('.todo-done')[1]).is(':checked'), true, 'second checked');
-        qunit.equal($(dom.find('.todo-id')[2]).val(), 'todo-3', 'third id matches');
+        qunit.ok($(dom.find('.todo-entry')[2]).hasClass('todo-id-3'), 'third id matches');
         qunit.equal($(dom.find('.todo-name')[2]).text(), 'Third thing to do', 'third text matches');
         qunit.equal($(dom.find('.todo-done')[2]).is(':checked'), false, 'third not checked');
     });
@@ -85,14 +85,14 @@ define(['lib/domReady!',
         }});
         dom.find('.add-todo-entry-button').click();
         fake.resolveResponse({status: 201, body: {
-            id: 'todo-1',
+            id: '1',
             name: 'First thing to do',
             done: false
         }});
 
         qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
-        qunit.equal(dom.find('.todo-name').length, 1, 'one todo entry added');
-        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal(dom.find('.todo-entry').length, 1, 'one todo entry added');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
         qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
         qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
         qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
@@ -116,14 +116,14 @@ define(['lib/domReady!',
         keyEvent.which = 13;
         dom.find('.user-input').trigger(keyEvent);
         fake.resolveResponse({status: 201, body: {
-            id: 'todo-1',
+            id: '1',
             name: 'First thing to do',
             done: false
         }});
 
         qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
-        qunit.equal(dom.find('.todo-name').length, 1, 'one todo entry added');
-        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal(dom.find('.todo-entry').length, 1, 'one todo entry added');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
         qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
         qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
     });
@@ -162,14 +162,14 @@ define(['lib/domReady!',
         }});
         dom.find('.add-todo-entry-button').click();
         fake.resolveResponse({status: 201, body: {
-            id: 'todo-1',
+            id: '1',
             name: 'First thing to do',
             done: false
         }});
 
         qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
-        qunit.equal(dom.find('.todo-name').length, 1, 'one todo entry added');
-        qunit.equal($(dom.find('.todo-id')[0]).val(), 'todo-1', 'first id matches');
+        qunit.equal(dom.find('.todo-entry').length, 1, 'one todo entry added');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
         qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
         qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
     });
@@ -190,5 +190,35 @@ define(['lib/domReady!',
 
         qunit.equal(fake.getRequestCount(), 1, 'one request was made');
         qunit.equal(dom.find('.todo-name').length, 0, 'no todo entries added');
+    });
+
+    qunit.test('delete entry', function () {
+        var dom, fake;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        dom = createTodoApplication(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: [
+            {id: '1', name: 'First thing to do', done: false},
+            {id: '2', name: 'Second thing to do', done: true},
+            {id: '3', name: 'Third thing to do', done: false}
+        ]});
+
+        fake.expectRequest({ uri: 'todo/2', method: 'DELETE'});
+        dom.find('.todo-id-2 .todo-delete').click();
+        fake.resolveResponse({status: 200, body: {
+            id: '2',
+            name: 'Second thing to do',
+            done: true
+        }});
+
+        qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
+        qunit.equal(dom.find('.todo-entry').length, 2, 'have two todo entries');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
+        qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
+        qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
+        qunit.ok($(dom.find('.todo-entry')[1]).hasClass('todo-id-3'), 'third id matches');
+        qunit.equal($(dom.find('.todo-name')[1]).text(), 'Third thing to do', 'third text matches');
+        qunit.equal($(dom.find('.todo-done')[1]).is(':checked'), false, 'third not checked');
     });
 });

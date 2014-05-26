@@ -5,7 +5,8 @@ define(['jquery',
     'text!todo/sean/todo-entry-template.html'], function ($, _, _s, pageTemplate, todoEntryTemplate) {
     'use strict';
     function createPrototypeTodoApplication(jsonOverHttp) {
-        var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendTodoEntryToView, respondToTodoAdded, respondToRefreshTodoEntries;
+        var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendTodoEntryToView, respondToTodoAdded,
+            respondToRefreshTodoEntries, respondToTodoDeleted;
         dom = $(pageTemplate);
         addButton = dom.find('.add-todo-entry-button');
         userInput = dom.find('.user-input');
@@ -26,8 +27,9 @@ define(['jquery',
             }
         };
         appendTodoEntryToView = function (todoEntry) {
-            var todoElement;
+            var todoElement, deleteEvent;
             todoElement = $(todoEntryTemplate);
+            todoElement.addClass('todo-id-' + todoEntry.id);
             todoElement.find('.todo-id').val(todoEntry.id);
             todoElement.find('.todo-name').text(todoEntry.name);
             if (todoEntry.done) {
@@ -35,6 +37,10 @@ define(['jquery',
             } else {
                 todoElement.find('.todo-done').removeAttr('checked');
             }
+            deleteEvent = function () {
+                jsonOverHttp({uri: 'todo/' + todoEntry.id, method: 'DELETE'}).then(respondToTodoDeleted);
+            };
+            todoElement.find('.todo-delete').on('click', deleteEvent);
             list.append(todoElement);
         };
         respondToTodoAdded = function (response) {
@@ -42,6 +48,9 @@ define(['jquery',
         };
         respondToRefreshTodoEntries = function (response) {
             _.each(response.body, appendTodoEntryToView);
+        };
+        respondToTodoDeleted = function (response) {
+            dom.find('.todo-id-' + response.body.id).remove();
         };
         addButton.on('click', addButtonPressed);
         userInput.on('keyup', keyPressed);
