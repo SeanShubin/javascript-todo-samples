@@ -11,7 +11,7 @@
 <script type="application/javascript">
     require(['lib/domReady!',
         'jquery',
-        'todo/sean/latest-attempt/createPrototypeTodoApplication',
+        'todo/sean/prototype/createPrototypeTodoApplication',
         'http/json-over-http'], function (dom, $, createPrototypeTodoApplication, jsonOverHttp) {
         var app = createPrototypeTodoApplication(jsonOverHttp);
         $(dom).find('.application').append(app);
