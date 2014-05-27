@@ -7,13 +7,14 @@ define(['lib/domReady!',
     'use strict';
     qunit.module('sean-todo-backbone-test-sinon-fake-ajax');
     qunit.test('start with no items', function () {
-        var $el, stubbedAjax, response;
-        stubbedAjax = sinon.stub($, 'ajax');
+        var $el, stubbedAjax, ajaxResponse, fakeAjax;
+        fakeAjax = function(options){
+            options.success(ajaxResponse);
+        };
+        stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = [];
         $el = createTodoApplication();
-        response.resolve({status: 200, body: []});
 
         qunit.equal($el.find('li').length, 0, 'no items');
 
@@ -25,18 +26,17 @@ define(['lib/domReady!',
     });
 
     qunit.test('add item', function () {
-        var $el, stubbedAjax, response;
-        stubbedAjax = sinon.stub($, 'ajax');
+        var $el, stubbedAjax, ajaxResponse, fakeAjax;
+        fakeAjax = function(options){
+            options.success(ajaxResponse);
+        };
+        stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = [];
         $el = createTodoApplication();
-        response.resolve([]);
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = { id: '1', name: 'item', number: 1 };
         $el.find('.add').click();
-        response.resolve({ id: '1', name: 'item', number: 1 });
 
         qunit.equal($el.find('li').length, 1, 'one item added');
         qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
@@ -50,28 +50,24 @@ define(['lib/domReady!',
         stubbedAjax.restore();
     });
     qunit.test('add many items', function () {
-        var $el, stubbedAjax, response;
-        stubbedAjax = sinon.stub($, 'ajax');
+        var $el, stubbedAjax, ajaxResponse, fakeAjax;
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        fakeAjax = function(options){
+            options.success(ajaxResponse);
+        };
+        stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
+
+        ajaxResponse = [];
         $el = createTodoApplication();
-        response.resolve([]);
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = { id: '1', name: 'item', number: 1 };
         $el.find('.add').click();
-        response.resolve({ id: '1', name: 'item', number: 1 });
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = { id: '2', name: 'item', number: 2 };
         $el.find('.add').click();
-        response.resolve({ id: '2', name: 'item', number: 2 });
 
-        response = $.Deferred();
-        stubbedAjax.returns(response);
+        ajaxResponse = { id: '3', name: 'item', number: 3 };
         $el.find('.add').click();
-        response.resolve({ id: '3', name: 'item', number: 3 });
 
         qunit.equal($el.find('li').length, 3, 'three items added');
         qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');
@@ -91,17 +87,18 @@ define(['lib/domReady!',
         stubbedAjax.restore();
     });
     qunit.test('start with many items', function () {
-        var $el, stubbedAjax, responseFunction;
+        var $el, stubbedAjax, ajaxResponse, fakeAjax;
 
-        responseFunction = function(options){
-            options.success([
-                { id: '1', name: 'item', number: 1 },
-                { id: '2', name: 'item', number: 2 },
-                { id: '3', name: 'item', number: 3 }
-            ]);
+        fakeAjax = function(options){
+            options.success(ajaxResponse);
         };
-        stubbedAjax = sinon.stub(Backbone.$, 'ajax', responseFunction);
+        stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
 
+        ajaxResponse = [
+            { id: '1', name: 'item', number: 1 },
+            { id: '2', name: 'item', number: 2 },
+            { id: '3', name: 'item', number: 3 }
+        ];
         $el = createTodoApplication();
 
         qunit.equal($el.find('li').length, 3, 'three items added');
