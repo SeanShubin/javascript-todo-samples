@@ -8,7 +8,7 @@ define(['lib/domReady!',
     qunit.module('sean-todo-backbone-test-sinon-fake-ajax');
     qunit.test('start with no items', function () {
         var $el, stubbedAjax, ajaxResponse, fakeAjax;
-        fakeAjax = function(options){
+        fakeAjax = function (options) {
             options.success(ajaxResponse);
         };
         stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
@@ -27,7 +27,7 @@ define(['lib/domReady!',
 
     qunit.test('add item', function () {
         var $el, stubbedAjax, ajaxResponse, fakeAjax;
-        fakeAjax = function(options){
+        fakeAjax = function (options) {
             options.success(ajaxResponse);
         };
         stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
@@ -52,7 +52,7 @@ define(['lib/domReady!',
     qunit.test('add many items', function () {
         var $el, stubbedAjax, ajaxResponse, fakeAjax;
 
-        fakeAjax = function(options){
+        fakeAjax = function (options) {
             options.success(ajaxResponse);
         };
         stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
@@ -89,7 +89,7 @@ define(['lib/domReady!',
     qunit.test('start with many items', function () {
         var $el, stubbedAjax, ajaxResponse, fakeAjax;
 
-        fakeAjax = function(options){
+        fakeAjax = function (options) {
             options.success(ajaxResponse);
         };
         stubbedAjax = sinon.stub(Backbone, 'ajax', fakeAjax);
