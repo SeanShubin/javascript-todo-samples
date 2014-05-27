@@ -98,7 +98,7 @@ define(['lib/domReady!',
                 { id: '1', name: 'item', number: 1 },
                 { id: '2', name: 'item', number: 2 },
                 { id: '3', name: 'item', number: 3 }
-            ], 'success');
+            ]);
         };
         stubbedAjax = sinon.stub(Backbone.$, 'ajax', responseFunction);
 
@@ -109,7 +109,7 @@ define(['lib/domReady!',
         qunit.equal($($el.find('li')[1]).text(), 'item 2', 'item 2');
         qunit.equal($($el.find('li')[2]).text(), 'item 3', 'item 3');
 
-        qunit.equal(1, stubbedAjax.callCount, 'one ajax calls');
+        qunit.equal(1, stubbedAjax.callCount, 'one ajax call');
         qunit.equal(stubbedAjax.getCall(0).args[0].type, 'GET', 'type get');
         qunit.equal(stubbedAjax.getCall(0).args[0].url, 'item', 'url item');
 
