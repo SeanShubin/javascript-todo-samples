@@ -6,7 +6,7 @@ This class has gotten a bit out of hand because its original behavior is so much
 to model the expectations of backbone.js.  At this point my intention is to simply rewrite it when I have the time.
  */
 class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
-  private var data: Map[String, Map[String, AnyRef]] = Map().withDefaultValue(Map())
+  private var data: Map[String, OrderedMap[String, AnyRef]] = Map().withDefaultValue(OrderedMap())
   private var idNumbers: Map[String, Long] = Map().withDefaultValue(0L)
 
   override def delete(name: String, id: String) {
@@ -78,6 +78,6 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
   }
 
   override def list(name: String): Seq[String] = {
-    data(name).keys.toSeq.sorted
+    data(name).keys
   }
 }
