@@ -2,7 +2,7 @@ define(['lib/domReady!',
     'jquery',
     'qunit',
     'q',
-    'todo/sean/sync/createTodoApplication'], function (dom, $, qunit, Q, createTodoApplication) {
+    'todo/sean/sync/createTodoComponent'], function (dom, $, qunit, Q, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-sync-test');
     qunit.test('start with no items', function () {
@@ -17,7 +17,7 @@ define(['lib/domReady!',
         };
         addItemToModelCount = 0;
         loadItemsFromModelCount = 0;
-        app = createTodoApplication(listener);
+        app = createTodoComponent(listener);
         qunit.equal(addItemToModelCount, 0, 'never called add item');
         qunit.equal(loadItemsFromModelCount, 1, 'called load items from model once');
         qunit.equal(app.dom.find('li').length, 0, 'no items in list');
@@ -33,7 +33,7 @@ define(['lib/domReady!',
                 loadItemsFromModelCount++;
             }
         };
-        app = createTodoApplication(listener);
+        app = createTodoComponent(listener);
         app.dom.find('.add').click();
         qunit.equal(items.length, 1, 'called add item after pressing add button');
         app.addItemToView({body: items[0]});
@@ -51,7 +51,7 @@ define(['lib/domReady!',
                 loadItemsFromModelCount++;
             }
         };
-        app = createTodoApplication(listener);
+        app = createTodoComponent(listener);
         app.dom.find('.add').click();
         app.dom.find('.add').click();
         app.dom.find('.add').click();

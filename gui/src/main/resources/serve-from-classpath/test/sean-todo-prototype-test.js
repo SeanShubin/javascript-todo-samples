@@ -1,7 +1,7 @@
 define(['lib/domReady!',
     'jquery',
     'qunit',
-    'todo/sean/prototype/createPrototypeTodoApplication'], function (dom, $, qunit, createTodoApplication) {
+    'todo/sean/prototype/createPrototypeTodoComponent'], function (dom, $, qunit, createTodoComponent) {
     'use strict';
     var createFake = function () {
         var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expectRequest, expectedRequest, resolveResponse;
@@ -37,7 +37,7 @@ define(['lib/domReady!',
         fake = createFake();
 
         fake.expectRequest({ uri: 'item', method: 'GET'});
-        dom = createTodoApplication(fake.jsonOverHttp);
+        dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         qunit.equal(fake.getRequestCount(), 1, 'one request was made');
@@ -48,7 +48,7 @@ define(['lib/domReady!',
         fake = createFake();
 
         fake.expectRequest({ uri: 'item', method: 'GET'});
-        dom = createTodoApplication(fake.jsonOverHttp);
+        dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});
@@ -64,7 +64,7 @@ define(['lib/domReady!',
         fake = createFake();
 
         fake.expectRequest({ uri: 'item', method: 'GET'});
-        dom = createTodoApplication(fake.jsonOverHttp);
+        dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});

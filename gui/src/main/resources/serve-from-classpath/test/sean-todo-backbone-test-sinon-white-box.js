@@ -3,13 +3,13 @@ define(['lib/domReady!',
     'qunit',
     'sinon',
     'backbone',
-    'todo/sean/backbone-white-box/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
+    'todo/sean/backbone-white-box/createTodoComponent'], function (dom, $, qunit, sinon, Backbone, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-backbone-test-sinon-white-box');
     qunit.test('start with many items', function () {
         var component, $el;
 
-        component = createTodoApplication();
+        component = createTodoComponent();
         $el = component.$el;
         component.collection.add([
             { id: '1', name: 'item', number: 1 },

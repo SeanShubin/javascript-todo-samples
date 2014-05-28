@@ -1,4 +1,4 @@
-define(["react", "qunit", "todo/thomas/react/createTodoApplication"], function (React, qunit, Todo) {
+define(["react", "qunit", "todo/thomas/react/createTodoComponent"], function (React, qunit, Todo) {
 
     function TestClient(todos) {
         // fake http client

@@ -3,7 +3,7 @@ define(['lib/domReady!',
     'qunit',
     'sinon',
     'backbone',
-    'todo/sean/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
+    'todo/sean/backbone/createTodoComponent'], function (dom, $, qunit, sinon, Backbone, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-backbone-test-sinon-fake-sync');
     qunit.test('start with no items', function () {
@@ -14,7 +14,7 @@ define(['lib/domReady!',
         stubbedSync = sinon.stub(Backbone, 'sync', fakeSync);
 
         syncResponse = [];
-        $el = createTodoApplication();
+        $el = createTodoComponent();
 
         qunit.equal($el.find('li').length, 0, 'no items');
 
@@ -33,7 +33,7 @@ define(['lib/domReady!',
         stubbedSync = sinon.stub(Backbone, 'sync', fakeSync);
 
         syncResponse = [];
-        $el = createTodoApplication();
+        $el = createTodoComponent();
 
         syncResponse = { id: '1', name: 'item', number: 1 };
         $el.find('.add').click();
@@ -58,7 +58,7 @@ define(['lib/domReady!',
         stubbedSync = sinon.stub(Backbone, 'sync', fakeSync);
 
         syncResponse = [];
-        $el = createTodoApplication();
+        $el = createTodoComponent();
 
         syncResponse = { id: '1', name: 'item', number: 1 };
         $el.find('.add').click();
@@ -99,7 +99,7 @@ define(['lib/domReady!',
             { id: '2', name: 'item', number: 2 },
             { id: '3', name: 'item', number: 3 }
         ];
-        $el = createTodoApplication();
+        $el = createTodoComponent();
 
         qunit.equal($el.find('li').length, 3, 'three items added');
         qunit.equal($($el.find('li')[0]).text(), 'item 1', 'item 1');

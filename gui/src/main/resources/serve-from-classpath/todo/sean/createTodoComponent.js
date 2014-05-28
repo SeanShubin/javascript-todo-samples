@@ -4,7 +4,7 @@ define(['jquery',
     'text!todo/sean/page-template.html',
     'text!todo/sean/todo-entry-template.html'], function ($, _, _s, pageTemplate, todoEntryTemplate) {
     'use strict';
-    function createPrototypeTodoApplication(jsonOverHttp) {
+    function createPrototypeTodoComponent(jsonOverHttp) {
         var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendTodoEntryToView, respondToTodoAdded,
             respondToRefreshTodoEntries, respondToTodoDeleted;
         dom = $(pageTemplate);
@@ -58,5 +58,5 @@ define(['jquery',
         return dom;
     }
 
-    return createPrototypeTodoApplication;
+    return createPrototypeTodoComponent;
 });

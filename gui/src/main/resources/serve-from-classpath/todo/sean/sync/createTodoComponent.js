@@ -1,6 +1,6 @@
 define(['jquery', 'underscore'], function ($, _) {
     'use strict';
-    function createTodoApplication(listeners) {
+    function createTodoComponent(listeners) {
         var dom, addItemToModel, counter, addButton, list, addItemToView, addItemResponseToView, setItemsInView;
         dom = $("<div></div>");
         addButton = dom.append('<button class="add">Add list item</button>');
@@ -32,5 +32,5 @@ define(['jquery', 'underscore'], function ($, _) {
         };
     }
 
-    return createTodoApplication;
+    return createTodoComponent;
 });

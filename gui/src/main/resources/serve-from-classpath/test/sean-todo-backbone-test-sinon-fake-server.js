@@ -3,14 +3,14 @@ define(['lib/domReady!',
     'qunit',
     'sinon',
     'backbone',
-    'todo/sean/backbone/createTodoApplication'], function (dom, $, qunit, sinon, Backbone, createTodoApplication) {
+    'todo/sean/backbone/createTodoComponent'], function (dom, $, qunit, sinon, Backbone, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-backbone-test-sinon-fake-server');
     qunit.test('start with no items', function () {
         var $el, server;
         server = sinon.fakeServer.create();
 
-        $el = createTodoApplication();
+        $el = createTodoComponent();
         server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
@@ -25,7 +25,7 @@ define(['lib/domReady!',
         var $el, server;
         server = sinon.fakeServer.create();
 
-        $el = createTodoApplication();
+        $el = createTodoComponent();
         server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
@@ -40,7 +40,7 @@ define(['lib/domReady!',
         var $el, addButton, server;
         server = sinon.fakeServer.create();
 
-        $el = createTodoApplication();
+        $el = createTodoComponent();
         server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
@@ -60,7 +60,7 @@ define(['lib/domReady!',
         var $el, server;
         server = sinon.fakeServer.create();
 
-        $el = createTodoApplication();
+        $el = createTodoComponent();
         server.respondWith('GET', 'item',
             [
                 200,

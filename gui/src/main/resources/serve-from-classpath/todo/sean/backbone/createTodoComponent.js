@@ -1,6 +1,6 @@
 define(['backbone', 'jquery'], function (Backbone, $) {
     'use strict';
-    function createTodoApplication() {
+    function createTodoComponent() {
         var ListView, listView, List, Model, View;
 
         Model = Backbone.Model.extend({
@@ -59,5 +59,5 @@ define(['backbone', 'jquery'], function (Backbone, $) {
         return listView.$el;
     }
 
-    return createTodoApplication;
+    return createTodoComponent;
 });

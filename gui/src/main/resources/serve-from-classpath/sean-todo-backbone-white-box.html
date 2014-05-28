@@ -11,8 +11,8 @@
 <script type="application/javascript">
     require(['lib/domReady!',
         'jquery',
-        'todo/sean/backbone-white-box/createTodoApplication'], function (dom, $, createTodoApplication) {
-        var backboneApp = createTodoApplication();
+        'todo/sean/backbone-white-box/createTodoComponent'], function (dom, $, createTodoComponent) {
+        var backboneApp = createTodoComponent();
         backboneApp.collection.fetch();
         $(dom).find('.application').append(backboneApp.$el);
     });

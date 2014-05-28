@@ -9,7 +9,11 @@
 <body>
 <div class="application"></div>
 <script type="application/javascript">
-    require(['lib/domReady!', 'jquery', 'todo/sean/backbone/createTodoApplication', 'backbone', 'sinon'], function (dom, $, createTodoApplication, Backbone, sinon) {
+    require(['lib/domReady!',
+        'jquery',
+        'todo/sean/backbone/createTodoComponent',
+        'backbone',
+        'sinon'], function (dom, $, createTodoComponent, Backbone, sinon) {
         var oldBackboneSync, oldBackboneAjax, displayAjaxResult, displaySyncResult;
         displayAjaxResult = function () {
             console.log('ajax result = ' + sinon.format(arguments));
@@ -40,7 +44,7 @@
             console.log('------------------------------------');
             return result;
         };
-        $(dom).find('.application').append(createTodoApplication());
+        $(dom).find('.application').append(createTodoComponent());
     });
 </script>
 </body>

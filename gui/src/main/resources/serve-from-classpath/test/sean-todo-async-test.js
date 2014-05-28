@@ -2,7 +2,7 @@ define(['lib/domReady!',
     'jquery',
     'qunit',
     'q',
-    'todo/sean/async/createTodoApplication'], function (dom, $, qunit, Q, createTodoApplication) {
+    'todo/sean/async/createTodoComponent'], function (dom, $, qunit, Q, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-async-test');
     var createFakeJsonOverHttp = function (calls) {
@@ -29,7 +29,7 @@ define(['lib/domReady!',
                 response: { status: 200, body: []}
             }
         ]);
-        appPromise = createTodoApplication(jsonOverHttp);
+        appPromise = createTodoComponent(jsonOverHttp);
         appPromise.then(function (app) {
             qunit.equal(app.dom.find('li').length, 0, 'no items in list');
             qunit.start();
@@ -47,7 +47,7 @@ define(['lib/domReady!',
                 response: { status: 200, body: { 'name': 'item', 'number': 1, id: '1'}}
             }
         ]);
-        createTodoApplication(jsonOverHttp).then(function (app) {
+        createTodoComponent(jsonOverHttp).then(function (app) {
             return app.pressAddButton();
         }).then(function (app) {
             qunit.equal(app.dom.find('li').length, 1, 'one item added');
@@ -88,7 +88,7 @@ define(['lib/domReady!',
             qunit.start();
         };
 
-        createTodoApplication(jsonOverHttp).
+        createTodoComponent(jsonOverHttp).
             then(pressAddButton).
             then(pressAddButton).
             then(pressAddButton).

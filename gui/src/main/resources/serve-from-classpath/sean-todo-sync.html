@@ -11,8 +11,8 @@
 <script type="application/javascript">
     require(['lib/domReady!',
         'jquery',
-        'todo/sean/sync/createTodoApplication',
-        'http/json-over-http'], function (dom, $, createTodoApplication, jsonOverHttp) {
+        'todo/sean/sync/createTodoComponent',
+        'http/json-over-http'], function (dom, $, createTodoComponent, jsonOverHttp) {
         var listener, app, addItemToView, setItemsInView;
         addItemToView = function (response) {
             app.addItemToView(response);
@@ -28,7 +28,7 @@
                 jsonOverHttp({uri: 'item', method: 'GET'}).then(setItemsInView);
             }
         };
-        app = createTodoApplication(listener);
+        app = createTodoComponent(listener);
         $(dom).find('.application').append(app.dom);
     });
 </script>

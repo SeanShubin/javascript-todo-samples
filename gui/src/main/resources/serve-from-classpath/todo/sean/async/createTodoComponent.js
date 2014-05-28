@@ -1,6 +1,6 @@
 define(['jquery', 'underscore', 'q'], function ($, _, Q) {
     'use strict';
-    function createTodoApplication(jsonOverHttp) {
+    function createTodoComponent(jsonOverHttp) {
         var application, addItemToModel, counter, addButton, list, addedItemToModel, addItemToView, refreshItemList, returnApp, result;
         returnApp = function () {
             return application;
@@ -38,5 +38,5 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
         return result;
     }
 
-    return createTodoApplication;
+    return createTodoComponent;
 });

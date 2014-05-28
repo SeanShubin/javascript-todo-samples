@@ -9,7 +9,7 @@
 <body>
 <div class="application"></div>
 <script type="application/javascript">
-    require(['react', 'todo/thomas/react/createTodoApplication'], function (React, Todo) {
+    require(['react', 'todo/thomas/react/createTodoComponent'], function (React, Todo) {
         var client = Todo.client("/item"),
                 app = Todo.app({client: client}),
                 mount = document.querySelector(".application");
