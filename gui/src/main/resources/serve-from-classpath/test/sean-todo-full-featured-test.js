@@ -1,7 +1,7 @@
 define(['lib/domReady!',
     'jquery',
     'qunit',
-    'todo/sean/createTodoComponent'], function (dom, $, qunit, createTodoComponent) {
+    'todo/sean/full-featured/createTodoComponent'], function (dom, $, qunit, createTodoComponent) {
     'use strict';
     var createFake = function () {
         var requestCount, jsonOverHttp, asyncResponse, getRequestCount, expectRequest, expectedRequest, resolveResponse;
@@ -36,7 +36,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -48,7 +48,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
             {id: '1', name: 'First thing to do', done: false},
@@ -73,13 +73,13 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('First thing to do');
 
-        fake.expectRequest({ uri: 'todo', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -102,13 +102,13 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('First thing to do');
 
-        fake.expectRequest({ uri: 'todo', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -132,7 +132,7 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -150,13 +150,13 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('   First thing to do   ');
 
-        fake.expectRequest({ uri: 'todo', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -178,7 +178,7 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -196,7 +196,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo', method: 'GET'});
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
             {id: '1', name: 'First thing to do', done: false},
@@ -204,7 +204,7 @@ define(['lib/domReady!',
             {id: '3', name: 'Third thing to do', done: false}
         ]});
 
-        fake.expectRequest({ uri: 'todo/2', method: 'DELETE'});
+        fake.expectRequest({ uri: 'todo-entry/2', method: 'DELETE'});
         dom.find('.todo-id-2 .todo-delete').click();
         fake.resolveResponse({status: 200, body: {
             id: '2',
@@ -220,5 +220,38 @@ define(['lib/domReady!',
         qunit.ok($(dom.find('.todo-entry')[1]).hasClass('todo-id-3'), 'third id matches');
         qunit.equal($(dom.find('.todo-name')[1]).text(), 'Third thing to do', 'third text matches');
         qunit.equal($(dom.find('.todo-done')[1]).is(':checked'), false, 'third not checked');
+    });
+
+    qunit.test('mark entry done', function () {
+        var dom, fake;
+        fake = createFake();
+
+        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        dom = createTodoComponent(fake.jsonOverHttp);
+        fake.resolveResponse({status: 200, body: [
+            {id: '1', name: 'First thing to do', done: false},
+            {id: '2', name: 'Second thing to do', done: false},
+            {id: '3', name: 'Third thing to do', done: false}
+        ]});
+
+        fake.expectRequest({ uri: 'todo-entry/2', method: 'PATCH', body: { done: true }});
+        dom.find('.todo-id-2 .todo-done').attr('checked', true).trigger('change');
+        fake.resolveResponse({status: 200, body: {
+            id: '2',
+            name: 'Second thing to do',
+            done: true
+        }});
+
+        qunit.equal(fake.getRequestCount(), 2, 'two requests were made');
+        qunit.equal(dom.find('.todo-entry').length, 3, 'have three todo entries');
+        qunit.ok($(dom.find('.todo-entry')[0]).hasClass('todo-id-1'), 'first id matches');
+        qunit.equal($(dom.find('.todo-name')[0]).text(), 'First thing to do', 'first text matches');
+        qunit.equal($(dom.find('.todo-done')[0]).is(':checked'), false, 'first not checked');
+        qunit.ok($(dom.find('.todo-entry')[1]).hasClass('todo-id-2'), 'second id matches');
+        qunit.equal($(dom.find('.todo-name')[1]).text(), 'Second thing to do', 'second text matches');
+        qunit.equal($(dom.find('.todo-done')[1]).is(':checked'), true, 'second checked');
+        qunit.ok($(dom.find('.todo-entry')[2]).hasClass('todo-id-3'), 'third id matches');
+        qunit.equal($(dom.find('.todo-name')[2]).text(), 'Third thing to do', 'third text matches');
+        qunit.equal($(dom.find('.todo-done')[2]).is(':checked'), false, 'third not checked');
     });
 });
