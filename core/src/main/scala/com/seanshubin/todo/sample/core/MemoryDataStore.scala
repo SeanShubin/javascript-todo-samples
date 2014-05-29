@@ -13,6 +13,11 @@ class MemoryDataStore(jsonMarshaller: JsonMarshaller) extends DataStore {
     data = data.updated(name, data(name) - id)
   }
 
+  override def delete(name: String): Unit = {
+    data = data.updated(name, OrderedMap())
+    idNumbers = idNumbers.updated(name, 0L)
+  }
+
   override def replace(name: String, id: String, value: Object) {
     value match {
       case untypedMap: Map[_, _] =>

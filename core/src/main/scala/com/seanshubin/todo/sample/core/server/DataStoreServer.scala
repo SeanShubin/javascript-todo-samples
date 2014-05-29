@@ -45,6 +45,11 @@ class DataStoreServer(dataStore: DataStore,
           val jsonObject = dataStore.find(name, id)
           dataStore.delete(name, id)
           (200, jsonObject)
+        case Delete(name) =>
+          def loadDocument(id: String) = dataStore.find(name, id)
+          val documents: Seq[AnyRef] = dataStore.list(name).map(loadDocument)
+          dataStore.delete(name)
+          (200, documents)
         case Patch(name, id) =>
           val jsonString: String = extractRequestBody(maybeRequestContent)
           val oldObject = dataStore.find(name, id)

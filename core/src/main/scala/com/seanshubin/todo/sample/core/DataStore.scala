@@ -12,4 +12,6 @@ trait DataStore {
   def replace(name: String, id: String, value: Object)
 
   def delete(name: String, id: String)
+
+  def delete(name: String)
 }

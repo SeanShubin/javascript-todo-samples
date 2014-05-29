@@ -30,6 +30,7 @@ define(['jquery', 'underscore'], function ($, _) {
 });
 /*
  Noteworthy features
+ * composable, given an http communication mechanic, return a dom element
  * no hoisting, it is obvious when everything is defined
  * no anonymous functions, you can tell what each does by its name
  * multiple vars in same scope not initialized when declared, so can set breakpoint on each assignment

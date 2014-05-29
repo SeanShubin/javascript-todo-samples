@@ -65,6 +65,21 @@ define(['qunit', 'jquery'], function (qunit, $) {
         returnTwo.resolve(2);
         returnThree.resolve(3);
     });
+    qunit.asyncTest('join array of promises', function () {
+        var returnTwo, returnThree, multiply, assertResult;
+        returnTwo = $.Deferred();
+        returnThree = $.Deferred();
+        multiply = function (x, y) {
+            return x * y;
+        };
+        assertResult = function (x) {
+            qunit.equal(x, 6, 'x equals 6');
+            qunit.start();
+        };
+        $.when.apply($, [returnTwo, returnThree]).then(multiply).then(assertResult);
+        returnTwo.resolve(2);
+        returnThree.resolve(3);
+    });
     qunit.test('simulate async', function () {
         var createFake, fake, callback, args;
         args = [];
