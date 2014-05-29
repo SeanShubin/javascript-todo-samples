@@ -37,5 +37,5 @@ define(['jquery', 'underscore'], function ($, _) {
  * collaborator is constructor injected, so easy to fake
  * each async call names its destination, so it is easy to follow the code flow
  * no knowledge of parent element, or its location in dom, or even if it is attached to the dom
- * avoided the need to use 'this' or 'bind'
+ * avoided the need to use 'this' or 'bind' or 'new'
  */
