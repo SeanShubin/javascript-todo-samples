@@ -13,8 +13,10 @@
         'jquery',
         'todo/sean/async/createTodoComponent',
         'http/json-over-http'], function (dom, $, createTodoComponent, jsonOverHttp) {
-        createTodoComponent(jsonOverHttp).then(function (app) {
-            $(dom).find('.application').append(app.dom);
+        createTodoComponent(jsonOverHttp).then(function (promise) {
+            promise.then(function(app) {
+                $(dom).find('.application').append(app.dom);
+            });
         });
     });
 </script>

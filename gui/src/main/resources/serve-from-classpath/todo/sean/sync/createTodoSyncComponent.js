@@ -2,7 +2,7 @@ define(['jquery', 'underscore'], function ($, _) {
     'use strict';
     function createTodoComponent(listeners) {
         var dom, addItemToModel, counter, addButton, list, addItemToView, addItemResponseToView, setItemsInView;
-        dom = $("<div></div>");
+        dom = $('<div id="todo-sean-sync-create-createTodoSyncComponent"></div>');
         addButton = dom.append('<button class="add">Add list item</button>');
         list = dom.append('<ul></ul>');
         counter = 1;

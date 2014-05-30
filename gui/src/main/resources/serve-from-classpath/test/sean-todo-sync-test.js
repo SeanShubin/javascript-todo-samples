@@ -2,7 +2,7 @@ define(['lib/domReady!',
     'jquery',
     'qunit',
     'q',
-    'todo/sean/sync/createTodoComponent'], function (dom, $, qunit, Q, createTodoComponent) {
+    'todo/sean/sync/createTodoSyncComponent'], function (dom, $, qunit, Q, createTodoComponent) {
     'use strict';
     qunit.module('sean-todo-sync-test');
     qunit.test('start with no items', function () {

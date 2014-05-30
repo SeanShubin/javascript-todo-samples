@@ -11,25 +11,13 @@
 <script type="application/javascript">
     require(['lib/domReady!',
         'jquery',
-        'todo/sean/sync/createTodoComponent',
-        'http/json-over-http'], function (dom, $, createTodoComponent, jsonOverHttp) {
-        var listener, app, addItemToView, setItemsInView;
-        addItemToView = function (response) {
-            app.addItemToView(response);
-        };
-        setItemsInView = function (response) {
-            app.setItemsInView(response);
-        };
-        listener = {
-            addItemToModel: function (item) {
-                jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addItemToView);
-            },
-            loadItemsFromModel: function () {
-                jsonOverHttp({uri: 'item', method: 'GET'}).then(setItemsInView);
-            }
-        };
-        app = createTodoComponent(listener);
-        $(dom).find('.application').append(app.dom);
+        'todo/sean/sync/createTodoAsyncWiring',
+        'todo/sean/sync/createTodoSyncComponent',
+        'http/json-over-http'], function (dom, $, createTodoAsyncWiring, createTodoSyncComponent, jsonOverHttp) {
+        $(dom).find('.application').append(createTodoAsyncWiring({
+            jsonOverHttp: jsonOverHttp,
+            createTodoSyncComponent: createTodoSyncComponent
+        }));
     });
 </script>
 </body>
