@@ -1,0 +1,4 @@
+Different styles of javascript
+Full test coverage without end-to-end tests
+Deploying a web application as a one-jar
+Dependency injection that is statically typed, compiled, and debuggable
