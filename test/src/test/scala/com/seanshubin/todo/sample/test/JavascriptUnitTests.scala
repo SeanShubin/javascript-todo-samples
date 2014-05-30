@@ -18,11 +18,13 @@ class JavascriptUnitTests extends FunSuite {
       lazy val client: Client = new HttpImpl
     }
     runner.jettyServer.start()
-//    val response = runner.client.send("localhost", runner.port, "get", "/all-tests.html")
-//    println(response.content)
-//    val webClient: WebClient = new WebClient()
-//    val htmlPage: HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/all-tests.html")
-//    println(htmlPage)
-    runner.jettyServer.stop()
+    val webClient: WebClient = new WebClient()
+    val htmlPage: HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/logic-tests.html")
+    //Javascript capabilities seem far to limited, going to have to use selenium instead
+
+
+//    webClient.waitForBackgroundJavaScript(1000 * 5)
+//    val text = htmlPage.asXml()
+//    println(text)
   }
 }
