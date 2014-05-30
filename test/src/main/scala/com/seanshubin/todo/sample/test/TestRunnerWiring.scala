@@ -14,7 +14,7 @@ trait TestRunnerWiring {
   lazy val freePortFinder: FreePortFinder = new FreePortFinderImpl
   lazy val host: String = "localhost"
   lazy val port: Int = freePortFinder.port
-  lazy val contentType: String = "application/json"
+  lazy val contentType: String = "application/json; charset=utf-8"
   lazy val charsetName: String = "utf-8"
   lazy val jsonMarshaller: JsonMarshaller = new JsonMarshallerImpl
   lazy val client: Client = new HttpImpl

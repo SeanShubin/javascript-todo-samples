@@ -13,7 +13,7 @@ class ClassLoaderHandler(classLoader: ClassLoader,
                          notifications: Notifications,
                          charsetName: String) extends AbstractHandler {
   val contentTypeByExtension = Map(
-    ".js" -> "application/json",
+    ".js" -> "text/javascript",
     ".css" -> "text/css",
     ".html" -> "text/html",
     ".ico" -> "image/x-icon"
