@@ -1,0 +1,105 @@
+diff --git a/gui/src/main/resources/serve-from-classpath/all-tests.html b/gui/src/main/resources/serve-from-classpath/all-tests.html
+index c4c1a27..22da408 100644
+--- a/gui/src/main/resources/serve-from-classpath/all-tests.html
++++ b/gui/src/main/resources/serve-from-classpath/all-tests.html
+@@ -11,7 +11,7 @@
+ <div id="application"></div>
+ <div id="qunit"></div>
+ <div id="qunit-fixture"></div>
+-<script type="application/javascript">
++<script type="text/javascript">
+     require([
+         'qunit',
+         'test/json-over-http-test',
+diff --git a/gui/src/main/scala/com/seanshubin/todo/sample/ClassLoaderHandler.scala b/gui/src/main/scala/com/seanshubin/todo/sample/ClassLoaderHandler.scala
+index 4b144dd..64f57ec 100644
+--- a/gui/src/main/scala/com/seanshubin/todo/sample/ClassLoaderHandler.scala
++++ b/gui/src/main/scala/com/seanshubin/todo/sample/ClassLoaderHandler.scala
+@@ -13,7 +13,7 @@ class ClassLoaderHandler(classLoader: ClassLoader,
+                          notifications: Notifications,
+                          charsetName: String) extends AbstractHandler {
+   val contentTypeByExtension = Map(
+-    ".js" -> "application/json",
++    ".js" -> "text/javascript",
+     ".css" -> "text/css",
+     ".html" -> "text/html",
+     ".ico" -> "image/x-icon"
+diff --git a/pom.xml b/pom.xml
+index 18c8df1..6695e86 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -107,8 +107,8 @@
+             <dependency>
+                 <groupId>org.eclipse.jetty</groupId>
+                 <artifactId>jetty-server</artifactId>
+-                <version>9.1.4.v20140401</version>
+-                <!--<version>8.1.15.v20140411</version>-->
++                <!--<version>9.1.4.v20140401</version>-->
++                <version>8.1.15.v20140411</version>
+             </dependency>
+             <dependency>
+                 <groupId>net.sourceforge.htmlunit</groupId>
+diff --git a/test/pom.xml b/test/pom.xml
+index fc4a232..14768ca 100644
+--- a/test/pom.xml
++++ b/test/pom.xml
+@@ -46,10 +46,10 @@
+             <groupId>org.scalatest</groupId>
+             <artifactId>scalatest_2.11</artifactId>
+         </dependency>
+-        <!--<dependency>-->
+-        <!--<groupId>net.sourceforge.htmlunit</groupId>-->
+-        <!--<artifactId>htmlunit</artifactId>-->
+-        <!--</dependency>-->
++        <dependency>
++            <groupId>net.sourceforge.htmlunit</groupId>
++            <artifactId>htmlunit</artifactId>
++        </dependency>
+     </dependencies>
+     <build>
+         <sourceDirectory>src/main/scala</sourceDirectory>
+diff --git a/test/src/main/scala/com/seanshubin/todo/sample/test/TestRunnerWiring.scala b/test/src/main/scala/com/seanshubin/todo/sample/test/TestRunnerWiring.scala
+index aef564d..a23669f 100644
+--- a/test/src/main/scala/com/seanshubin/todo/sample/test/TestRunnerWiring.scala
++++ b/test/src/main/scala/com/seanshubin/todo/sample/test/TestRunnerWiring.scala
+@@ -14,7 +14,7 @@ trait TestRunnerWiring {
+   lazy val freePortFinder: FreePortFinder = new FreePortFinderImpl
+   lazy val host: String = "localhost"
+   lazy val port: Int = freePortFinder.port
+-  lazy val contentType: String = "application/json"
++  lazy val contentType: String = "application/json; charset=utf-8"
+   lazy val charsetName: String = "utf-8"
+   lazy val jsonMarshaller: JsonMarshaller = new JsonMarshallerImpl
+   lazy val client: Client = new HttpImpl
+diff --git a/test/src/test/scala/com/seanshubin/todo/sample/test/JavascriptUnitTests.scala b/test/src/test/scala/com/seanshubin/todo/sample/test/JavascriptUnitTests.scala
+index 1ecf655..06a7728 100644
+--- a/test/src/test/scala/com/seanshubin/todo/sample/test/JavascriptUnitTests.scala
++++ b/test/src/test/scala/com/seanshubin/todo/sample/test/JavascriptUnitTests.scala
+@@ -5,8 +5,8 @@ import com.seanshubin.todo.sample.server.{Configuration, RunnerWiring}
+ import com.seanshubin.todo.sample.client.HttpImpl
+ import com.seanshubin.todo.sample.core.http.Client
+ 
+-//import com.gargoylesoftware.htmlunit.WebClient
+-//import com.gargoylesoftware.htmlunit.html.HtmlPage
++import com.gargoylesoftware.htmlunit.WebClient
++import com.gargoylesoftware.htmlunit.html.HtmlPage
+ 
+ class JavascriptUnitTests extends FunSuite {
+   test("javascript unit tests") {
+@@ -18,11 +18,11 @@ class JavascriptUnitTests extends FunSuite {
+       lazy val client: Client = new HttpImpl
+     }
+     runner.jettyServer.start()
+-    val response = runner.client.send("localhost", runner.port, "get", "/all-tests.html")
+-    println(response.content)
+-    //    val webClient:WebClient = new WebClient()
+-    //    val htmlPage:HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/all-tests.html")
+-    //    println(htmlPage)
++//    val response = runner.client.send("localhost", runner.port, "get", "/all-tests.html")
++//    println(response.content)
++    val webClient: WebClient = new WebClient()
++    val htmlPage: HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/all-tests.html")
++    println(htmlPage)
+     runner.jettyServer.stop()
+   }
+ }
