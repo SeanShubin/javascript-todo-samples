@@ -5,8 +5,8 @@ import com.seanshubin.todo.sample.server.{Configuration, RunnerWiring}
 import com.seanshubin.todo.sample.client.HttpImpl
 import com.seanshubin.todo.sample.core.http.Client
 
-//import com.gargoylesoftware.htmlunit.WebClient
-//import com.gargoylesoftware.htmlunit.html.HtmlPage
+import com.gargoylesoftware.htmlunit.WebClient
+import com.gargoylesoftware.htmlunit.html.HtmlPage
 
 class JavascriptUnitTests extends FunSuite {
   test("javascript unit tests") {
@@ -18,11 +18,11 @@ class JavascriptUnitTests extends FunSuite {
       lazy val client: Client = new HttpImpl
     }
     runner.jettyServer.start()
-    val response = runner.client.send("localhost", runner.port, "get", "/all-tests.html")
-    println(response.content)
-    //    val webClient:WebClient = new WebClient()
-    //    val htmlPage:HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/all-tests.html")
-    //    println(htmlPage)
+//    val response = runner.client.send("localhost", runner.port, "get", "/all-tests.html")
+//    println(response.content)
+//    val webClient: WebClient = new WebClient()
+//    val htmlPage: HtmlPage = webClient.getPage(s"http://localhost:${runner.port}/all-tests.html")
+//    println(htmlPage)
     runner.jettyServer.stop()
   }
 }
