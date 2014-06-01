@@ -1,3 +1,7 @@
+Get smoke tests working with selenium
+
+Move database into separate namespace
+
 Try out Mocha for javascript testing
     http://visionmedia.github.io/mocha/
 
