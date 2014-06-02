@@ -1,13 +1,17 @@
 define(['jquery',
     'underscore',
-    'underscore.string',
-    'text!todo/sean/full-featured/page-template.html',
-    'text!todo/sean/full-featured/todo-entry-template.html'], function ($, _, _s, pageTemplate, todoEntryTemplate) {
+    'underscore.string'], function ($, _, _s) {
     'use strict';
     function createPrototypeTodoComponent(jsonOverHttp) {
         var dom, addButtonPressed, keyPressed, addButton, userInput, list, appendTodoEntryToView, respondToTodoAdded,
             respondToRefreshTodoEntries, respondToTodoDeleted, respondToTodoModified, updateTodoElementValues;
-        dom = $(pageTemplate);
+        dom = $(
+                '<div>' +
+                '    <input class="user-input" type="text">' +
+                '    <button class="add-todo-entry-button">Add todo entry</button>' +
+                '    <ul class="todo-entries-list">' +
+                '    </ul>' +
+                '</div>');
         addButton = dom.find('.add-todo-entry-button');
         userInput = dom.find('.user-input');
         list = dom.find('.todo-entries-list');
@@ -28,7 +32,12 @@ define(['jquery',
         };
         appendTodoEntryToView = function (todoEntry) {
             var todoElement, deleteEvent, doneEvent;
-            todoElement = $(todoEntryTemplate);
+            todoElement = $(
+                    '<li class="todo-entry">' +
+                    '    <input class="todo-done" type="checkbox">' +
+                    '    <label class="todo-name"></label>' +
+                    '    <button class="todo-delete">Delete</button>' +
+                    '</li>');
             list.append(todoElement);
             todoElement.addClass('todo-id-' + todoEntry.id);
             updateTodoElementValues(todoEntry);
@@ -55,7 +64,7 @@ define(['jquery',
         respondToTodoDeleted = function (response) {
             dom.find('.todo-id-' + response.body.id).remove();
         };
-        updateTodoElementValues = function(todoEntry) {
+        updateTodoElementValues = function (todoEntry) {
             var todoElement = dom.find('.todo-id-' + todoEntry.id);
             todoElement.find('.todo-name').text(todoEntry.name);
             if (todoEntry.done) {

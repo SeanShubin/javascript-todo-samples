@@ -3,15 +3,15 @@ define(['jquery',
     'underscore.string',
     'text!todo/sean/full-featured/single-template.html'], function ($, _, _s, singleTemplate) {
     'use strict';
-    return function (overrides) {
+    return function (parameters) {
         var dom, dataAccess, todoEntry, respondToTodoDeleted, respondToTodoModified, update, deleteEvent, doneEvent;
-        dataAccess = overrides.dataAccess || {
+        dataAccess = parameters.dataAccess || {
             deleteEntry: function (id) {
             },
             setDoneStatus: function (idAndNewDoneStatus) {
             }
         };
-        todoEntry = overrides.todoEntry || {
+        todoEntry = parameters.todoEntry || {
             id: '0', name: 'test name', done: false
         };
         dom = $(singleTemplate);

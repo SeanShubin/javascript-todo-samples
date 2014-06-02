@@ -3,15 +3,15 @@ define(['jquery',
     'underscore.string',
     'text!todo/sean/components/list-template.html'], function ($, _, _s, listTemplate) {
     'use strict';
-    return function (overrides) {
+    return function (parameters) {
         var dom, createSingle, dataAccess, list, todoEntryAdded, todoEntriesRefreshed;
-        createSingle = overrides.createSingle || function (todoEntry) {
+        createSingle = parameters.createSingle || function (todoEntry) {
         };
-        dataAccess = overrides.dataAccess || {getEntries: function () {
+        dataAccess = parameters.dataAccess || {getEntries: function () {
         }};
         dom = $(listTemplate);
         todoEntryAdded = function (todoEntry) {
-            var single = createSingle(_.extend(overrides, {todoEntry: todoEntry}));
+            var single = createSingle(_.extend(parameters, {todoEntry: todoEntry}));
             list.append(single.dom);
         };
         todoEntriesRefreshed = function (todoEntries) {
