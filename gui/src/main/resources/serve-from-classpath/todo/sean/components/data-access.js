@@ -1,12 +1,14 @@
 define([], function () {
     'use strict';
     function create(jsonOverHttp) {
-        var createWithName, setDoneStatus, deleteEntry, getEntries, extractResponseBody;
+        var createWithName, setDoneStatus, deleteEntry, getEntries, extractResponseBody, createListeners,
+            addCreateListener, notifyCreateListeners, fireCreateForEachTodoEntry, getAllAndFireCreateForEachTodoEntry;
+        createListeners = [];
         createWithName = function (name) {
             return jsonOverHttp({
                 uri: 'todo-entry',
                 method: 'POST',
-                body: {name: name, done: false}}).then(extractResponseBody);
+                body: {name: name, done: false}}).then(extractResponseBody).then(notifyCreateListeners);
         };
         setDoneStatus = function (parameters) {
             return jsonOverHttp({
@@ -27,11 +29,25 @@ define([], function () {
         extractResponseBody = function (response) {
             return response.body;
         };
+        addCreateListener = function(listener) {
+            createListeners.push(listener);
+        };
+        notifyCreateListeners = function(todoEntry) {
+            _.invoke(createListeners, 'call', todoEntry);
+        };
+        fireCreateForEachTodoEntry = function(todoEntries) {
+            _.each(todoEntries, notifyCreateListeners);
+        };
+        getAllAndFireCreateForEachTodoEntry = function(){
+            getEntries().then(fireCreateForEachTodoEntry);
+        };
         return {
             createWithName: createWithName,
             setDoneStatus: setDoneStatus,
             deleteEntry: deleteEntry,
-            getEntries: getEntries
+            getEntries: getEntries,
+            addCreateListener: addCreateListener,
+            getAllAndFireCreateForEachTodoEntry:getAllAndFireCreateForEachTodoEntry
         };
     }
 
