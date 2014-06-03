@@ -1,11 +1,9 @@
 define(['jquery',
-        'underscore',
-        'underscore.string',
         'text!todo/sean/components/todo-entry-template.html'],
-    function ($, _, _s, todoEntryTemplate) {
+    function ($, todoEntryTemplate) {
         'use strict';
         return function (parameters) {
-            var dom, todoEntry, respondToTodoDeleted, respondToUpdate, deleteClicked, doneChanged;
+            var dom, respondToUpdate, deleteClicked, doneChanged, respondToTodoDeleted;
             dom = $(todoEntryTemplate);
             dom.addClass('todo-id-' + parameters.todoEntry.id);
             respondToUpdate = function (todoEntry) {
@@ -18,11 +16,13 @@ define(['jquery',
             };
             respondToUpdate(parameters.todoEntry);
             deleteClicked = function () {
-                parameters.dataAccess.deleteEntry(todoEntry.id).then(respondToTodoDeleted);
+                parameters.dataAccess.deleteEntry(parameters.todoEntry.id).then(respondToTodoDeleted);
             };
             doneChanged = function () {
-                var checkedValue = dom.find('.todo-done').is(':checked');
-                parameters.dataAccess.setDoneStatus(checkedValue).then(respondToUpdate);
+                var checkedValue = dom.find('.done').is(':checked');
+                parameters.dataAccess.setDoneStatus({
+                    id: parameters.todoEntry.id,
+                    done: checkedValue}).then(respondToUpdate);
             };
             respondToTodoDeleted = function () {
                 dom.remove();

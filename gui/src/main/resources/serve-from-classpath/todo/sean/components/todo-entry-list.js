@@ -1,18 +1,17 @@
 define(['jquery',
-        'underscore',
         'todo/sean/components/todo-entry',
         'text!todo/sean/components/todo-entry-list-template.html'],
-    function ($, _, createTodoEntryComponent, listTemplate) {
+    function ($, createTodoEntryComponent, listTemplate) {
         'use strict';
         return function (dataAccess) {
-            var dom, list, createTodoEntry;
+            var dom, createTodoEntry;
             dom = $(listTemplate);
             createTodoEntry = function (todoEntry) {
                 var todoEntryDom = createTodoEntryComponent({
                     dataAccess: dataAccess,
                     todoEntry: todoEntry
                 });
-                list.append(todoEntryDom);
+                dom.append(todoEntryDom);
             };
             dataAccess.addCreateListener(createTodoEntry);
             return dom;

@@ -1,4 +1,4 @@
-define([], function () {
+define(['underscore'], function (_) {
     'use strict';
     function create(jsonOverHttp) {
         var createWithName, setDoneStatus, deleteEntry, getEntries, extractResponseBody, createListeners,
@@ -10,11 +10,11 @@ define([], function () {
                 method: 'POST',
                 body: {name: name, done: false}}).then(extractResponseBody).then(notifyCreateListeners);
         };
-        setDoneStatus = function (parameters) {
+        setDoneStatus = function (todoEntry) {
             return jsonOverHttp({
-                uri: 'todo-entry/' + parameters.id,
+                uri: 'todo-entry/' + todoEntry.id,
                 method: 'PATCH',
-                body: {done: parameters.done}}).then(extractResponseBody);
+                body: {done: todoEntry.done}}).then(extractResponseBody);
         };
         deleteEntry = function (id) {
             return jsonOverHttp({
@@ -29,16 +29,16 @@ define([], function () {
         extractResponseBody = function (response) {
             return response.body;
         };
-        addCreateListener = function(listener) {
+        addCreateListener = function (listener) {
             createListeners.push(listener);
         };
-        notifyCreateListeners = function(todoEntry) {
-            _.invoke(createListeners, 'call', todoEntry);
+        notifyCreateListeners = function (todoEntry) {
+            _.invoke(createListeners, 'call', undefined, todoEntry);
         };
-        fireCreateForEachTodoEntry = function(todoEntries) {
+        fireCreateForEachTodoEntry = function (todoEntries) {
             _.each(todoEntries, notifyCreateListeners);
         };
-        getAllAndFireCreateForEachTodoEntry = function(){
+        getAllAndFireCreateForEachTodoEntry = function () {
             getEntries().then(fireCreateForEachTodoEntry);
         };
         return {
@@ -47,7 +47,7 @@ define([], function () {
             deleteEntry: deleteEntry,
             getEntries: getEntries,
             addCreateListener: addCreateListener,
-            getAllAndFireCreateForEachTodoEntry:getAllAndFireCreateForEachTodoEntry
+            getAllAndFireCreateForEachTodoEntry: getAllAndFireCreateForEachTodoEntry
         };
     }
 

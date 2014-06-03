@@ -1,9 +1,7 @@
-define([
-        'jquery',
-        'underscore',
+define(['jquery',
         'underscore.string',
         'text!todo/sean/components/add-template.html'],
-    function ($, _, _s, addTemplate) {
+    function ($, _s, addTemplate) {
         'use strict';
         return function (dataAccess) {
             var dom, addButtonPressed, keyPressed, userInput;
