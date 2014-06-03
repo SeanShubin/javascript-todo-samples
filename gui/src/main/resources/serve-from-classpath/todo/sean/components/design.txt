@@ -1,0 +1,29 @@
+add
+input
+    createTodoEntryNamed
+output
+    dom
+
+todoEntry
+input
+    todoEntry
+    updateTodoEntry
+    deleteTodoEntryById
+output
+    dom
+
+todoEntryList
+input
+    updateTodoEntry
+    deleteTodoEntryById
+output
+    dom
+    createTodoEntry
+
+layout
+input
+    createTodoEntryNamed
+    updateTodoEntry
+    deleteTodoEntryById
+output
+    dom

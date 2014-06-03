@@ -5,11 +5,8 @@ define(['jquery',
     'text!todo/sean/components/add-template.html'], function ($, _, _s, addTemplate) {
     'use strict';
     return function (parameters) {
-        var dataAccess, dom, addButtonPressed, keyPressed, userInput;
-        dataAccess = parameters.dataAccess || {
-            createWithName: function (name) {
-            }
-        };
+        var createTodoEntryNamed, dom, addButtonPressed, keyPressed, userInput;
+        createTodoEntryNamed = parameters.createTodoEntryNamed || function (name) {};
         dom = $(addTemplate);
         userInput = dom.find('.user-input');
         keyPressed = function (event) {
@@ -22,7 +19,7 @@ define(['jquery',
             if (!_s.isBlank(name)) {
                 userInput.val('');
                 userInput.focus();
-                dataAccess.createWithName(name);
+                createTodoEntryNamed(name);
             }
         };
         dom.find('.add-todo-entry-button').on('click', addButtonPressed);
