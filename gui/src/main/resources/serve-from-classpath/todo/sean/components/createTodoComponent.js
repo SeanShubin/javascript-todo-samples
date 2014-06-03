@@ -10,7 +10,7 @@ define(['todo/sean/components/layout', 'todo/sean/components/data-access'], func
             layout.list.createTodoEntry(todoEntry);
         };
         initialize = function () {
-            dataAccess.getEntries().then(createTodoEntries)
+            dataAccess.getEntries().then(createTodoEntries);
         };
         createTodoEntries = function(todoEntries) {
             _.each(todoEntries, createTodoEntry);
@@ -22,6 +22,6 @@ define(['todo/sean/components/layout', 'todo/sean/components/data-access'], func
         return {
             dom: layout.dom,
             initialize: initialize
-        }
+        };
     };
 });
