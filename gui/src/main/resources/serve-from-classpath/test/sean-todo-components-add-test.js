@@ -18,7 +18,7 @@ define(['lib/domReady!',
                 }
             };
             dom = createAddComponent(fakeDataAccess);
-            $('#application').append(dom);
+            $('body').prepend(dom);
 
             //when
             dom.find('.user-input').val('First thing to do');
