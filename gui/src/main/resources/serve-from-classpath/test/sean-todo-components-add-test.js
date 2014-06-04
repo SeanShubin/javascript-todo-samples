@@ -29,4 +29,29 @@ define(['lib/domReady!',
             qunit.equal(actualCalls[0][0], 'First thing to do', 'createWithName was given the correct name');
             qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
         });
+
+        qunit.test('add using enter key', function () {
+            var dom, fakeDataAccess, actualCalls, keyEvent;
+
+            //given
+            actualCalls = [];
+            fakeDataAccess = {
+                createWithName: function () {
+                    actualCalls.push(arguments);
+                }
+            };
+            dom = createAddComponent(fakeDataAccess);
+
+            //when
+            dom.find('.user-input').val('First thing to do');
+            keyEvent = $.Event('keyup');
+            keyEvent.which = 13;
+            dom.find('.user-input').trigger(keyEvent);
+
+            //then
+            qunit.equal(actualCalls.length, 1, 'one call to createWithName');
+            qunit.equal(actualCalls[0].length, 1, 'exactly one argument to createWithName');
+            qunit.equal(actualCalls[0][0], 'First thing to do', 'createWithName was given the correct name');
+            qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+        });
     });

@@ -31,7 +31,7 @@ define(['lib/domReady!',
             resolveResponse: resolveResponse
         };
     };
-    qunit.module('sean-todo-test');
+    qunit.module('sean-todo-full-featured-test');
     qunit.test('start with no todo entries', function () {
         var dom, fake;
         fake = createFake();
