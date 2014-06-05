@@ -36,7 +36,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'db/item', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -47,11 +47,11 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'db/item', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
-        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});
+        fake.expectRequest({ uri: 'db/item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { 'name': 'item', 'number': 1 }});
 
@@ -63,19 +63,19 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'item', method: 'GET'});
+        fake.expectRequest({ uri: 'db/item', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
-        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});
+        fake.expectRequest({ uri: 'db/item', method: 'POST', 'body': { 'name': 'item', 'number': 1 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { 'name': 'item', 'number': 1 }});
 
-        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 2 }});
+        fake.expectRequest({ uri: 'db/item', method: 'POST', 'body': { 'name': 'item', 'number': 2 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { 'name': 'item', 'number': 2 }});
 
-        fake.expectRequest({ uri: 'item', method: 'POST', 'body': { 'name': 'item', 'number': 3 }});
+        fake.expectRequest({ uri: 'db/item', method: 'POST', 'body': { 'name': 'item', 'number': 3 }});
         dom.find('.add').click();
         fake.resolveResponse({status: 201, body: { 'name': 'item', 'number': 3 }});
 

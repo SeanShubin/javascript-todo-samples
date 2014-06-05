@@ -10,10 +10,10 @@ define(function () {
         };
         listeners = {
             addItemToModel: function (item) {
-                dependencies.jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addItemToView);
+                dependencies.jsonOverHttp({uri: 'db/item', method: 'POST', body: item}).then(addItemToView);
             },
             loadItemsFromModel: function () {
-                dependencies.jsonOverHttp({uri: 'item', method: 'GET'}).then(setItemsInView);
+                dependencies.jsonOverHttp({uri: 'db/item', method: 'GET'}).then(setItemsInView);
             }
         };
         app = dependencies.createTodoSyncComponent(listeners);

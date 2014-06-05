@@ -36,7 +36,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -48,7 +48,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
             {id: '1', name: 'First thing to do', done: false},
@@ -73,13 +73,13 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('First thing to do');
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -102,13 +102,13 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('First thing to do');
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -132,7 +132,7 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -150,13 +150,13 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
         dom.find('.user-input').val('   First thing to do   ');
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'POST', 'body': {
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'POST', 'body': {
             name: 'First thing to do',
             done: false
         }});
@@ -178,7 +178,7 @@ define(['lib/domReady!',
         var dom, fake, keyEvent;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: []});
 
@@ -196,7 +196,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
             {id: '1', name: 'First thing to do', done: false},
@@ -204,7 +204,7 @@ define(['lib/domReady!',
             {id: '3', name: 'Third thing to do', done: false}
         ]});
 
-        fake.expectRequest({ uri: 'todo-entry/2', method: 'DELETE'});
+        fake.expectRequest({ uri: 'db/todo-entry/2', method: 'DELETE'});
         dom.find('.todo-id-2 .todo-delete').click();
         fake.resolveResponse({status: 200, body: {
             id: '2',
@@ -226,7 +226,7 @@ define(['lib/domReady!',
         var dom, fake;
         fake = createFake();
 
-        fake.expectRequest({ uri: 'todo-entry', method: 'GET'});
+        fake.expectRequest({ uri: 'db/todo-entry', method: 'GET'});
         dom = createTodoComponent(fake.jsonOverHttp);
         fake.resolveResponse({status: 200, body: [
             {id: '1', name: 'First thing to do', done: false},
@@ -234,7 +234,7 @@ define(['lib/domReady!',
             {id: '3', name: 'Third thing to do', done: false}
         ]});
 
-        fake.expectRequest({ uri: 'todo-entry/2', method: 'PATCH', body: { done: true }});
+        fake.expectRequest({ uri: 'db/todo-entry/2', method: 'PATCH', body: { done: true }});
         dom.find('.todo-id-2 .todo-done').attr('checked', true).trigger('change');
         fake.resolveResponse({status: 200, body: {
             id: '2',

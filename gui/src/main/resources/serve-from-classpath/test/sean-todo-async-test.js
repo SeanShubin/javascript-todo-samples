@@ -25,7 +25,7 @@ define(['lib/domReady!',
         var appPromise, jsonOverHttp;
         jsonOverHttp = createFakeJsonOverHttp([
             {
-                request: {uri: 'item', method: 'GET'},
+                request: {uri: 'db/item', method: 'GET'},
                 response: { status: 200, body: []}
             }
         ]);
@@ -39,11 +39,11 @@ define(['lib/domReady!',
         var jsonOverHttp;
         jsonOverHttp = createFakeJsonOverHttp([
             {
-                request: {uri: 'item', method: 'GET'},
+                request: {uri: 'db/item', method: 'GET'},
                 response: { status: 200, body: []}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 1}},
+                request: {uri: 'db/item', method: 'POST', body: { 'name': 'item', 'number': 1}},
                 response: { status: 200, body: { 'name': 'item', 'number': 1, id: '1'}}
             }
         ]);
@@ -59,19 +59,19 @@ define(['lib/domReady!',
         var jsonOverHttp, pressAddButton, assertThreeItemsAdded;
         jsonOverHttp = createFakeJsonOverHttp([
             {
-                request: {uri: 'item', method: 'GET'},
+                request: {uri: 'db/item', method: 'GET'},
                 response: { status: 200, body: []}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 1}},
+                request: {uri: 'db/item', method: 'POST', body: { 'name': 'item', 'number': 1}},
                 response: { status: 200, body: { 'name': 'item', 'number': 1, id: '1'}}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 2}},
+                request: {uri: 'db/item', method: 'POST', body: { 'name': 'item', 'number': 2}},
                 response: { status: 200, body: { 'name': 'item', 'number': 2, id: '2'}}
             },
             {
-                request: {uri: 'item', method: 'POST', body: { 'name': 'item', 'number': 3}},
+                request: {uri: 'db/item', method: 'POST', body: { 'name': 'item', 'number': 3}},
                 response: { status: 200, body: { 'name': 'item', 'number': 3, id: '3'}}
             }
         ]);

@@ -11,11 +11,12 @@ trait RunnerWiring {
   def configuration: Configuration
 
   lazy val charsetName: String = "utf-8"
+  lazy val dbPrefix: String = "db"
   lazy val jsonMarshaller: JsonMarshaller = new JsonMarshallerImpl
   lazy val dataStore: DataStore = new MemoryDataStore(jsonMarshaller)
   lazy val emitLine: String => Unit = println
   lazy val notifications: Notifications = new LineEmittingNotifications(emitLine)
-  lazy val dataStoreServer: Server = new DataStoreServer(dataStore, jsonMarshaller, notifications, charsetName)
+  lazy val dataStoreServer: Server = new DataStoreServer(dataStore, jsonMarshaller, notifications, charsetName, dbPrefix)
   lazy val favoriteIconServer: Server = new FavoriteIconServer
   lazy val servers: Server = new CompositeServer(Seq(favoriteIconServer, dataStoreServer))
   lazy val serversHandler: Handler = new ServerToJettyHandler(servers)

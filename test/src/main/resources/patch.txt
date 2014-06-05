@@ -1,29 +1,29 @@
-get /color
+get /db/color
 200 []
 
-post /color { "name": "reed", "wavelength": 650 }
+post /db/color { "name": "reed", "wavelength": 650 }
 201 { "name": "reed", "wavelength": 650, "id": "1" }
 
-patch /color/1 { "name": "red" }
+patch /db/color/1 { "name": "red" }
 200 { "name": "red", "wavelength": 650, "id": "1" }
 
-get /color/1
+get /db/color/1
 200 { "name": "red", "wavelength": 650, "id": "1" }
 
-post /color { "name": "green", "wavelength": 510 }
+post /db/color { "name": "green", "wavelength": 510 }
 201 { "name": "green", "wavelength": 510, "id":"2" }
 
-patch /color/2 { "isPrimary":true }
+patch /db/color/2 { "isPrimary":true }
 200 { "name": "green", "wavelength": 510, "id":"2", "isPrimary":true }
 
-get /color/2
+get /db/color/2
 200 { "name": "green", "wavelength": 510, "id":"2", "isPrimary":true }
 
-post /color { "name": "blue", "wavelength": 475 }
+post /db/color { "name": "blue", "wavelength": 475 }
 201 { "name": "blue", "wavelength": 475, "id":"3" }
 
-patch /color/3 { "wavelength":null }
+patch /db/color/3 { "wavelength":null }
 200 { "name": "blue", "id":"3" }
 
-get /color/3
+get /db/color/3
 200 { "name": "blue", "id":"3" }

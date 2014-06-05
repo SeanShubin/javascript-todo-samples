@@ -10,7 +10,7 @@
 <div class="application"></div>
 <script type="text/javascript">
     require(['react', 'todo/thomas/react/createTodoComponent'], function (React, Todo) {
-        var client = Todo.client("/item"),
+        var client = Todo.client("db/item"),
                 app = Todo.app({client: client}),
                 mount = document.querySelector(".application");
         React.renderComponent(app, mount);

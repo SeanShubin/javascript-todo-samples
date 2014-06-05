@@ -14,7 +14,7 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
             var item;
             item = {name: 'item', number: counter};
             counter++;
-            return jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(addedItemToModel);
+            return jsonOverHttp({uri: 'db/item', method: 'POST', body: item}).then(addedItemToModel);
         };
         addedItemToModel = function (response) {
             return addItemToView(response.body);
@@ -34,7 +34,7 @@ define(['jquery', 'underscore', 'q'], function ($, _, Q) {
         };
         addButton.on('click', addItemToModel);
         application.pressAddButton = addItemToModel;
-        result = jsonOverHttp({uri: 'item', method: 'GET'}).then(refreshItemList);
+        result = jsonOverHttp({uri: 'db/item', method: 'GET'}).then(refreshItemList);
         return result;
     }
 

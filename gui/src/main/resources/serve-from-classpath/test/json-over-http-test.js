@@ -1,6 +1,6 @@
 define(['qunit', 'http/json-over-http'], function (qunit, jsonOverHttp) {
     'use strict';
-    var setupAsyncTest, runTestCases;
+    var setupAsyncTest;
     setupAsyncTest = function (options) {
         var responsePromise = jsonOverHttp(options.request);
         responsePromise.then(function (actual) {
@@ -13,40 +13,40 @@ define(['qunit', 'http/json-over-http'], function (qunit, jsonOverHttp) {
     qunit.asyncTest('post', function () {
         var resetDataStore, initialGetAll, addRed, addGreen, addBlue, finalGetAll, getRed;
         resetDataStore = function () {
-            return jsonOverHttp({uri: 'test-post', method: 'DELETE'});
+            return jsonOverHttp({uri: 'db/test-post', method: 'DELETE'});
         };
         initialGetAll = function () {
             return setupAsyncTest({
                 name: 'initial get all',
-                request: {uri: 'test-post', method: 'GET'},
+                request: {uri: 'db/test-post', method: 'GET'},
                 expected: {status: 200, body: []}
             });
         };
         addRed = function () {
             return setupAsyncTest({
                 name: 'add red',
-                request: {uri: 'test-post', method: 'POST', body: { "name": "red", "wavelength": 650 }},
+                request: {uri: 'db/test-post', method: 'POST', body: { "name": "red", "wavelength": 650 }},
                 expected: {status: 201, body: { "name": "red", "wavelength": 650, "id": "1" }}
             });
         };
         addGreen = function () {
             return setupAsyncTest({
                 name: 'add green',
-                request: {uri: 'test-post', method: 'POST', body: { "name": "green", "wavelength": 510 }},
+                request: {uri: 'db/test-post', method: 'POST', body: { "name": "green", "wavelength": 510 }},
                 expected: {status: 201, body: { "name": "green", "wavelength": 510, "id": "2" }}
             });
         };
         addBlue = function () {
             return setupAsyncTest({
                 name: 'add blue',
-                request: {uri: 'test-post', method: 'POST', body: { "name": "blue", "wavelength": 475 }},
+                request: {uri: 'db/test-post', method: 'POST', body: { "name": "blue", "wavelength": 475 }},
                 expected: {status: 201, body: { "name": "blue", "wavelength": 475, "id": "3" }}
             });
         };
         finalGetAll = function () {
             return setupAsyncTest({
                 name: 'final get all',
-                request: {uri: 'test-post', method: 'GET'},
+                request: {uri: 'db/test-post', method: 'GET'},
                 expected: {status: 200, body: [
                     { "name": "red", "wavelength": 650, "id": "1" },
                     { "name": "green", "wavelength": 510, "id": "2" },
@@ -57,7 +57,7 @@ define(['qunit', 'http/json-over-http'], function (qunit, jsonOverHttp) {
         getRed = function () {
             return setupAsyncTest({
                 name: 'get red',
-                request: {uri: 'test-post/1', method: 'GET'},
+                request: {uri: 'db/test-post/1', method: 'GET'},
                 expected: {status: 200, body: { "name": "red", "wavelength": 650, "id": "1" }}
             });
         };

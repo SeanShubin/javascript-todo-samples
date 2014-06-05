@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.{ExpectedCondition, WebDriverWait}
 
 object SeleniumPrototype extends App {
-  System.setProperty("webdriver.chrome.driver","/home/sshubin/dev/selenium/chromedriver")
+  System.setProperty("webdriver.chrome.driver", "/home/sshubin/dev/selenium/chromedriver")
   val driver: WebDriver = new ChromeDriver()
   driver.get("http://www.google.com")
   val element: WebElement = driver.findElement(By.name("q"))
