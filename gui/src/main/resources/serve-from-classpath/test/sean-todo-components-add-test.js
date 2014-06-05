@@ -5,127 +5,146 @@ define(['lib/domReady!',
     function (dom, $, qunit, createAddComponent) {
         'use strict';
 
-        qunit.module('sean-todo-components-add-test');
-
-        qunit.test('add using button', function () {
-            var dom, fakeDataAccess, actualCalls;
-
-            //given
-            actualCalls = [];
-            fakeDataAccess = {
+        var createHelper = function () {
+            var dom, dataAccess, createWithNameCalls, userTypesInText, userPressesAddButton, verifyCalledCreateNameWith,
+                verifyUserInputBlank, verifyUserInputHasFocus, userTypesKey, verifyCreateNameWithNotCalled;
+            createWithNameCalls = [];
+            dataAccess = {
                 createWithName: function () {
-                    actualCalls.push(arguments);
+                    createWithNameCalls.push(arguments);
                 }
             };
-            dom = createAddComponent(fakeDataAccess);
-            $('body').prepend(dom);
+            dom = createAddComponent(dataAccess);
+            userTypesInText = function (text) {
+                dom.find('.user-input').val(text);
+            };
+            userTypesKey = function (key) {
+                var keyEvent = $.Event('keyup');
+                keyEvent.which = key;
+                dom.find('.user-input').trigger(keyEvent);
+            };
+            userPressesAddButton = function () {
+                dom.find('.add-todo-entry-button').click();
+            };
+            verifyCalledCreateNameWith = function (expected) {
+                qunit.equal(createWithNameCalls.length, 1, 'exactly one call to createWithName');
+                qunit.equal(createWithNameCalls[0].length, 1, 'exactly one argument to createWithName');
+                qunit.equal(createWithNameCalls[0][0], expected, 'createWithName was given the correct name (' + expected + ')');
+            };
+            verifyCreateNameWithNotCalled = function () {
+                qunit.equal(createWithNameCalls.length, 0, 'no calls to createWithName');
+            };
+            verifyUserInputBlank = function () {
+                qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+            };
+            verifyUserInputHasFocus = function () {
+                qunit.equal($(dom.find('.user-input')[0]).is(':focus'), true, 'user input has focus after adding todo entry');
+            };
+            return {
+                dom: dom,
+                userTypesInText: userTypesInText,
+                userPressesAddButton: userPressesAddButton,
+                verifyCalledCreateNameWith: verifyCalledCreateNameWith,
+                verifyUserInputBlank: verifyUserInputBlank,
+                verifyUserInputHasFocus: verifyUserInputHasFocus,
+                userTypesKey: userTypesKey,
+                verifyCreateNameWithNotCalled: verifyCreateNameWithNotCalled
+            };
+        };
+
+        qunit.module('sean-todo-components-add-test');
+
+        qunit.test('start with user input and add button', function () {
+            var helper = createHelper();
+            qunit.equal(helper.dom.find('.user-input').length, 1, 'has user input element');
+            qunit.equal(helper.dom.find('.add-todo-entry-button').length, 1, 'has add todo button');
+        });
+
+        qunit.test('add using button', function () {
+            //given
+            var helper = createHelper();
 
             //when
-            dom.find('.user-input').val('First thing to do');
-            dom.find('.add-todo-entry-button').click();
+            helper.userTypesInText('First thing to do');
+            helper.userPressesAddButton();
 
             //then
-            qunit.equal(dom.find('.user-input').length, 1, 'has user input element');
-            qunit.equal(dom.find('.add-todo-entry-button').length, 1, 'has add todo button');
-            qunit.equal(actualCalls.length, 1, 'one call to createWithName');
-            qunit.equal(actualCalls[0].length, 1, 'exactly one argument to createWithName');
-            qunit.equal(actualCalls[0][0], 'First thing to do', 'createWithName was given the correct name');
-            qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
-            qunit.equal($(dom.find('.user-input')[0]).is(':focus'), true, 'user input has focus after adding todo entry');
-            dom.remove();
+            helper.verifyCalledCreateNameWith('First thing to do');
+        });
+
+        qunit.test('blank out user input after add', function () {
+            //given
+            var helper = createHelper();
+
+            //when
+            helper.userTypesInText('First thing to do');
+            helper.userPressesAddButton();
+
+            //then
+            helper.verifyUserInputBlank();
+        });
+
+        qunit.test('input area has focus after add', function () {
+            //given
+            var helper = createHelper();
+            $('body').prepend(helper.dom);
+
+            //when
+            helper.userTypesInText('First thing to do');
+            helper.userPressesAddButton();
+
+            //then
+            helper.verifyUserInputHasFocus();
+
+            //cleanup (necessary because we can't check for focus unless we are actually rendered)
+            helper.dom.remove();
         });
 
         qunit.test('add using enter key', function () {
-            var dom, fakeDataAccess, actualCalls, keyEvent;
-
             //given
-            actualCalls = [];
-            fakeDataAccess = {
-                createWithName: function () {
-                    actualCalls.push(arguments);
-                }
-            };
-            dom = createAddComponent(fakeDataAccess);
+            var helper = createHelper();
 
             //when
-            dom.find('.user-input').val('First thing to do');
-            keyEvent = $.Event('keyup');
-            keyEvent.which = 13;
-            dom.find('.user-input').trigger(keyEvent);
+            helper.userTypesInText('First thing to do');
+            helper.userTypesKey(13);
 
             //then
-            qunit.equal(actualCalls.length, 1, 'one call to createWithName');
-            qunit.equal(actualCalls[0].length, 1, 'exactly one argument to createWithName');
-            qunit.equal(actualCalls[0][0], 'First thing to do', 'createWithName was given the correct name');
-            qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+            helper.verifyCalledCreateNameWith('First thing to do');
         });
 
         qunit.test('trim name', function () {
-            var dom, fakeDataAccess, actualCalls;
-
             //given
-            actualCalls = [];
-            fakeDataAccess = {
-                createWithName: function () {
-                    actualCalls.push(arguments);
-                }
-            };
-            dom = createAddComponent(fakeDataAccess);
+            var helper = createHelper();
 
             //when
-            dom.find('.user-input').val('   trim    me   ');
-            dom.find('.add-todo-entry-button').click();
+            helper.userTypesInText('   trim    me   ');
+            helper.userPressesAddButton();
 
             //then
-            qunit.equal(dom.find('.user-input').length, 1, 'has user input element');
-            qunit.equal(dom.find('.add-todo-entry-button').length, 1, 'has add todo button');
-            qunit.equal(actualCalls.length, 1, 'one call to createWithName');
-            qunit.equal(actualCalls[0].length, 1, 'exactly one argument to createWithName');
-            qunit.equal(actualCalls[0][0], 'trim me', 'createWithName was given the correct name');
-            qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+            helper.verifyCalledCreateNameWith('trim me');
         });
 
         qunit.test('do nothing if name blank', function () {
-            var dom, fakeDataAccess, actualCalls;
-
             //given
-            actualCalls = [];
-            fakeDataAccess = {
-                createWithName: function () {
-                    actualCalls.push(arguments);
-                }
-            };
-            dom = createAddComponent(fakeDataAccess);
+            var helper = createHelper();
 
             //when
-            dom.find('.user-input').val('      ');
-            dom.find('.add-todo-entry-button').click();
+            helper.userTypesInText('      ');
+            helper.userPressesAddButton();
 
             //then
-            qunit.equal(dom.find('.user-input').length, 1, 'has user input element');
-            qunit.equal(dom.find('.add-todo-entry-button').length, 1, 'has add todo button');
-            qunit.equal(actualCalls.length, 0, 'no calls call to createWithName');
+            helper.verifyCreateNameWithNotCalled();
         });
 
         qunit.test('do not add on keypress if key is not enter', function () {
-            var dom, fakeDataAccess, actualCalls, keyEvent;
-
             //given
-            actualCalls = [];
-            fakeDataAccess = {
-                createWithName: function () {
-                    actualCalls.push(arguments);
-                }
-            };
-            dom = createAddComponent(fakeDataAccess);
+            var helper = createHelper();
 
             //when
-            dom.find('.user-input').val('First thing to do');
-            keyEvent = $.Event('keyup');
-            keyEvent.which = 65;
-            dom.find('.user-input').trigger(keyEvent);
+            helper.userTypesInText('First thing to do');
+            helper.userTypesKey(65);
 
             //then
-            qunit.equal(actualCalls.length, 0, 'one call to createWithName');
+            helper.verifyCreateNameWithNotCalled();
         });
     });
