@@ -6,8 +6,8 @@ define(['lib/domReady!',
         'use strict';
 
         var createHelper = function () {
-            var dom, dataAccess, createWithNameCalls, userTypesInText, userPressesAddButton, verifyCalledCreateNameWith,
-                verifyUserInputBlank, verifyUserInputHasFocus, userTypesKey, verifyCreateNameWithNotCalled;
+            var dom, dataAccess, createWithNameCalls, userTypesInText, userPressesAddButton, verifyCalledCreateWithName,
+                verifyUserInputBlank, verifyUserInputHasFocus, userTypesKey, verifyCreateWithNameNotCalled;
             createWithNameCalls = [];
             dataAccess = {
                 createWithName: function () {
@@ -26,12 +26,12 @@ define(['lib/domReady!',
             userPressesAddButton = function () {
                 dom.find('.add-todo-entry-button').click();
             };
-            verifyCalledCreateNameWith = function (expected) {
+            verifyCalledCreateWithName = function (expected) {
                 qunit.equal(createWithNameCalls.length, 1, 'exactly one call to createWithName');
                 qunit.equal(createWithNameCalls[0].length, 1, 'exactly one argument to createWithName');
                 qunit.equal(createWithNameCalls[0][0], expected, 'createWithName was given the correct name (' + expected + ')');
             };
-            verifyCreateNameWithNotCalled = function () {
+            verifyCreateWithNameNotCalled = function () {
                 qunit.equal(createWithNameCalls.length, 0, 'no calls to createWithName');
             };
             verifyUserInputBlank = function () {
@@ -44,11 +44,11 @@ define(['lib/domReady!',
                 dom: dom,
                 userTypesInText: userTypesInText,
                 userPressesAddButton: userPressesAddButton,
-                verifyCalledCreateNameWith: verifyCalledCreateNameWith,
+                verifyCalledCreateWithName: verifyCalledCreateWithName,
                 verifyUserInputBlank: verifyUserInputBlank,
                 verifyUserInputHasFocus: verifyUserInputHasFocus,
                 userTypesKey: userTypesKey,
-                verifyCreateNameWithNotCalled: verifyCreateNameWithNotCalled
+                verifyCreateWithNameNotCalled: verifyCreateWithNameNotCalled
             };
         };
 
@@ -69,7 +69,7 @@ define(['lib/domReady!',
             helper.userPressesAddButton();
 
             //then
-            helper.verifyCalledCreateNameWith('First thing to do');
+            helper.verifyCalledCreateWithName('First thing to do');
         });
 
         qunit.test('blank out user input after add', function () {
@@ -109,7 +109,7 @@ define(['lib/domReady!',
             helper.userTypesKey(13);
 
             //then
-            helper.verifyCalledCreateNameWith('First thing to do');
+            helper.verifyCalledCreateWithName('First thing to do');
         });
 
         qunit.test('trim name', function () {
@@ -121,7 +121,7 @@ define(['lib/domReady!',
             helper.userPressesAddButton();
 
             //then
-            helper.verifyCalledCreateNameWith('trim me');
+            helper.verifyCalledCreateWithName('trim me');
         });
 
         qunit.test('do nothing if name blank', function () {
@@ -133,7 +133,7 @@ define(['lib/domReady!',
             helper.userPressesAddButton();
 
             //then
-            helper.verifyCreateNameWithNotCalled();
+            helper.verifyCreateWithNameNotCalled();
         });
 
         qunit.test('do not add on keypress if key is not enter', function () {
@@ -145,6 +145,6 @@ define(['lib/domReady!',
             helper.userTypesKey(65);
 
             //then
-            helper.verifyCreateNameWithNotCalled();
+            helper.verifyCreateWithNameNotCalled();
         });
     });
