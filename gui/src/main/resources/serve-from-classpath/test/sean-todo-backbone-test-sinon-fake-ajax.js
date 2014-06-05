@@ -20,7 +20,7 @@ define(['lib/domReady!',
 
         qunit.equal(1, stubbedAjax.callCount, 'one ajax call');
         qunit.equal(stubbedAjax.firstCall.args[0].type, 'GET');
-        qunit.equal(stubbedAjax.firstCall.args[0].url, 'item');
+        qunit.equal(stubbedAjax.firstCall.args[0].url, 'db/item');
 
         stubbedAjax.restore();
     });
@@ -43,9 +43,9 @@ define(['lib/domReady!',
 
         qunit.equal(2, stubbedAjax.callCount, 'two ajax calls');
         qunit.equal(stubbedAjax.getCall(0).args[0].type, 'GET');
-        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'item');
+        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'db/item');
         qunit.equal(stubbedAjax.getCall(1).args[0].type, 'POST');
-        qunit.equal(stubbedAjax.getCall(1).args[0].url, 'item');
+        qunit.equal(stubbedAjax.getCall(1).args[0].url, 'db/item');
 
         stubbedAjax.restore();
     });
@@ -76,13 +76,13 @@ define(['lib/domReady!',
 
         qunit.equal(4, stubbedAjax.callCount, 'four ajax calls');
         qunit.equal(stubbedAjax.getCall(0).args[0].type, 'GET', 'type get');
-        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'item', 'url item');
+        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'db/item', 'url item');
         qunit.equal(stubbedAjax.getCall(1).args[0].type, 'POST', 'type post');
-        qunit.equal(stubbedAjax.getCall(1).args[0].url, 'item', 'url item');
+        qunit.equal(stubbedAjax.getCall(1).args[0].url, 'db/item', 'url item');
         qunit.equal(stubbedAjax.getCall(2).args[0].type, 'POST', 'type post');
-        qunit.equal(stubbedAjax.getCall(2).args[0].url, 'item', 'url item');
+        qunit.equal(stubbedAjax.getCall(2).args[0].url, 'db/item', 'url item');
         qunit.equal(stubbedAjax.getCall(3).args[0].type, 'POST', 'type post');
-        qunit.equal(stubbedAjax.getCall(3).args[0].url, 'item');
+        qunit.equal(stubbedAjax.getCall(3).args[0].url, 'db/item');
 
         stubbedAjax.restore();
     });
@@ -108,7 +108,7 @@ define(['lib/domReady!',
 
         qunit.equal(1, stubbedAjax.callCount, 'one ajax call');
         qunit.equal(stubbedAjax.getCall(0).args[0].type, 'GET', 'type get');
-        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'item', 'url item');
+        qunit.equal(stubbedAjax.getCall(0).args[0].url, 'db/item', 'url item');
 
         stubbedAjax.restore();
     });

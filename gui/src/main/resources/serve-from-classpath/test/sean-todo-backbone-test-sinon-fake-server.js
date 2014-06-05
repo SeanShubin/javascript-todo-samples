@@ -11,12 +11,12 @@ define(['lib/domReady!',
         server = sinon.fakeServer.create();
 
         $el = createTodoComponent();
-        server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
+        server.respondWith('GET', 'db/item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
         qunit.equal(server.requests.length, 1, 'server.requests.length');
         qunit.equal(server.requests[0].method, 'GET', 'server.requests[0].method ' + server.requests[0].method);
-        qunit.equal(server.requests[0].url, 'item', 'server.requests[0].url ' + server.requests[0].url);
+        qunit.equal(server.requests[0].url, 'db/item', 'server.requests[0].url ' + server.requests[0].url);
         qunit.equal($el.find('li').length, 0, 'no items');
 
         server.restore();
@@ -26,7 +26,7 @@ define(['lib/domReady!',
         server = sinon.fakeServer.create();
 
         $el = createTodoComponent();
-        server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
+        server.respondWith('GET', 'db/item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
         $el.find('.add').click();
@@ -41,7 +41,7 @@ define(['lib/domReady!',
         server = sinon.fakeServer.create();
 
         $el = createTodoComponent();
-        server.respondWith('GET', 'item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
+        server.respondWith('GET', 'db/item', [200, { 'Content-Type': 'application/json' }, JSON.stringify([])]);
         server.respond();
 
         addButton = $el.find('.add');
@@ -61,7 +61,7 @@ define(['lib/domReady!',
         server = sinon.fakeServer.create();
 
         $el = createTodoComponent();
-        server.respondWith('GET', 'item',
+        server.respondWith('GET', 'db/item',
             [
                 200,
                 { 'Content-Type': 'application/json' },
