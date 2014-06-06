@@ -5,7 +5,7 @@ var require = {
         'underscore': 'lib/underscore',
         'underscore.string': 'lib/underscore.string',
         'backbone': 'lib/backbone',
-	'handlebars': 'lib/handlebars',
+        'handlebars': 'lib/handlebars',
         'qunit': 'lib/qunit-1.14.0',
         'sinon': 'lib/sinon-1.10.0',
         'react': 'lib/react-with-addons-0.10.0',
@@ -24,8 +24,8 @@ var require = {
         'sinon': {
             exports: 'sinon'
         },
-	'handlebars':{
-	    exports:'Handlebars'
-	}
+        'handlebars':{
+            exports:'Handlebars'
+        }
     }
 };
