@@ -1,5 +1,5 @@
 var require = {
-    baseUrl: '.',
+    baseUrl: '/',
     paths: {
         'jquery': 'lib/jquery-2.1.1',
         'underscore': 'lib/underscore',
