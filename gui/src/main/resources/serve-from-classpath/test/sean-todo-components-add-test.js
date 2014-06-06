@@ -6,15 +6,16 @@ define(['lib/domReady!',
         'use strict';
 
         var createHelper = function () {
-            var dom, dataAccess, createWithNameCalls, userTypesInText, userPressesAddButton, verifyCalledCreateWithName,
-                verifyUserInputBlank, verifyUserInputHasFocus, userTypesKey, verifyCreateWithNameNotCalled;
+            var dom, fakeDataAccess, createWithNameCalls, userTypesInText, userPressesAddButton,
+                verifyCalledCreateWithName, verifyUserInputBlank, verifyUserInputHasFocus, userTypesKey,
+                verifyCreateWithNameNotCalled;
             createWithNameCalls = [];
-            dataAccess = {
+            fakeDataAccess = {
                 createWithName: function () {
                     createWithNameCalls.push(arguments);
                 }
             };
-            dom = createAddComponent(dataAccess);
+            dom = createAddComponent(fakeDataAccess);
             userTypesInText = function (text) {
                 dom.find('.user-input').val(text);
             };
