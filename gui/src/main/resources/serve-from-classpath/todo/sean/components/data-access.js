@@ -1,29 +1,29 @@
 define(['underscore'], function (_) {
     'use strict';
-    function create(jsonOverHttp) {
-        var createWithName, setDoneStatus, deleteEntry, getEntries, extractResponseBody, createListeners,
-            addCreateListener, notifyCreateListeners, fireCreateForEachTodoEntry, getAllAndFireCreateForEachTodoEntry;
+    return function (jsonOverHttp) {
+        var createWithName, setDone, deleteTodo, getTodoList, extractResponseBody, createListeners,
+            addCreateListener, notifyCreateListeners, fireCreateForAll, getAndFireCreateForAll;
         createListeners = [];
         createWithName = function (name) {
             return jsonOverHttp({
-                uri: 'db/todo-entry',
+                uri: 'db/todo',
                 method: 'POST',
                 body: {name: name, done: false}}).then(extractResponseBody).then(notifyCreateListeners);
         };
-        setDoneStatus = function (todoEntry) {
+        setDone = function (todo) {
             return jsonOverHttp({
-                uri: 'db/todo-entry/' + todoEntry.id,
+                uri: 'db/todo/' + todo.id,
                 method: 'PATCH',
-                body: {done: todoEntry.done}}).then(extractResponseBody);
+                body: {done: todo.done}}).then(extractResponseBody);
         };
-        deleteEntry = function (id) {
+        deleteTodo = function (id) {
             return jsonOverHttp({
-                uri: 'db/todo-entry/' + id,
+                uri: 'db/todo/' + id,
                 method: 'DELETE'}).then(extractResponseBody);
         };
-        getEntries = function () {
+        getTodoList = function () {
             return jsonOverHttp({
-                uri: 'db/todo-entry',
+                uri: 'db/todo',
                 method: 'GET'}).then(extractResponseBody);
         };
         extractResponseBody = function (response) {
@@ -32,24 +32,22 @@ define(['underscore'], function (_) {
         addCreateListener = function (listener) {
             createListeners.push(listener);
         };
-        notifyCreateListeners = function (todoEntry) {
-            _.invoke(createListeners, 'call', undefined, todoEntry);
+        notifyCreateListeners = function (todo) {
+            _.invoke(createListeners, 'call', undefined, todo);
         };
-        fireCreateForEachTodoEntry = function (todoEntries) {
-            _.each(todoEntries, notifyCreateListeners);
+        fireCreateForAll = function (todoList) {
+            _.each(todoList, notifyCreateListeners);
         };
-        getAllAndFireCreateForEachTodoEntry = function () {
-            getEntries().then(fireCreateForEachTodoEntry);
+        getAndFireCreateForAll = function () {
+            getTodoList().then(fireCreateForAll);
         };
         return {
             createWithName: createWithName,
-            setDoneStatus: setDoneStatus,
-            deleteEntry: deleteEntry,
-            getEntries: getEntries,
+            setDone: setDone,
+            deleteTodo: deleteTodo,
+            getTodoList: getTodoList,
             addCreateListener: addCreateListener,
-            getAllAndFireCreateForEachTodoEntry: getAllAndFireCreateForEachTodoEntry
+            getAndFireCreateForAll: getAndFireCreateForAll
         };
-    }
-
-    return create;
+    };
 });

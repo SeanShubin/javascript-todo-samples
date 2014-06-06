@@ -1,3 +1,26 @@
+/*
+ Terminology guide
+ model
+ -   todo
+ -       id
+ -       name
+ -       done
+ view
+ -   layout
+ -   add
+ -       add-button
+ -       name-field
+ -   list
+ -   entry
+ -       done-checkbox
+ -       name-label
+ -       delete-button
+ events
+ -   create
+ -   update
+ -   delete
+ -   get
+ */
 define(['todo/sean/components/layout',
         'todo/sean/components/data-access'],
     function (createLayout, createDataAccess) {
@@ -6,7 +29,7 @@ define(['todo/sean/components/layout',
             var dataAccess, layout, initialize, component;
             dataAccess = createDataAccess(jsonOverHttp);
             initialize = function () {
-                dataAccess.getAllAndFireCreateForEachTodoEntry();
+                dataAccess.getAndFireCreateForAll();
                 return component;
             };
             layout = createLayout(dataAccess);

@@ -17,15 +17,15 @@ define(['lib/domReady!',
             };
             dom = createAddComponent(fakeDataAccess);
             userTypesInText = function (text) {
-                dom.find('.user-input').val(text);
+                dom.find('.name-field').val(text);
             };
             userTypesKey = function (key) {
                 var keyEvent = $.Event('keyup');
                 keyEvent.which = key;
-                dom.find('.user-input').trigger(keyEvent);
+                dom.find('.name-field').trigger(keyEvent);
             };
             userPressesAddButton = function () {
-                dom.find('.add-todo-entry-button').click();
+                dom.find('.add-button').click();
             };
             verifyCalledCreateWithName = function (expected) {
                 qunit.equal(createWithNameCalls.length, 1, 'exactly one call to createWithName');
@@ -36,10 +36,10 @@ define(['lib/domReady!',
                 qunit.equal(createWithNameCalls.length, 0, 'no calls to createWithName');
             };
             verifyUserInputBlank = function () {
-                qunit.equal($(dom.find('.user-input')[0]).val(), '', 'user input set to blank after adding todo entry');
+                qunit.equal($(dom.find('.name-field')[0]).val(), '', 'user input set to blank after adding todo entry');
             };
             verifyUserInputHasFocus = function () {
-                qunit.equal($(dom.find('.user-input')[0]).is(':focus'), true, 'user input has focus after adding todo entry');
+                qunit.equal($(dom.find('.name-field')[0]).is(':focus'), true, 'user input has focus after adding todo entry');
             };
             return {
                 dom: dom,
@@ -57,8 +57,8 @@ define(['lib/domReady!',
 
         qunit.test('start with user input and add button', function () {
             var helper = createHelper();
-            qunit.equal(helper.dom.find('.user-input').length, 1, 'has user input element');
-            qunit.equal(helper.dom.find('.add-todo-entry-button').length, 1, 'has add todo button');
+            qunit.equal(helper.dom.find('.name-field').length, 1, 'has user input element');
+            qunit.equal(helper.dom.find('.add-button').length, 1, 'has add todo button');
         });
 
         qunit.test('add using button', function () {
