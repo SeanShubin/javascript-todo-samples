@@ -1,12 +1,12 @@
 /*global require */
 
-define(["lib/templateobserver", "jquery", "underscore", "http/json-over-http"],    function (templateService, $, _, jsonOverHttp) {
+define(["lib/templateobserver", "jquery", "underscore", "http/json-over-http", "todo/dron/observer/todoElementObserver"],    function (templateService, $, _, jsonOverHttp, elementObserver) {
     function plugin(element){
         jsonOverHttp({uri: 'item', method: 'GET'}).then(function(response){
             var items = response.body;
             
             _.each(items, function(item){
-                element.append($("<div>").text(item.name));
+                element.append(templateService.template("<div data-todo-id="+item.id+">", [elementObserver]).text(item.name));
             });
             
         });
