@@ -27,7 +27,7 @@ define(['jquery',
                 userInput.val('');
                 userInput.focus();
                 todo = { name: toAdd, done: false };
-                jsonOverHttp({uri: 'todo-entry', method: 'POST', body: todo}).then(respondToTodoAdded);
+                jsonOverHttp({uri: 'db/todo-entry', method: 'POST', body: todo}).then(respondToTodoAdded);
             }
         };
         appendTodoEntryToView = function (todoEntry) {
@@ -42,12 +42,12 @@ define(['jquery',
             todoElement.addClass('todo-id-' + todoEntry.id);
             updateTodoElementValues(todoEntry);
             deleteEvent = function () {
-                jsonOverHttp({uri: 'todo-entry/' + todoEntry.id, method: 'DELETE'}).then(respondToTodoDeleted);
+                jsonOverHttp({uri: 'db/todo-entry/' + todoEntry.id, method: 'DELETE'}).then(respondToTodoDeleted);
             };
             doneEvent = function () {
                 var checkedValue = todoElement.find('.todo-done').is(':checked');
                 jsonOverHttp({
-                    uri: 'todo-entry/' + todoEntry.id,
+                    uri: 'db/todo-entry/' + todoEntry.id,
                     method: 'PATCH',
                     body: {done: checkedValue}
                 }).then(respondToTodoModified);
@@ -78,7 +78,7 @@ define(['jquery',
         };
         addButton.on('click', addButtonPressed);
         userInput.on('keyup', keyPressed);
-        jsonOverHttp({uri: 'todo-entry', method: 'GET'}).then(respondToRefreshTodoEntries);
+        jsonOverHttp({uri: 'db/todo-entry', method: 'GET'}).then(respondToRefreshTodoEntries);
         return dom;
     }
 

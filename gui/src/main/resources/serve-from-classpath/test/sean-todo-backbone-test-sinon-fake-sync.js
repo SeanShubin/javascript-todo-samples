@@ -20,7 +20,7 @@ define(['lib/domReady!',
 
         qunit.equal(1, stubbedSync.callCount, 'one sync call');
         qunit.equal(stubbedSync.getCall(0).args[0], 'read', 'read');
-        qunit.equal(stubbedSync.getCall(0).args[1].url, 'item', 'url is item');
+        qunit.equal(stubbedSync.getCall(0).args[1].url, 'db/item', 'url is item');
 
         stubbedSync.restore();
     });
@@ -43,9 +43,9 @@ define(['lib/domReady!',
 
         qunit.equal(2, stubbedSync.callCount, 'two sync calls');
         qunit.equal(stubbedSync.getCall(0).args[0], 'read', 'method is read');
-        qunit.equal(stubbedSync.getCall(0).args[1].url, 'item', 'url is item');
+        qunit.equal(stubbedSync.getCall(0).args[1].url, 'db/item', 'url is item');
         qunit.equal(stubbedSync.getCall(1).args[0], 'create', 'method is create');
-        qunit.equal(stubbedSync.getCall(1).args[1].url(), 'item/1', 'url is item');
+        qunit.equal(stubbedSync.getCall(1).args[1].url(), 'db/item/1', 'url is item');
 
         stubbedSync.restore();
     });
@@ -76,13 +76,13 @@ define(['lib/domReady!',
 
         qunit.equal(4, stubbedSync.callCount, 'four sync calls');
         qunit.equal(stubbedSync.getCall(0).args[0], 'read', 'method is read');
-        qunit.equal(stubbedSync.getCall(0).args[1].url, 'item', 'url is item');
+        qunit.equal(stubbedSync.getCall(0).args[1].url, 'db/item', 'url is item');
         qunit.equal(stubbedSync.getCall(1).args[0], 'create', 'method is create');
-        qunit.equal(stubbedSync.getCall(1).args[1].url(), 'item/1', 'url is item');
+        qunit.equal(stubbedSync.getCall(1).args[1].url(), 'db/item/1', 'url is item');
         qunit.equal(stubbedSync.getCall(2).args[0], 'create', 'method is create');
-        qunit.equal(stubbedSync.getCall(2).args[1].url(), 'item/2', 'url is item');
+        qunit.equal(stubbedSync.getCall(2).args[1].url(), 'db/item/2', 'url is item');
         qunit.equal(stubbedSync.getCall(3).args[0], 'create', 'method is create');
-        qunit.equal(stubbedSync.getCall(3).args[1].url(), 'item/3', 'url is item');
+        qunit.equal(stubbedSync.getCall(3).args[1].url(), 'db/item/3', 'url is item');
 
         stubbedSync.restore();
     });
@@ -108,7 +108,7 @@ define(['lib/domReady!',
 
         qunit.equal(1, stubbedSync.callCount, 'one sync call');
         qunit.equal(stubbedSync.getCall(0).args[0], 'read', 'method is read');
-        qunit.equal(stubbedSync.getCall(0).args[1].url, 'item', 'url is item');
+        qunit.equal(stubbedSync.getCall(0).args[1].url, 'db/item', 'url is item');
 
         stubbedSync.restore();
     });

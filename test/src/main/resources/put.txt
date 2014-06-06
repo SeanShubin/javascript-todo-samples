@@ -1,14 +1,14 @@
-get /color
+get /db/color
 200 []
 
-post /color/red { "name": "reed", "intensity": 650 }
+post /db/color/red { "name": "reed", "intensity": 650 }
 201 { "name" : "reed", "intensity" : 650, "id" : "red" }
 
-put /color/red { "name": "red", "wavelength": 650 }
+put /db/color/red { "name": "red", "wavelength": 650 }
 200 { "name" : "red", "wavelength" : 650, "id" : "red" }
 
-get /color
+get /db/color
 200 [ { "name" : "red", "wavelength" : 650, "id" : "red" } ]
 
-get /color/red
+get /db/color/red
 200 { "name": "red", "wavelength": 650, "id" : "red" }

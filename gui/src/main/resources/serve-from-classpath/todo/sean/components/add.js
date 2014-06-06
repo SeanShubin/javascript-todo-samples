@@ -13,7 +13,7 @@ define(['jquery',
                 }
             };
             addButtonPressed = function () {
-                var name = _s.trim(userInput.val());
+                var name = _s.trim(userInput.val()).replace(/\s+/g, ' ');
                 if (!_s.isBlank(name)) {
                     userInput.val('');
                     userInput.focus();

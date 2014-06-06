@@ -16,6 +16,7 @@ trait TestRunnerWiring {
   lazy val port: Int = freePortFinder.port
   lazy val contentType: String = "application/json; charset=utf-8"
   lazy val charsetName: String = "utf-8"
+  lazy val dbPrefix: String = "db"
   lazy val jsonMarshaller: JsonMarshaller = new JsonMarshallerImpl
   lazy val client: Client = new HttpImpl
   lazy val webSettings: WebSettings = WebSettings(host, port, charsetName, contentType)
@@ -23,7 +24,7 @@ trait TestRunnerWiring {
   lazy val environment: TestEnvironment = TestEnvironment(client, jsonMarshaller)
   lazy val dataStore: DataStore = new MemoryDataStore(jsonMarshaller)
   lazy val notifications: Notifications = new SilentNotifications()
-  lazy val dataStoreServer: Server = new DataStoreServer(dataStore, jsonMarshaller, notifications, charsetName)
+  lazy val dataStoreServer: Server = new DataStoreServer(dataStore, jsonMarshaller, notifications, charsetName, dbPrefix)
   lazy val dataStoreHandler: Handler = new ServerToJettyHandler(dataStoreServer)
   lazy val httpServer: HttpServer = new JettyServer(port, dataStoreHandler)
   lazy val runner: Runner = new RunnerImpl(name, httpServer, scenarioLoader, environment)

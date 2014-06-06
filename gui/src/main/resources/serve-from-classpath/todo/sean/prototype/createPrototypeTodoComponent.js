@@ -9,7 +9,7 @@ define(['jquery', 'underscore'], function ($, _) {
         sendAddItemRequest = function () {
             var item = {name: 'item', number: counter};
             counter++;
-            jsonOverHttp({uri: 'item', method: 'POST', body: item}).then(respondToItemAdded);
+            jsonOverHttp({uri: 'db/item', method: 'POST', body: item}).then(respondToItemAdded);
         };
         appendItemToView = function (item) {
             var text = '<li>' + item.name + ' ' + item.number + '</li>';
@@ -22,7 +22,7 @@ define(['jquery', 'underscore'], function ($, _) {
             _.each(response.body, appendItemToView);
         };
         addButton.on('click', sendAddItemRequest);
-        jsonOverHttp({uri: 'item', method: 'GET'}).then(respondToRefreshItems);
+        jsonOverHttp({uri: 'db/item', method: 'GET'}).then(respondToRefreshItems);
         return dom;
     }
 

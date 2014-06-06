@@ -13,18 +13,18 @@ define(['qunit',
         fakeComponent = {
             addItemToView: addItemToView
         };
-        fakeCreateTodoSyncComponent = function(theListeners){
+        fakeCreateTodoSyncComponent = function (theListeners) {
             listeners = theListeners;
             return fakeComponent;
         };
         createTodoAsyncWiring({
-            jsonOverHttp:fakeJsonOverHttp,
-            createTodoSyncComponent:fakeCreateTodoSyncComponent
+            jsonOverHttp: fakeJsonOverHttp,
+            createTodoSyncComponent: fakeCreateTodoSyncComponent
         });
         listeners.addItemToModel(sampleItem);
         deferred.resolve(sampleItem);
 
-        qunit.ok(fakeJsonOverHttp.calledWithExactly({uri: 'item', method: 'POST', body: sampleItem}));
+        qunit.ok(fakeJsonOverHttp.calledWithExactly({uri: 'db/item', method: 'POST', body: sampleItem}));
         qunit.equal(addItemToView.callCount, 1, 'added one item');
         qunit.ok(addItemToView.calledWith(sampleItem), 'added the correct item');
     });
@@ -34,23 +34,25 @@ define(['qunit',
         setItemsInView = sinon.stub();
         listeners = undefined;
         deferred = $.Deferred();
-        sampleItems = [{name: 'blah'}];
+        sampleItems = [
+            {name: 'blah'}
+        ];
         fakeJsonOverHttp = sinon.stub().returns(deferred.promise());
         fakeComponent = {
             setItemsInView: setItemsInView
         };
-        fakeCreateTodoSyncComponent = function(theListeners){
+        fakeCreateTodoSyncComponent = function (theListeners) {
             listeners = theListeners;
             return fakeComponent;
         };
         createTodoAsyncWiring({
-            jsonOverHttp:fakeJsonOverHttp,
-            createTodoSyncComponent:fakeCreateTodoSyncComponent
+            jsonOverHttp: fakeJsonOverHttp,
+            createTodoSyncComponent: fakeCreateTodoSyncComponent
         });
         listeners.loadItemsFromModel(sampleItems);
         deferred.resolve(sampleItems);
 
-        qunit.ok(fakeJsonOverHttp.calledWithExactly({uri: 'item', method: 'GET'}));
+        qunit.ok(fakeJsonOverHttp.calledWithExactly({uri: 'db/item', method: 'GET'}));
         qunit.equal(setItemsInView.callCount, 1, 'set items once');
         qunit.ok(setItemsInView.calledWith(sampleItems), 'set the correct items');
     });

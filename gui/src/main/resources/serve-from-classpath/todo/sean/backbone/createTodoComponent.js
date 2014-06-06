@@ -21,7 +21,7 @@ define(['backbone', 'jquery'], function (Backbone, $) {
 
         List = Backbone.Collection.extend({
             model: Model,
-            url: 'item'
+            url: 'db/item'
         });
 
         ListView = Backbone.View.extend({

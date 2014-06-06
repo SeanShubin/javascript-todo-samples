@@ -1,17 +1,17 @@
-get /color
+get /db/color
 200 []
 
-post /color { "name": "red", "wavelength": 650 }
+post /db/color { "name": "red", "wavelength": 650 }
 201 { "name": "red", "wavelength": 650, "id":"1" }
 
-post /color { "name": "green", "wavelength": 510 }
+post /db/color { "name": "green", "wavelength": 510 }
 201 { "name": "green", "wavelength": 510, "id":"2" }
 
-post /color { "name": "blue", "wavelength": 475 }
+post /db/color { "name": "blue", "wavelength": 475 }
 201 { "name": "blue", "wavelength": 475, "id":"3" }
 
-get /color
+get /db/color
 200 [ { "name" : "red", "wavelength" : 650, "id" : "1" }, { "name" : "green", "wavelength" : 510, "id" : "2" }, { "name" : "blue", "wavelength" : 475, "id" : "3" } ]
 
-get /color/1
+get /db/color/1
 200 { "name": "red", "wavelength": 650, "id":"1" }

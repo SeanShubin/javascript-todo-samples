@@ -6,24 +6,24 @@ define(['underscore'], function (_) {
         createListeners = [];
         createWithName = function (name) {
             return jsonOverHttp({
-                uri: 'todo-entry',
+                uri: 'db/todo-entry',
                 method: 'POST',
                 body: {name: name, done: false}}).then(extractResponseBody).then(notifyCreateListeners);
         };
         setDoneStatus = function (todoEntry) {
             return jsonOverHttp({
-                uri: 'todo-entry/' + todoEntry.id,
+                uri: 'db/todo-entry/' + todoEntry.id,
                 method: 'PATCH',
                 body: {done: todoEntry.done}}).then(extractResponseBody);
         };
         deleteEntry = function (id) {
             return jsonOverHttp({
-                uri: 'todo-entry/' + id,
+                uri: 'db/todo-entry/' + id,
                 method: 'DELETE'}).then(extractResponseBody);
         };
         getEntries = function () {
             return jsonOverHttp({
-                uri: 'todo-entry',
+                uri: 'db/todo-entry',
                 method: 'GET'}).then(extractResponseBody);
         };
         extractResponseBody = function (response) {
