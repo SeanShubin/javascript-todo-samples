@@ -1,21 +1,23 @@
 /*global require */
 
-define(["lib/templateobserver", "jquery", "underscore", "http/json-over-http", "todo/dron/observer/todoElementObserver"],    function (templateService, $, _, jsonOverHttp, elementObserver) {
-    function plugin(element){
-        jsonOverHttp({uri: 'item', method: 'GET'}).then(function(response){
-            var items = response.body;
-            
-            _.each(items, function(item){
-                element.append(templateService.template("<div data-todo-id="+item.id+">", [elementObserver]).text(item.name));
-            });
-            
-        });
+define([
+        "lib/templateobserver", 
+        "jquery", 
+        "underscore", 
+        "http/json-over-http", 
+        "todo/dron/observer/todoElementObserver",
+        "text!todo/dron/observer/todoLayout.html"
+        ],function (templateService, $, _, jsonOverHttp, elementObserver, todoLayout) {
+	    function plugin(element){
+		jsonOverHttp({uri: 'item', method: 'GET'}).then(function(response){
+		    element.append(templateService.template(todoLayout, [elementObserver], {'todos':response.body}));
+		});
         
         
-    }
+	    }
     
-    return {
-        observer:templateService.observer({method:plugin, elementLocator:"#todo-list"}),
-        setJsonOverHttp:function(j){jsonOverHttp = j;}
-    };
+	    return {
+		observer:templateService.observer({method:plugin, elementLocator:"#todo-list"}),
+		setJsonOverHttp:function(j){jsonOverHttp = j;}
+	    };
 });

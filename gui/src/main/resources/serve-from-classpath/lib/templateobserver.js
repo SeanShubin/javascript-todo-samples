@@ -1,7 +1,7 @@
 /**
  * This module will automatically scan the dom for "script" tags of type html/template
  */
-define("lib/templateobserver", ["jquery", "underscore"],    function ($, _) {
+define("lib/templateobserver", ["jquery", "underscore", "handlebars"],    function ($, _, handlebars) {
     function loadTemplateForUrl(url, backupString){
         if(url){
             return $.get(url);
@@ -33,8 +33,8 @@ define("lib/templateobserver", ["jquery", "underscore"],    function ($, _) {
     /**
     * Applies the given template with the provided observers.
     **/
-    function template(templateString, observers){
-        var ret = $(_.template(templateString)());
+    function template(templateString, observers, model){
+        var ret = $(handlebars.compile(templateString)(model));
         _.each(observers,function(plugin){
             try{
                 plugin.observer(ret);
