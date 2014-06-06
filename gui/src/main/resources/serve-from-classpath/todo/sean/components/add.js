@@ -4,24 +4,24 @@ define(['jquery',
     function ($, _s, addTemplate) {
         'use strict';
         return function (dataAccess) {
-            var dom, addButtonPressed, keyPressed, userInput;
+            var dom, addButtonPressed, keyPressed, nameField;
             dom = $(addTemplate);
-            userInput = dom.find('.user-input');
+            nameField = dom.find('.name-field');
             keyPressed = function (event) {
                 if (event.which === 13) {
                     addButtonPressed();
                 }
             };
             addButtonPressed = function () {
-                var name = _s.trim(userInput.val()).replace(/\s+/g, ' ');
+                var name = _s.trim(nameField.val()).replace(/\s+/g, ' ');
                 if (!_s.isBlank(name)) {
-                    userInput.val('');
-                    userInput.focus();
+                    nameField.val('');
+                    nameField.focus();
                     dataAccess.createWithName(name);
                 }
             };
-            dom.find('.add-todo-entry-button').on('click', addButtonPressed);
-            userInput.on('keyup', keyPressed);
+            dom.find('.add-button').on('click', addButtonPressed);
+            nameField.on('keyup', keyPressed);
             return dom;
         };
     });

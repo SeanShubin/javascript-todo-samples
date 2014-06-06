@@ -1,15 +1,15 @@
 define(['jquery',
-        'todo/sean/components/todo-entry',
-        'text!todo/sean/components/todo-entry-list-template.html'],
-    function ($, createTodoEntryComponent, listTemplate) {
+        'todo/sean/components/entry',
+        'text!todo/sean/components/list-template.html'],
+    function ($, createEntryComponent, listTemplate) {
         'use strict';
         return function (dataAccess) {
             var dom, createTodoEntry;
             dom = $(listTemplate);
-            createTodoEntry = function (todoEntry) {
-                var todoEntryDom = createTodoEntryComponent({
+            createTodoEntry = function (todo) {
+                var todoEntryDom = createEntryComponent({
                     dataAccess: dataAccess,
-                    todoEntry: todoEntry
+                    todo: todo
                 });
                 dom.append(todoEntryDom);
             };
