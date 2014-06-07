@@ -11,7 +11,9 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
         vanillaResponse = [{'name':"name 1", 'number':1, 'id':1}, {'name':"name 2", number:2, 'id':2}];
 
     qunit.module('dron-todo-observer-test');
-    
+    //qunit.config.reorder = false;
+    todoElementObserver.setJsonOverHttp({});
+
     test("The Todo Component Properly Loads When A Well-Formatted Template Is Provided", function(){
         var element = loadTodoAppWithData(vanillaResponse);
         
@@ -23,6 +25,19 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
     test("The todo component doesn't crash when an empty body is returned by the server", function(){
         loadTodoAppWithData([]);
         ok(didntCrash);
+    });
+
+    test("The 'clear completed' button will trigger a clear completed on all todo elements", function(){
+        var numberVisited = 0,
+            element = loadTodoAppWithData(vanillaResponse);
+        
+        todoElementObserver.setJsonOverHttp(uselessJsonOverHttp());
+
+        element.find("[data-todo-id]").on("clearCompleted", function(){
+            numberVisited++;
+        });
+        element.find("#clear-completed").click();
+        equal(numberVisited, 2);
     });
 
 
@@ -86,6 +101,16 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
         });
               
     });
+
+    test("Each [data-todo-id] element has a clearCompeted even that will delete if completed", function(){
+        var stateChanged=false,
+            element = templateService.template("<div data-todo-id='5' class='todo-done'></div>", [todoElementObserver]);
+        todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
+
+        element.trigger("clearCompleted");
+        ok(element.is(":empty"), "Element should be emptied.");
+        equal(lastJsonOverHttpRequest.method, "DELETE");
+    });
     
     function loadTodoAppWithData(data){
         todo.setJsonOverHttp(mockJsonOverHttp(data));
@@ -98,13 +123,22 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
         equal($(element.find(".todo-container>div").get(0)).data("todo-id"), 9, "Todo number 9 should exist now.");
 
     }
-    
+
+    function uselessJsonOverHttp(){
+        return function(){
+            return{
+                then:function(callback){
+                    callback();
+                }
+            };
+        };
+    }
+
     function mockJsonOverHttp(nextJsonOverHttpResponse, uri){
         realUri = uri?uri:'/db/item';
         return function(requestObject){
             equal(requestObject.uri, realUri, 'A valid URI was used.');
             lastJsonOverHttpRequest=requestObject;
-            //lastJsonOverHttpRequest.body = requestObject.body ? $.parseJSON(requestObject.body): {};            
             lastJsonOverHttpRequest.body = requestObject.body ? requestObject.body: {};
             return {
                 then:function(callback){

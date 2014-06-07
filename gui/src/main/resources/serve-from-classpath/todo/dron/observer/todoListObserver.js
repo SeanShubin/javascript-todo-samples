@@ -25,6 +25,10 @@ define([
                             refreshTodoList();
                         });
 
+                        element.find("button#clear-completed").on("click",function(){
+                            element.find("[data-todo-id]").trigger("clearCompleted");
+                        });
+
                     });
                 }
 
