@@ -1,5 +1,5 @@
 <div class="todo-container">
-  Create A Todo: <input type='text' class='new-todo'><input type='button' class='submit'>
+  <span data-todo-creator>Create A Todo: <input type='text' class='new-todo'><input type='button' class='submit'></span>
   {{#each todos}}
     <div data-todo-id="{{id}}" data-todo-name="{{name}}"></div>
   {{/each}}
