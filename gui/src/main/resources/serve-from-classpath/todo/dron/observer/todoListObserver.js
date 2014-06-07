@@ -10,23 +10,21 @@ define([
         "text!todo/dron/observer/todoLayout.html"
         ],function (templateService, $, _, jsonOverHttp, elementObserver, creatorObserver, todoLayout) {
             function plugin(element){
+                
+                element.on("newTodo todoStateChange", function(){
+                    refreshTodoList();
+                });
 
                 function refreshTodoList(){
-                    element.empty();
                     jsonOverHttp({uri: '/db/item', method: 'GET'}).then(function(response){
-                        var todos = response.body;
+                        var listeners = [],
+                            todos = response.body;
+                        element.empty();
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
-
-                        element.find("[data-todo-creator]").on("newTodo", function(){
-                            refreshTodoList();
-                        });
                         
-                        element.find("[data-todo-id]").on("todoStateChange", function(){
-                            refreshTodoList();
-                        });
-
                         element.find("button#clear-completed").on("click",function(){
-                            element.find("[data-todo-id]").trigger("clearCompleted");
+                            //element.find("[data-todo-id]").trigger("clearCompleted");
+                            elementObserver.trigger("todoClearCompleted");
                         });
 
                     });

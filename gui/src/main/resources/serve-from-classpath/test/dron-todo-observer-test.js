@@ -8,11 +8,10 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
     var test = qunit.test,
         didntCrash=true,
         lastJsonOverHttpRequest = {},
-        vanillaResponse = [{'name':"name 1", 'number':1, 'id':1}, {'name':"name 2", number:2, 'id':2}];
+        anything = "",
+        vanillaResponse = [{'name':"name 1", 'number':1, 'id':1, done:true}, {'name':"name 2", number:2, 'id':2}];
 
     qunit.module('dron-todo-observer-test');
-    //qunit.config.reorder = false;
-    todoElementObserver.setJsonOverHttp({});
 
     test("The Todo Component Properly Loads When A Well-Formatted Template Is Provided", function(){
         var element = loadTodoAppWithData(vanillaResponse);
@@ -28,16 +27,16 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
     });
 
     test("The 'clear completed' button will trigger a clear completed on all todo elements", function(){
-        var numberVisited = 0,
+        var eventTriggered = false,
             element = loadTodoAppWithData(vanillaResponse);
         
-        todoElementObserver.setJsonOverHttp(uselessJsonOverHttp());
+        todoElementObserver.setJsonOverHttp(mockJsonOverHttp(anything, anything));        
 
-        element.find("[data-todo-id]").on("clearCompleted", function(){
-            numberVisited++;
+        element.on("todoClearCompleted", function(){
+            eventTriggered=true;
         });
         element.find("#clear-completed").click();
-        equal(numberVisited, 2);
+        ok(eventTriggered, "The event should have been triggered.");
     });
 
 
@@ -105,11 +104,19 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
     test("Each [data-todo-id] element has a clearCompeted even that will delete if completed", function(){
         var stateChanged=false,
             element = templateService.template("<div data-todo-id='5' class='todo-done'></div>", [todoElementObserver]);
+
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
 
-        element.trigger("clearCompleted");
-        ok(element.is(":empty"), "Element should be emptied.");
+        todoElementObserver.trigger("todoClearCompleted");
+        ok(element.children().size()===0, "Element should be emptied.");
         equal(lastJsonOverHttpRequest.method, "DELETE");
+    });
+
+    test("todoClearCompeted does nothing if the element isn't completed", function(){
+        var element = templateService.template("<div data-todo-id='5'></div>", [todoElementObserver]);
+
+        todoElementObserver.trigger("todoClearCompleted");
+        ok(element.children().size()>0, "Element should not be emptied.");
     });
     
     function loadTodoAppWithData(data){
@@ -135,9 +142,8 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
     }
 
     function mockJsonOverHttp(nextJsonOverHttpResponse, uri){
-        realUri = uri?uri:'/db/item';
         return function(requestObject){
-            equal(requestObject.uri, realUri, 'A valid URI was used.');
+            if (uri !== anything) equal(requestObject.uri, uri?uri:'/db/item', 'A valid URI was used.');
             lastJsonOverHttpRequest=requestObject;
             lastJsonOverHttpRequest.body = requestObject.body ? requestObject.body: {};
             return {
