@@ -46,7 +46,6 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
             newTodoName = "This is a new todo entry",
             newTodoCreated = false;
         creator.setJsonOverHttp(mockJsonOverHttp());
-        //element = templateService.template("<span data-todo-creator><form><input type='text' class='new-todo'><input type='button' class='submit'></form></span>", [creator]);
         element = templateService.template(todoLayout, [creator]);
         element.find("input.new-todo").val(newTodoName);
         element.on("newTodo", function(event, newName){
@@ -106,10 +105,10 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     test("Each [data-todo-id] element has a clearCompeted even that will delete if completed", function(){
         var stateChanged=false,
             element = templateService.template("<div data-todo-id='5' class='todo-done'></div>", [todoElementObserver]);
-
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
 
         $("body").trigger("todoClearCompleted");
+
         equal(element.children().size(),0, "Element should be emptied.");
         equal(lastJsonOverHttpRequest.method, "DELETE");
     });
@@ -118,6 +117,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         var element = templateService.template("<div data-todo-id='5'></div>", [todoElementObserver]);
 
         $("body").trigger("todoClearCompleted");
+
         ok(element.children().size()>0, "Element should not be emptied.");
     });
     
@@ -131,16 +131,6 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         f();
         equal($(element.find(".todo-container>div").get(0)).data("todo-id"), 9, "Todo number 9 should exist now.");
 
-    }
-
-    function uselessJsonOverHttp(){
-        return function(){
-            return{
-                then:function(callback){
-                    callback();
-                }
-            };
-        };
     }
 
     function mockJsonOverHttp(nextJsonOverHttpResponse, uri){
