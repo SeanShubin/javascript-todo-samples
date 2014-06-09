@@ -23,11 +23,12 @@ define([
                             todos = response.body;
                         element.empty();
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
-                        
+                     
                         element.find("button#clear-completed").on("click",function(){
                             element.trigger("todoClearCompleted");
                         });
 
+                        element.find("input.new-todo").focus();
                     });
                 }
 

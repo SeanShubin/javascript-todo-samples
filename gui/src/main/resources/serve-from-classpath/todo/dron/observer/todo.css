@@ -1,0 +1,31 @@
+h1{
+    margin:0;
+}
+.todo-container{
+    border:1px solid black;
+    padding:1.5em;
+    display:inline-block;
+    background-color:yellow;
+}
+.clear-completed{
+    display:block;
+}
+.todo-item {
+    background-color: yellow;
+    padding: .2em 1em .2em 1em;
+    border-top: 1px solid blue;
+}
+
+.todo-title{
+    NOTfont-weight:bold;
+    NOTpadding:1em;
+}
+
+.todo-creator-form {
+    NOTpadding-top: 1em;
+    NOTpadding-bottom: 1em;
+}
+
+.todo-creator{
+    padding: 1em;
+}

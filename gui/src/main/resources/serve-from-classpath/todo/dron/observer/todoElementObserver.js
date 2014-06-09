@@ -16,7 +16,7 @@ define(["lib/templateobserver", "jquery", "underscore","http/json-over-http"],  
         $("body").on("todoClearCompleted", function(){
             if(element.hasClass("todo-done") && !element.hasClass("deleted")){
                 jsonOverHttp({uri: '/db/item/'+todoId, method:'DELETE'});
-                element.addClass("deleted").empty();
+                element.addClass("deleted").remove();
             }
         });
     }

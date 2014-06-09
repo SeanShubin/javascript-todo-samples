@@ -17,9 +17,9 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     test("The Todo Component Properly Loads When A Well-Formatted Template Is Provided", function(){
         var element = loadTodoAppWithData(vanillaResponse);
         
-        equal(element.find(".todo-container>div").size(),2,"Both elements are drawn into the element");
-        equal($(element.find(".todo-container>div").get(0)).text(), "name 1", "The first element should be the first returned from the REST endpoint");
-        equal($(element.find(".todo-container>div").get(0)).data("todo-id"), 1, "The element should be given an ID of 1.");
+        equal(element.find(".todo-item").size(),2,"Both elements are drawn into the element");
+        equal($(element.find(".todo-item").get(0)).text(), "name 1", "The first element should be the first returned from the REST endpoint");
+        equal($(element.find(".todo-item").get(0)).data("todo-id"), 1, "The element should be given an ID of 1.");
     });
 
     test("The todo component doesn't crash when an empty body is returned by the server", function(){
@@ -53,7 +53,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
             equal(newName, newTodoName, "The event should contain the new name that was entered");
         });
 
-        element.find("input.submit").click();
+        element.find(".todo-creator-form form").submit();
 
         equal(lastJsonOverHttpRequest.body.name, newTodoName);
         equal(lastJsonOverHttpRequest.body.id, undefined);
@@ -104,12 +104,12 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
 
     test("Each [data-todo-id] element has a clearCompeted even that will delete if completed", function(){
         var stateChanged=false,
-            element = templateService.template("<div data-todo-id='5' class='todo-done'></div>", [todoElementObserver]);
+            element = templateService.template("<span><div data-todo-id='5' class='todo-done'></div><span>", [todoElementObserver]);
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
 
         $("body").trigger("todoClearCompleted");
 
-        equal(element.children().size(),0, "Element should be emptied.");
+        equal(element.find("[data-todo-id]").size(), 0, "Element should be emptied.");
         equal(lastJsonOverHttpRequest.method, "DELETE");
     });
 
@@ -129,7 +129,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     function expectActionToCauseARedraw(element, f){
         todo.setJsonOverHttp(mockJsonOverHttp([{'name':"name 9", 'number':9, 'id':9}]));
         f();
-        equal($(element.find(".todo-container>div").get(0)).data("todo-id"), 9, "Todo number 9 should exist now.");
+        equal($(element.find(".todo-item").get(0)).data("todo-id"), 9, "Todo number 9 should exist now.");
 
     }
 

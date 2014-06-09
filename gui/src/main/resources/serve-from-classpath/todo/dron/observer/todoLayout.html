@@ -1,7 +1,12 @@
 <div class="todo-container">
-  <span data-todo-creator>Create A Todo: <form><input type='text' class='new-todo'><input type='submit' class='submit' value="Add"></form></span>
+  <h1>Todo List</h1>
+  <div data-todo-creator class='todo-creator'>
+    <div class="todo-creator-form"><form><input type='text' class='new-todo' placeholder="Create A Todo"><!--<input type='submit' class='submit' value="Add">--></form></div>
+  </div>
   {{#each todos}}
-    <div data-todo-id="{{id}}" data-todo-name="{{name}}", {{#if done}} class="todo-done" {{/if}}></div>
+    <div data-todo-id="{{id}}" data-todo-name="{{name}}", class="todo-item {{#if done}}todo-done{{/if}}"></div>
   {{/each}}
 </div>
-<button id="clear-completed">Clear Completed</button>
+<div>
+  <button id="clear-completed">Clear Completed</button>
+</div>
