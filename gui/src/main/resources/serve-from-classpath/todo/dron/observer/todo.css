@@ -16,16 +16,6 @@ h1{
     border-top: 1px solid blue;
 }
 
-.todo-title{
-    NOTfont-weight:bold;
-    NOTpadding:1em;
-}
-
-.todo-creator-form {
-    NOTpadding-top: 1em;
-    NOTpadding-bottom: 1em;
-}
-
 .todo-creator{
     padding: 1em;
 }
