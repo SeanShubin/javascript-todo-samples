@@ -11,7 +11,6 @@ define(["lib/templateobserver", "jquery", "underscore","http/json-over-http"],  
                     element.trigger("todoStateChange", newState);
                 });
             });
-        //if (todoIsDone) checkbox.prop('checked', true);
         element.append(checkbox).append("<span>"+todoName+"</span>");
 
         $("body").on("todoClearCompleted", function(){
