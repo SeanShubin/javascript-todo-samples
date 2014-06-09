@@ -11,10 +11,12 @@ define([
         ],function (templateService, $, _, jsonOverHttp, elementObserver, creatorObserver, todoLayout) {
             function plugin(element){
                 
+                //When these events bubble up from children, the todo list should be refreshed.
                 element.on("newTodo todoStateChange", function(){
                     refreshTodoList();
                 });
 
+                //Redraw the todo list by clearing out the container and re-applying the template.
                 function refreshTodoList(){
                     jsonOverHttp({uri: '/db/item', method: 'GET'}).then(function(response){
                         var listeners = [],
@@ -23,8 +25,7 @@ define([
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
                         
                         element.find("button#clear-completed").on("click",function(){
-                            //element.find("[data-todo-id]").trigger("clearCompleted");
-                            elementObserver.trigger("todoClearCompleted");
+                            element.trigger("todoClearCompleted");
                         });
 
                     });

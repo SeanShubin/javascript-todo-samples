@@ -3,8 +3,9 @@ define([
     "todo/dron/observer/todoListObserver", 
     "todo/dron/observer/todoElementObserver", 
     "todo/dron/observer/todoElementCreatorObserver", 
+    "text!todo/dron/observer/todoLayout.html",
     "lib/templateobserver"], 
-function (qunit, todo, todoElementObserver, creator, templateService) {
+function (qunit, todo, todoElementObserver, creator, todoLayout, templateService) {
     var test = qunit.test,
         didntCrash=true,
         lastJsonOverHttpRequest = {},
@@ -45,7 +46,8 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
             newTodoName = "This is a new todo entry",
             newTodoCreated = false;
         creator.setJsonOverHttp(mockJsonOverHttp());
-        element = templateService.template("<span data-todo-creator><input type='text' class='new-todo'><input type='button' class='submit'></span>", [creator]);
+        //element = templateService.template("<span data-todo-creator><form><input type='text' class='new-todo'><input type='button' class='submit'></form></span>", [creator]);
+        element = templateService.template(todoLayout, [creator]);
         element.find("input.new-todo").val(newTodoName);
         element.on("newTodo", function(event, newName){
             newTodoCreated = true;
@@ -107,15 +109,15 @@ function (qunit, todo, todoElementObserver, creator, templateService) {
 
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
 
-        todoElementObserver.trigger("todoClearCompleted");
-        ok(element.children().size()===0, "Element should be emptied.");
+        $("body").trigger("todoClearCompleted");
+        equal(element.children().size(),0, "Element should be emptied.");
         equal(lastJsonOverHttpRequest.method, "DELETE");
     });
 
     test("todoClearCompeted does nothing if the element isn't completed", function(){
         var element = templateService.template("<div data-todo-id='5'></div>", [todoElementObserver]);
 
-        todoElementObserver.trigger("todoClearCompleted");
+        $("body").trigger("todoClearCompleted");
         ok(element.children().size()>0, "Element should not be emptied.");
     });
     

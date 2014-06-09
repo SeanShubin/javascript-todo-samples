@@ -1,33 +1,29 @@
 /*global require */
 
 define(["lib/templateobserver", "jquery", "underscore","http/json-over-http"],    function (templateService, $, _, jsonOverHttp) {
-    var listener=$("<span>");
     function plugin(element){
         var todoName = element.data("todo-name"),
             todoId = element.data("todo-id"),
-            todoState = element.hasClass("todo-done"),
-            checkbox = $("<input type=checkbox>").click(function(){
-                var newState = todoState ? false:true;
+            todoIsDone = element.hasClass("todo-done"),
+            checkbox = $("<input type=checkbox>").prop("checked", todoIsDone).click(function(){
+                var newState = todoIsDone ? false:true;
                 jsonOverHttp({uri: '/db/item/'+todoId, method:'PATCH', body:{done:newState, id:todoId}}).then(function(){
                     element.trigger("todoStateChange", newState);
                 });
             });
-        //if (todoState) element.addClass("todo-done");
+        //if (todoIsDone) checkbox.prop('checked', true);
         element.append(checkbox).append("<span>"+todoName+"</span>");
 
-        listener.on("todoClearCompleted", function(){
-            if(element.hasClass("todo-done")){
+        $("body").on("todoClearCompleted", function(){
+            if(element.hasClass("todo-done") && !element.hasClass("deleted")){
                 jsonOverHttp({uri: '/db/item/'+todoId, method:'DELETE'});
-                element.empty();
-                element.trigger("todoClearCompleted");
+                element.addClass("deleted").empty();
             }
         });
-
     }
     
     return {
         observer:templateService.observer({method:plugin, elementLocator:"[data-todo-id]"}),
-        trigger:function(event){listener.trigger(event);},
         setJsonOverHttp:function(j){jsonOverHttp = j;}
     };
 });

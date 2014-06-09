@@ -5,11 +5,12 @@ define([
         "http/json-over-http"
     ],function(templateService, $, _, jsonOverHttp){
         function plugin(element){
-            element.find("input.submit").click(function(){
+            element.find("form").on("submit",function(event){
                 var newItemName=element.find("input.new-todo").val();
                 jsonOverHttp({uri: '/db/item', method:'POST', body:{name:newItemName}}).then(function(){
                     element.trigger("newTodo", newItemName);
                 });
+                event.preventDefault();
             });
         }
 
