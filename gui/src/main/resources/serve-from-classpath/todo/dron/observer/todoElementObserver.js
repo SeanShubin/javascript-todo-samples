@@ -13,7 +13,7 @@ define(["lib/templateobserver", "jquery", "underscore","http/json-over-http"],  
             });
         element.append(checkbox).append("<span>"+todoName+"</span>");
 
-        $("body").on("todoClearCompleted", function(){
+        element.on("todoClearCompleted", function(){
             if(element.hasClass("todo-done") && !element.hasClass("deleted")){
                 jsonOverHttp({uri: '/db/item/'+todoId, method:'DELETE'});
                 element.addClass("deleted").remove();

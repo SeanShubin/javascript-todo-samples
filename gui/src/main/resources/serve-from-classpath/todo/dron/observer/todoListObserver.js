@@ -25,7 +25,7 @@ define([
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
                      
                         element.find("button#clear-completed").on("click",function(){
-                            element.trigger("todoClearCompleted");
+                            element.find(".todo-item").trigger("todoClearCompleted");
                         });
 
                         element.find("input.new-todo").focus();

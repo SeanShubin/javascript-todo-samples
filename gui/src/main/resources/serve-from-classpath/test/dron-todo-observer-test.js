@@ -28,16 +28,16 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     });
 
     test("The 'clear completed' button will trigger a clear completed on all todo elements", function(){
-        var eventTriggered = false,
+        var eventTriggered = 0,
             element = loadTodoAppWithData(vanillaResponse);
         
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp(anything, anything));        
 
-        element.on("todoClearCompleted", function(){
-            eventTriggered=true;
+        element.find(".todo-item").on("todoClearCompleted", function(){
+            eventTriggered++;
         });
         element.find("#clear-completed").click();
-        ok(eventTriggered, "The event should have been triggered.");
+        equal(eventTriggered,2, "The event should have been triggered on each element.");
     });
 
 
@@ -102,12 +102,12 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
               
     });
 
-    test("Each [data-todo-id] element has a clearCompeted even that will delete if completed", function(){
+    test("Each [data-todo-id] element has a clearComlpeted event that will delete if completed", function(){
         var stateChanged=false,
             element = templateService.template("<span><div data-todo-id='5' class='todo-done'></div><span>", [todoElementObserver]);
         todoElementObserver.setJsonOverHttp(mockJsonOverHttp("", "/db/item/5"));
 
-        $("body").trigger("todoClearCompleted");
+        element.find("[data-todo-id]").trigger("todoClearCompleted");
 
         equal(element.find("[data-todo-id]").size(), 0, "Element should be emptied.");
         equal(lastJsonOverHttpRequest.method, "DELETE");
@@ -116,7 +116,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     test("todoClearCompeted does nothing if the element isn't completed", function(){
         var element = templateService.template("<div data-todo-id='5'></div>", [todoElementObserver]);
 
-        $("body").trigger("todoClearCompleted");
+        element.find("[data-todo-id]").trigger("todoClearCompleted");
 
         ok(element.children().size()>0, "Element should not be emptied.");
     });
