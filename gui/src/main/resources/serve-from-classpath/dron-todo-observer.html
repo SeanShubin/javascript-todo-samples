@@ -18,5 +18,17 @@
 <script type='html/template' data-observers='["todo/dron/observer/todoListObserver"]'>
     <div id="todo-list"></div>
 </script>
+<br><br><br><br><br><br>
+<h1>Objectives</h1>
+<ul>
+  <li>Every component is a DOM object.</li>
+  <li>Every component has an API similar to raw HTML object such as &lt;div>, &lt;form>, and &lt;video>.</li>
+  <li>Every component generates events on self that bubble up the DOM tree.</li>
+  <li>Every component responds to events on self that bubble up from children or are activated directly on it by parents.</li>
+  <li>No component may reach out to the DOM except down to children.</li>
+  <li>All DOM objects are constructed synchronously - all non-dependent asynchronous behavior is parallel.</li>
+  <li>Composition within the DOM is done using plain HTML by observing node creation.</li>
+  <li>Composition of behavior is done using plan Javascript by observing events bubbling up the DOM tree.</li>
+</ul>
 </body>
 </html>
