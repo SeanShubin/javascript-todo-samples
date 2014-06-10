@@ -34,6 +34,7 @@
   <li>Every component has an API similar to raw HTML object such as &lt;div>, &lt;form>, and &lt;video>.</li>
   <li>Every component generates events on self that bubble up the DOM tree.</li>
   <li>Every component responds to events on self that bubble up from children or are activated directly on it by parents.</li>
+  <li>Every component should be easy to test drive.</li>
   <li>No component may reach out to the DOM except to TRIGGER events on children.</li>
   <li>All DOM objects are constructed synchronously - all non-dependent asynchronous behavior is parallel.</li>
   <li>Composition within the DOM is done using plain HTML by observing node creation.</li>
