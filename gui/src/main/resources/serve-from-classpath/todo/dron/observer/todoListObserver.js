@@ -2,13 +2,11 @@
 
 define([
         "lib/templateobserver", 
-        "jquery", 
-        "underscore", 
         "http/json-over-http", 
         "todo/dron/observer/todoElementObserver",
         "todo/dron/observer/todoElementCreatorObserver",
         "text!todo/dron/observer/todoLayout.html"
-        ],function (templateService, $, _, jsonOverHttp, elementObserver, creatorObserver, todoLayout) {
+        ],function (templateService, jsonOverHttp, elementObserver, creatorObserver, todoLayout) {
             function plugin(element){
                 
                 //*********EVENT HANDLERS THIS COMPONENT RESPONDS TO

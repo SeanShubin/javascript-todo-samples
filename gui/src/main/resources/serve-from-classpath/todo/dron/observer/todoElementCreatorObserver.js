@@ -1,9 +1,7 @@
 define([
         "lib/templateobserver",
-        "jquery",
-        "underscore",
         "http/json-over-http"
-    ],function(templateService, $, _, jsonOverHttp){
+    ],function(templateService, jsonOverHttp){
         function plugin(element){
             element.find("form").on("submit",function(event){
                 var newItemName=element.find("input.new-todo").val();
