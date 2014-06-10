@@ -11,10 +11,15 @@ define([
         ],function (templateService, $, _, jsonOverHttp, elementObserver, creatorObserver, todoLayout) {
             function plugin(element){
                 
-                //When these events bubble up from children, the todo list should be refreshed.
+                //*********EVENT HANDLERS THIS COMPONENT RESPONDS TO
                 element.on("newTodo todoStateChange", function(){
                     refreshTodoList();
                 });
+
+                element.on("click","#clear-completed", function(){
+                    element.find(".todo-item").trigger("todoClearCompleted");
+                });
+                //********DONE WITH EVENT HANDLERS
 
                 //Redraw the todo list by clearing out the container and re-applying the template.
                 function refreshTodoList(){
@@ -24,10 +29,6 @@ define([
                         element.empty();
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
                      
-                        element.find("button#clear-completed").on("click",function(){
-                            element.find(".todo-item").trigger("todoClearCompleted");
-                        });
-
                         element.find("input.new-todo").focus();
                     });
                 }
