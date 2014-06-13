@@ -22,7 +22,7 @@
       <li>...That require specialized training.</li>
       <li>...That become out-dated and hard to remove (lock in).</li>
       <li>...That are difficult to refactor in a polystylistic environment.</li>
-    </ul
+    </ul>
   </li>
   <li>Every component is a DOM object.</li>
   <li>Every component has an API similar to raw HTML object such as &lt;div>, &lt;form>, and &lt;video>.</li>
@@ -33,6 +33,8 @@
   <li>All DOM objects are constructed synchronously - all non-dependent asynchronous behavior is parallel.</li>
   <li>Composition within the DOM is done using plain HTML by observing node creation.</li>
   <li>Composition of behavior is done using plan Javascript by observing events bubbling up the DOM tree.</li>
+  <li>no knowledge of parent element, or its location in dom, or even if it is attached to the dom</li>
+  <li>avoided the need to use 'this' or 'bind' or 'new'</li>
 </ul>
 </body>
 </html>

@@ -1,6 +1,4 @@
-/*global require */
-
-define(["lib/templateobserver", "http/json-over-http"],    function (templateService, jsonOverHttp) {
+define(["jquery", "lib/templateobserver", "http/json-over-http"], function ($, templateService, jsonOverHttp) {
     function plugin(element){
         var todoName = element.data("todo-name"),
             todoId = element.data("todo-id"),

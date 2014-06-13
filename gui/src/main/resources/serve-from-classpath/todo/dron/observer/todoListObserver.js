@@ -22,8 +22,7 @@ define([
                 //Redraw the todo list by clearing out the container and re-applying the template.
                 function refreshTodoList(){
                     jsonOverHttp({uri: '/db/item', method: 'GET'}).then(function(response){
-                        var listeners = [],
-                            todos = response.body;
+                        var todos = response.body;
                         element.empty();
                         element.append(templateService.template(todoLayout, [elementObserver, creatorObserver], {'todos':todos}));
                      
