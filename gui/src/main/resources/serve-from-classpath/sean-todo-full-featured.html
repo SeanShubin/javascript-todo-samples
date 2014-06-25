@@ -8,6 +8,35 @@
 </head>
 <body>
 <div class="application"></div>
+<h3>Noteworthy Features</h3>
+<ul>
+    <li>Entry Point (this page)
+        <ul>
+            <li>entry point at root level, so it can use relative paths, allowing it to be proxied</li>
+            <li>no logic, only wiring</li>
+        </ul>
+    </li>
+    <li><a href="test/sean-todo-full-featured-test.js">Test</a>
+        <ul>
+            <li>fake does exactly what we need, and we can tell how it works by looking at it</li>
+            <li>'requestCount' ensures we don't get a false positive if an event is not fired</li>
+            <li>behavior of jquery deferred allows test to be synchronous</li>
+        </ul>
+    </li>
+    <li><a href="todo/sean/full-featured/createTodoComponent.js">Component</a>
+        <ul>
+            <li>composable, given an http communication mechanic, return a dom element</li>
+            <li>no hoisting, it is obvious when everything is defined</li>
+            <li>no anonymous functions, you can tell what each does by its name</li>
+            <li>multiple vars in same scope not initialized when declared, so can set breakpoint on each assignment</li>
+            <li>single vars in same scope initialized when declared</li>
+            <li>collaborator is constructor injected, so easy to fake</li>
+            <li>each async call names its destination, so it is easy to follow the code flow</li>
+            <li>no knowledge of parent element, or its location in dom, or even if it is attached to the dom</li>
+            <li>avoided the need to use 'this' or 'bind' or 'new'</li>
+        </ul>
+    </li>
+</ul>
 <script type="text/javascript">
     require(['lib/domReady!',
         'jquery',
