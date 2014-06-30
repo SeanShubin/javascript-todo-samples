@@ -27,20 +27,6 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         ok(didntCrash);
     });
 
-    test("The 'clear completed' button will trigger a clear completed on all todo elements", function(){
-        var eventTriggered = 0,
-            element = loadTodoAppWithData(vanillaResponse);
-        
-        todoElementObserver.setJsonOverHttp(mockJsonOverHttp(anything, anything));        
-
-        element.find(".todo-item").on("todoClearCompleted", function(){
-            eventTriggered++;
-        });
-        element.find("#clear-completed").click();
-        equal(eventTriggered,2, "The event should have been triggered on each element.");
-    });
-
-
     test("Should be able to add new todo entries", function(){
         var element, 
             newTodoName = "This is a new todo entry",
@@ -48,6 +34,8 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         creator.setJsonOverHttp(mockJsonOverHttp());
         element = templateService.template(todoLayout, [creator]);
         element.find("input.new-todo").val(newTodoName);
+
+        //Stub Event Handler
         element.on("newTodo", function(event, newName){
             newTodoCreated = true;
             equal(newName, newTodoName, "The event should contain the new name that was entered");
@@ -65,6 +53,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
 
         element.find("[data-todo-creator]").trigger("newTodo");        
 
+        //Stub Event Handler
         expectActionToCauseARedraw(element, function(){
             element.find("[data-todo-creator]").trigger("newTodo");
         });
@@ -74,6 +63,7 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
     test("When The Todo Element Checkbox Is Checked, It Should Post The Change And Trigger A Notification ", function(){
         var element,
             stateChanged=false;
+
         element = templateService.template("<div data-todo-id='5'></div>", [todoElementObserver]);
         element.on("todoStateChange", function(event){
             stateChanged=true;
@@ -94,9 +84,9 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         var element = loadTodoAppWithData(vanillaResponse),
             stateChanged=false;
 
-        //Then:
+        //Stub Event Handler
         expectActionToCauseARedraw(element, function(){
-            //When
+            //When:
             element.find("[data-todo-id]").trigger("todoStateChange");
         });
               
@@ -119,6 +109,19 @@ function (qunit, todo, todoElementObserver, creator, todoLayout, templateService
         element.find("[data-todo-id]").trigger("todoClearCompleted");
 
         ok(element.children().size()>0, "Element should not be emptied.");
+    });
+
+    test("The 'clear completed' button will trigger a clear completed on all todo elements", function(){
+        var eventTriggered = 0,
+            element = loadTodoAppWithData(vanillaResponse);
+
+        todoElementObserver.setJsonOverHttp(mockJsonOverHttp(anything, anything));
+
+        element.find(".todo-item").on("todoClearCompleted", function(){
+            eventTriggered++;
+        });
+        element.find("#clear-completed").click();
+        equal(eventTriggered,2, "The event should have been triggered on each element.");
     });
     
     function loadTodoAppWithData(data){

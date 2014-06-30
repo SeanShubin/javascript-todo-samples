@@ -12,8 +12,8 @@
 <script type='html/template' data-observers='["todo/dron/observer/todoListObserver"]'>
     <div id="todo-list"></div>
 </script>
-<br><br><br><br><br><br>
-<h1>Objectives and Rules</h1>
+<br><br><br><br>
+<h1>Noteworthy Features</h1>
 <ul>
   <li>No Frameworks.
     <ul>
@@ -26,15 +26,24 @@
   </li>
   <li>Every component is a DOM object.</li>
   <li>Every component has an API similar to raw HTML object such as &lt;div>, &lt;form>, and &lt;video>.</li>
-  <li>Every component generates events on self that bubble up the DOM tree.</li>
+  <li>Components may generate events on self that bubble up the DOM tree.</li>
   <li>Every component responds to events on self that bubble up from children or are activated directly on it by parents.</li>
   <li>Every component should be easy to test drive.</li>
-  <li>No component may reach out to the DOM except to TRIGGER events on children.</li>
+  <li>No component may reach out to the global DOM, but they may reach into child nodes.</li>
   <li>All DOM objects are constructed synchronously - all non-dependent asynchronous behavior is parallel.</li>
   <li>Composition within the DOM is done using plain HTML by observing node creation.</li>
   <li>Composition of behavior is done using plan Javascript by observing events bubbling up the DOM tree.</li>
-  <li>no knowledge of parent element, or its location in dom, or even if it is attached to the dom</li>
-  <li>avoided the need to use 'this' or 'bind' or 'new'</li>
+  <li>No knowledge of parent element, or its location in dom, or even if it is attached to the dom</li>
+  <li>Avoided the need to use 'this' or 'bind' or 'new'</li>
+  <li>To reduce boilerplate, uses require.js for dependency resolution and allows for setters to override dependencies in tests rather than constructor injection.</li>
+</ul>
+<h1>Files</h1>
+<ul>
+  <li><a href="/test/dron-todo-observer-test.js">Tests</li>
+  <li><a href="/todo/dron/observer/todoLayout.html">todoLayout.html</li>
+  <li><a href="/todo/dron/observer/todoListObserver.js">todoListObserver.js</li>
+  <li><a href="/todo/dron/observer/todoElementCreatorObserver.js">todoElementCreatorObserver.js</li>
+  <li><a href="/todo/dron/observer/todoElementObserver.js">todoElementObserver.js</li>
 </ul>
 </body>
 </html>
