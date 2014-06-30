@@ -24,6 +24,8 @@
       <li>...That are difficult to refactor in a polystylistic environment.</li>
     </ul>
   </li>
+  <li>No Controllers.</li>
+  <li>Less Code, easier to comprehend.</li>
   <li>Every component is a DOM object.</li>
   <li>Every component has an API similar to raw HTML object such as &lt;div>, &lt;form>, and &lt;video>.</li>
   <li>Components may generate events on self that bubble up the DOM tree.</li>
@@ -31,7 +33,7 @@
   <li>Every component should be easy to test drive.</li>
   <li>No component may reach out to the global DOM, but they may reach into child nodes.</li>
   <li>All DOM objects are constructed synchronously - all non-dependent asynchronous behavior is parallel.</li>
-  <li>Composition within the DOM is done using plain HTML by observing node creation.</li>
+  <li>Composition of the DOM is done using plain HTML by observing node creation.</li>
   <li>Composition of behavior is done using plan Javascript by observing events bubbling up the DOM tree.</li>
   <li>No knowledge of parent element, or its location in dom, or even if it is attached to the dom</li>
   <li>Avoided the need to use 'this' or 'bind' or 'new'</li>
@@ -40,10 +42,10 @@
 <h1>Files</h1>
 <ul>
   <li><a href="/test/dron-todo-observer-test.js">Tests</li>
-  <li><a href="/todo/dron/observer/todoLayout.html">todoLayout.html</li>
-  <li><a href="/todo/dron/observer/todoListObserver.js">todoListObserver.js</li>
-  <li><a href="/todo/dron/observer/todoElementCreatorObserver.js">todoElementCreatorObserver.js</li>
-  <li><a href="/todo/dron/observer/todoElementObserver.js">todoElementObserver.js</li>
+  <li><a href="/todo/dron/observer/todoLayout.html">todoLayout.html (The Layout)</li>
+  <li><a href="/todo/dron/observer/todoListObserver.js">todoListObserver.js (Root Element Observer)</li>
+  <li><a href="/todo/dron/observer/todoElementCreatorObserver.js">todoElementCreatorObserver.js (Observer for the input form)</li>
+  <li><a href="/todo/dron/observer/todoElementObserver.js">todoElementObserver.js (Observer for each element and its checkbox)</li>
 </ul>
 </body>
 </html>
