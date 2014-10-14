@@ -4,7 +4,8 @@
 **/*.ipr
 **/*.iws
 **/target
-target/
+generated
+local-config
 *~
 *#
 .#*
