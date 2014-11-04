@@ -11,7 +11,9 @@ var require = {
         'react': 'lib/react-with-addons',
         'superagent': 'lib/superagent-0.18.0',
         'q': 'lib/q',
-        'text': 'lib/text'
+        'text': 'lib/text',
+        'JSXTransformer': 'lib/JSXTransformer',
+        'jsx': 'lib/jsx'
     },
     shim: {
         'qunit': {
