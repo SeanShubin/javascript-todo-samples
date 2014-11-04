@@ -8,7 +8,7 @@ var require = {
         'handlebars': 'lib/handlebars',
         'qunit': 'lib/qunit-1.14.0',
         'sinon': 'lib/sinon-1.10.0',
-        'react': 'lib/react-with-addons-0.10.0',
+        'react': 'lib/react-with-addons',
         'superagent': 'lib/superagent-0.18.0',
         'q': 'lib/q',
         'text': 'lib/text'
