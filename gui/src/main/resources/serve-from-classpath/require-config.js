@@ -26,8 +26,11 @@ var require = {
         'sinon': {
             exports: 'sinon'
         },
-        'handlebars':{
-            exports:'Handlebars'
+        'handlebars': {
+            exports: 'Handlebars'
         }
+    },
+    jsx: {
+        fileExtension: '.jsx'
     }
 };
