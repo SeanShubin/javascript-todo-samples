@@ -1,17 +1,22 @@
 define(['react'], function (React) {
     'use strict';
-    var HelloWorld, createTodo;
+    var createTodo, TodoAdd;
 
-    HelloWorld = React.createClass({
+    TodoAdd = React.createClass({
         render: function () {
-            return <h1>Hello World!</h1>;
+            return <div>
+                <input className="user-input" type="text"/>
+                <button className="add-todo-entry-button">Add todo entry</button>
+                <ul className="todo-entries-list">
+                </ul>
+            </div>;
         }
     });
 
-    createTodo = function(options) {
+    createTodo = function (options) {
         var mount, todoApp;
         mount = options.domNode;
-        todoApp = React.createElement(HelloWorld);
+        todoApp = React.createElement(TodoAdd);
         React.render(todoApp, mount);
     };
 
