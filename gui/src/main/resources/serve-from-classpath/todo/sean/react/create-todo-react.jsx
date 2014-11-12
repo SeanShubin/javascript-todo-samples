@@ -4,14 +4,7 @@ define(['react', 'http/json-over-http'], function (React, jsonOverHttp) {
 
     TodoAdd = React.createClass({
         addButtonPressed: function() {
-            console.log('this.refs');
-            console.log(this.refs);
-            console.log('this.props');
-            console.log(this.props);
-            console.log('this.state');
-            console.log(this.state);
-            console.log('this.getDOMNode()');
-            console.log(this.getDOMNode());
+            this.props.onAddTodoItem(this.state.value);
         },
         getInitialState: function() {
             return {value: ''};
@@ -48,42 +41,23 @@ define(['react', 'http/json-over-http'], function (React, jsonOverHttp) {
     });
 
     TodoLayout = React.createClass({
-        getInitialState: function() {
-            return {data: [
-                {
-                    id: 1,
-                    name: 'User Interface'
-                },
-                {
-                    id: 2,
-                    name: 'Business Logic'
-                },
-                {
-                    id: 3,
-                    name: 'Database Integration'
-                }
-            ]};
+        onAddTodoItem: function(name) {
+            this.state.data.push({
+                id: this.state.nextId,
+                name: name
+            });
+            this.state.nextId = this.state.nextId + 1;
+            this.setState(this.state);
         },
-        componentDidMount: function() {
-            this.setState({data: [
-                {
-                    id: 1,
-                    name: 'User Interface'
-                },
-                {
-                    id: 3,
-                    name: 'Database Integration'
-                },
-                {
-                    id: 4,
-                    name: 'Just Foo It'
-                }
-            ]});
-
+        getInitialState: function() {
+            return {
+                nextId: 1,
+                data: []
+            };
         },
         render: function () {
             return <div>
-                <TodoAdd/>
+                <TodoAdd onAddTodoItem={this.onAddTodoItem}/>
                 <TodoList data={this.state.data}/>
             </div>
         }
