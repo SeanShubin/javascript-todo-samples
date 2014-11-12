@@ -1,20 +1,29 @@
-define(['react', 'http/json-over-http'], function (React, jsonOverHttp) {
+define(['react', 'http/json-over-http', 'underscore', 'underscore.string'], function (React, jsonOverHttp, _, _s) {
     'use strict';
     var createTodo, TodoAdd, TodoElement, TodoList, TodoLayout;
 
     TodoAdd = React.createClass({
-        addButtonPressed: function() {
-            this.props.onAddTodoItem(this.state.value);
+        addButtonPressed: function () {
+            var name = _s.trim(this.state.value);
+            if (!_s.isBlank(name)) {
+                this.setState({value: ''});
+                this.props.onAddTodoItem(this.state.value);
+            }
         },
-        getInitialState: function() {
+        getInitialState: function () {
             return {value: ''};
         },
-        handleChange: function(event) {
+        textUpdated: function (event) {
             this.setState({value: event.target.value});
+        },
+        keyUp: function (event) {
+            if (event.which === 13) {
+                this.addButtonPressed();
+            }
         },
         render: function () {
             return <div>
-                <input className="user-input" type="text" value={this.state.value} onChange={this.handleChange} />
+                <input className="user-input" type="text" value={this.state.value} onChange={this.textUpdated} onKeyUp={this.keyUp}/>
                 <button className="add-todo-entry-button" onClick={this.addButtonPressed}>Add todo entry</button>
             </div>;
         }
@@ -41,19 +50,25 @@ define(['react', 'http/json-over-http'], function (React, jsonOverHttp) {
     });
 
     TodoLayout = React.createClass({
-        onAddTodoItem: function(name) {
-            this.state.data.push({
-                id: this.state.nextId,
-                name: name
-            });
-            this.state.nextId = this.state.nextId + 1;
+        onAddTodoItem: function (name) {
+            var todo;
+            todo = { name: name, done: false };
+            jsonOverHttp({uri: 'db/todo-entry', method: 'POST', body: todo}).then(this.respondToTodoAdded);
+        },
+        respondToTodoAdded: function (response) {
+            this.state.data.push(response.body);
             this.setState(this.state);
         },
-        getInitialState: function() {
+        respondToRefreshTodoEntries: function (response) {
+            this.setState({data: response.body});
+        },
+        getInitialState: function () {
             return {
-                nextId: 1,
                 data: []
             };
+        },
+        componentDidMount: function () {
+            jsonOverHttp({uri: 'db/todo-entry', method: 'GET'}).then(this.respondToRefreshTodoEntries);
         },
         render: function () {
             return <div>

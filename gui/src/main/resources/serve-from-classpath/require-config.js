@@ -31,6 +31,7 @@ var require = {
         }
     },
     jsx: {
-        fileExtension: '.jsx'
+        fileExtension: '.jsx',
+        sourceMap: true
     }
 };
