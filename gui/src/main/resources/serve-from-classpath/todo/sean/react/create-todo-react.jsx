@@ -1,33 +1,99 @@
-define(['react'], function (React) {
+define(['react', 'http/json-over-http'], function (React, jsonOverHttp) {
     'use strict';
-    var createTodo, TodoAdd, TodoElement;
+    var createTodo, TodoAdd, TodoElement, TodoList, TodoLayout;
 
     TodoAdd = React.createClass({
+        addButtonPressed: function() {
+            console.log('this.refs');
+            console.log(this.refs);
+            console.log('this.props');
+            console.log(this.props);
+            console.log('this.state');
+            console.log(this.state);
+            console.log('this.getDOMNode()');
+            console.log(this.getDOMNode());
+        },
+        getInitialState: function() {
+            return {value: ''};
+        },
+        handleChange: function(event) {
+            this.setState({value: event.target.value});
+        },
         render: function () {
             return <div>
-                <input className="user-input" type="text"/>
-                <button className="add-todo-entry-button">Add todo entry</button>
-                <ul className="todo-entries-list">
-                </ul>
+                <input className="user-input" type="text" value={this.state.value} onChange={this.handleChange} />
+                <button className="add-todo-entry-button" onClick={this.addButtonPressed}>Add todo entry</button>
             </div>;
         }
     });
 
     TodoElement = React.createClass({
-        render: function(){
-            return <li class="todo-entry">
-                <input class="todo-done" type="checkbox"/>
-                <label class="todo-name"></label>
-                <button class="todo-delete">Delete</button>
+        render: function () {
+            return <li className="todo-entry">
+                <input className="todo-done" type="checkbox"/>
+                <label className="todo-name">{this.props.name}</label>
+                <button className="todo-delete">Delete</button>
             </li>;
         }
     });
 
+    TodoList = React.createClass({
+        render: function () {
+            var todoEntries;
+            todoEntries = this.props.data.map(function (todoEntry) {
+                return <TodoElement key={todoEntry.id} name={todoEntry.name}/>
+            });
+            return <ul todo-entries-list>{todoEntries}</ul>;
+        }
+    });
+
+    TodoLayout = React.createClass({
+        getInitialState: function() {
+            return {data: [
+                {
+                    id: 1,
+                    name: 'User Interface'
+                },
+                {
+                    id: 2,
+                    name: 'Business Logic'
+                },
+                {
+                    id: 3,
+                    name: 'Database Integration'
+                }
+            ]};
+        },
+        componentDidMount: function() {
+            this.setState({data: [
+                {
+                    id: 1,
+                    name: 'User Interface'
+                },
+                {
+                    id: 3,
+                    name: 'Database Integration'
+                },
+                {
+                    id: 4,
+                    name: 'Just Foo It'
+                }
+            ]});
+
+        },
+        render: function () {
+            return <div>
+                <TodoAdd/>
+                <TodoList data={this.state.data}/>
+            </div>
+        }
+    });
+
     createTodo = function (options) {
-        var mount, todoApp;
+        var mount, todoComponent;
         mount = options.domNode;
-        todoApp = React.createElement(TodoAdd);
-        React.render(todoApp, mount);
+        todoComponent = <TodoLayout/>;
+        React.render(todoComponent, mount);
     };
 
     return createTodo;
@@ -120,5 +186,4 @@ define(['jquery',
 
     return createPrototypeTodoComponent;
 });
-
- */
+*/
