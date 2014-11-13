@@ -8,6 +8,7 @@ define(['react', 'http/json-over-http', 'underscore', 'underscore.string'], func
             if (!_s.isBlank(name)) {
                 this.setState({value: ''});
                 this.props.onAddTodoItem(this.state.value);
+                this.refs.myTextInput.getDOMNode().focus();
             }
         },
         getInitialState: function () {
@@ -23,27 +24,35 @@ define(['react', 'http/json-over-http', 'underscore', 'underscore.string'], func
         },
         render: function () {
             return <div>
-                <input className="user-input" type="text" value={this.state.value} onChange={this.textUpdated} onKeyUp={this.keyUp}/>
-                <button className="add-todo-entry-button" onClick={this.addButtonPressed}>Add todo entry</button>
+                <input type="text"
+                       ref="myTextInput"
+                       value={this.state.value}
+                       onChange={this.textUpdated}
+                       onKeyUp={this.keyUp}/>
+                <button onClick={this.addButtonPressed}>Add todo entry</button>
             </div>;
         }
     });
 
     TodoElement = React.createClass({
+        deleteButtonPressed: function(){
+            jsonOverHttp({uri: 'db/todo-entry/' + this.props.id, method: 'DELETE'}).then(this.props.onRespondToTodoDeleted);
+        },
         render: function () {
             return <li className="todo-entry">
                 <input className="todo-done" type="checkbox"/>
                 <label className="todo-name">{this.props.name}</label>
-                <button className="todo-delete">Delete</button>
+                <button className="todo-delete" onClick={this.deleteButtonPressed}>Delete</button>
             </li>;
         }
     });
 
     TodoList = React.createClass({
         render: function () {
-            var todoEntries;
+            var todoEntries, todoDeletedFunction;
+            todoDeletedFunction = this.props.onRespondToTodoDeleted;
             todoEntries = this.props.data.map(function (todoEntry) {
-                return <TodoElement key={todoEntry.id} name={todoEntry.name}/>
+                return <TodoElement key={todoEntry.id} id={todoEntry.id} name={todoEntry.name} onRespondToTodoDeleted={todoDeletedFunction}/>
             });
             return <ul todo-entries-list>{todoEntries}</ul>;
         }
@@ -62,6 +71,12 @@ define(['react', 'http/json-over-http', 'underscore', 'underscore.string'], func
         respondToRefreshTodoEntries: function (response) {
             this.setState({data: response.body});
         },
+        onRespondToTodoDeleted: function (response) {
+            var id, newStateData;
+            id = response.body.id;
+            newStateData = _.filter(this.state.data, function(item){return item.id !== id});
+            this.setState({data: newStateData});
+        },
         getInitialState: function () {
             return {
                 data: []
@@ -73,7 +88,7 @@ define(['react', 'http/json-over-http', 'underscore', 'underscore.string'], func
         render: function () {
             return <div>
                 <TodoAdd onAddTodoItem={this.onAddTodoItem}/>
-                <TodoList data={this.state.data}/>
+                <TodoList data={this.state.data} onRespondToTodoDeleted={this.onRespondToTodoDeleted}/>
             </div>
         }
     });
