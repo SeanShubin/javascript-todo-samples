@@ -1,13 +1,18 @@
 define(['react'], function (React) {
     'use strict';
     return React.createClass({
-        addButtonPressed: function (event) {
-            var name = event.target.value;
-            this.props.addTaskEvent(name);
+        addButtonPressed: function () {
+            this.props.addTaskEvent(this.state.taskName);
+        },
+        getInitialState: function () {
+            return {taskName: ''};
+        },
+        textUpdated: function (event) {
+            this.setState({taskName: event.target.value});
         },
         render: function () {
             return <div>
-                <input ref="taskNameField" type="text"/>
+                <input ref="taskNameField" value={this.state.taskName} type="text" onChange={this.textUpdated}/>
                 <button ref="addTaskButton" onClick={this.addButtonPressed}>Add todo entry</button>
             </div>;
         }
