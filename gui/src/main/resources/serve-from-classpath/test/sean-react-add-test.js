@@ -4,13 +4,25 @@ define(['lib/domReady!',
     'react',
     'jsx!todo/sean/react/component-add'], function (dom, $, qunit, React, ComponentAdd) {
     'use strict';
-    var renderIntoDocument, simulateChange, simulateClick;
+    var renderIntoDocument, simulateChange, simulateClick, fireChangeEvent, withElementOnRealDom;
 
     renderIntoDocument = React.addons.TestUtils.renderIntoDocument;
     simulateChange = React.addons.TestUtils.Simulate.change;
     simulateClick = React.addons.TestUtils.Simulate.click;
 
+    fireChangeEvent = function($el) {
+        var event = new Event("input", {bubbles: true, cancelable: false});
+        $el.get(0).dispatchEvent(event);
+    };
+
+    withElementOnRealDom = function(element, callback) {
+        $('body').append(element);
+        callback();
+        element.remove();
+    };
+
     qunit.module('sean-react-add-test');
+
     qunit.test('when user enters valid name and presses add button, fire add event (react test utils version)', function () {
         var componentAdd, renderedComponentAdd, taskNameField, addTaskButton, addTaskEvent, tasksAdded;
         //GIVEN
@@ -48,18 +60,18 @@ define(['lib/domReady!',
         React.render(componentAdd, renderedComponentAdd);
         renderedComponentAdd$ = $(renderedComponentAdd);
 
-        $('body').append(renderedComponentAdd$);
-
         taskNameField = renderedComponentAdd$.find('input');
         addTaskButton = renderedComponentAdd$.find('button');
 
-        //WHEN
-        taskNameField.val('Task A');
-        taskNameField.change();
-        addTaskButton.click();
+        withElementOnRealDom(renderedComponentAdd$, function() {
+            //WHEN
+            taskNameField.val('Task A');
+            fireChangeEvent(taskNameField);
+            addTaskButton.click();
 
-        //THEN
-        qunit.equal(tasksAdded.length, 1, 'exactly one task added');
-        qunit.equal(tasksAdded[0], 'Task A', 'task was added with correct name');
+            //THEN
+            qunit.equal(tasksAdded.length, 1, 'exactly one task added');
+            qunit.equal(tasksAdded[0], 'Task A', 'task was added with correct name');
+        });
     });
 });
