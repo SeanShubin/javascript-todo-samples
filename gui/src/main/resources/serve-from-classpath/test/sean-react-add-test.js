@@ -11,7 +11,7 @@ define(['lib/domReady!',
     simulateClick = React.addons.TestUtils.Simulate.click;
 
     qunit.module('sean-react-add-test');
-    qunit.test('when user enters valid name and presses add button, fire add event', function () {
+    qunit.test('when user enters valid name and presses add button, fire add event (react test utils version)', function () {
         var componentAdd, renderedComponentAdd, taskNameField, addTaskButton, addTaskEvent, tasksAdded;
         //GIVEN
         tasksAdded = [];
@@ -33,6 +33,33 @@ define(['lib/domReady!',
         //THEN
         qunit.equal(tasksAdded.length, 1, 'exactly one task added');
         qunit.equal(tasksAdded[0], 'Task A', 'task was added with correct name');
+    });
 
+    qunit.test('when user enters valid name and presses add button, fire add event (jquery version)', function () {
+        var componentAdd, renderedComponentAdd, renderedComponentAdd$, taskNameField, addTaskButton, addTaskEvent, tasksAdded;
+
+        //GIVEN
+        tasksAdded = [];
+        addTaskEvent = function(taskName){
+            tasksAdded.push(taskName)
+        };
+        componentAdd = React.createElement(ComponentAdd, {addTaskEvent: addTaskEvent});
+        renderedComponentAdd = document.createElement('div');
+        React.render(componentAdd, renderedComponentAdd);
+        renderedComponentAdd$ = $(renderedComponentAdd);
+
+        $('body').append(renderedComponentAdd$);
+
+        taskNameField = renderedComponentAdd$.find('input');
+        addTaskButton = renderedComponentAdd$.find('button');
+
+        //WHEN
+        taskNameField.val('Task A');
+        taskNameField.change();
+        addTaskButton.click();
+
+        //THEN
+        qunit.equal(tasksAdded.length, 1, 'exactly one task added');
+        qunit.equal(tasksAdded[0], 'Task A', 'task was added with correct name');
     });
 });
