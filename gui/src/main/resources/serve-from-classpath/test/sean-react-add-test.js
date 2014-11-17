@@ -65,10 +65,12 @@ define(['lib/domReady!',
 
         withElementOnRealDom(renderedComponentAdd$, function() {
             //WHEN
-            taskNameField.val('Task A');
-            fireChangeEvent(taskNameField);
-            addTaskButton.click();
+            simulateChange(taskNameField[0], { target: { value: 'Task A' } });
+            //THEN
+            qunit.equal(taskNameField.val(), 'Task A');
 
+            //WHEN
+            addTaskButton.click();
             //THEN
             qunit.equal(tasksAdded.length, 1, 'exactly one task added');
             qunit.equal(tasksAdded[0], 'Task A', 'task was added with correct name');
