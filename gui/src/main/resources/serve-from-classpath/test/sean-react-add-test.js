@@ -28,7 +28,7 @@ define(['lib/domReady!',
         //GIVEN
         tasksAdded = [];
         addTaskEvent = function(taskName){
-            tasksAdded.push(taskName)
+            tasksAdded.push(taskName);
         };
         componentAdd = React.createElement(ComponentAdd, {addTaskEvent: addTaskEvent});
         renderedComponentAdd = renderIntoDocument(componentAdd);
@@ -53,7 +53,7 @@ define(['lib/domReady!',
         //GIVEN
         tasksAdded = [];
         addTaskEvent = function(taskName){
-            tasksAdded.push(taskName)
+            tasksAdded.push(taskName);
         };
         componentAdd = React.createElement(ComponentAdd, {addTaskEvent: addTaskEvent});
         renderedComponentAdd = document.createElement('div');
