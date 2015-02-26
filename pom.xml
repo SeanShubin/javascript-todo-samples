@@ -75,7 +75,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
                 <!--<version>9.1.4.v20140401</version>-->
-                <version>9.2.8.v20150217</version>
+                <version>9.2.9.v20150224</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
