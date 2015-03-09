@@ -1,33 +1,57 @@
 {
-    "searchPaths": [
-        [ "server", "target", "server.jar" ]
+  "searchPaths": [
+    [
+      "server",
+      "target",
+      "server.jar"
+    ]
+  ],
+  "scrubGroupingPattern": "com/seanshubin/([^/]+).*",
+  "styleSheet": ["dependency.css"],
+  "relevantDependencyPattern": {
+    "includeRegex": ["com/seanshubin/.*"],
+    "excludeRegex": [
+      "com/seanshubin/web/server/ServerApplication",
+      "com/seanshubin/web/server/ServerApplication\\$"
+    ]
+  },
+  "trimRegex": "^com/seanshubin/todo/sample/",
+  "classFileNamePattern": {
+    "includeRegex": [".*\\.class"],
+    "excludeRegex": []
+  },
+  "zipFileNamePattern": {
+    "includeRegex": [
+      ".*\\.zip",
+      ".*\\.war",
+      ".*\\.jar"
     ],
-    "styleSheet": [ "dependency.css" ],
-    "relevantDependencyPattern": {
-        "includeRegex": [ "com/seanshubin/.*"],
-        "excludeRegex": [ "com/seanshubin/web/server/ServerApplication", "com/seanshubin/web/server/ServerApplication\\$" ]
-    },
-    "trimRegex": "^com/seanshubin/todo/sample/",
-    "classFileNamePattern": {
-        "includeRegex": [ ".*\\.class" ],
-        "excludeRegex": [ ]
-    },
-    "zipFileNamePattern": {
-        "includeRegex": [ ".*\\.zip", ".*\\.war", ".*\\.jar" ],
-        "excludeRegex": [ ]
-    },
-    "generatedReportDirectory": [ "server", "target", "dependency-report" ],
-    "classLimits": {
-        "depth": 10,
-        "complexity": 40,
-        "cycleCount": 0
-    },
-    "packageLimits": {
-        "depth": 10,
-        "complexity": 10,
-        "cycleCount": 0
-    },
-    "expectedClassCycles": [ ],
-    "expectedPackageCycles": [ ],
-    "failIfAnyLimitExceeded": true
+    "excludeRegex": []
+  },
+  "generatedReportDirectory": [
+    "server",
+    "target",
+    "dependency-report"
+  ],
+  "classLimits": {
+    "depth": 10,
+    "complexity": 40,
+    "cycleCount": 0,
+    "cycleSize": 0
+  },
+  "packageLimits": {
+    "depth": 10,
+    "complexity": 10,
+    "cycleCount": 0,
+    "cycleSize": 0
+  },
+  "groupingLimits": {
+    "depth": 1,
+    "complexity": 0,
+    "cycleCount": 0,
+    "cycleSize": 0
+  },
+  "expectedClassCycles": [],
+  "expectedPackageCycles": [],
+  "failIfAnyLimitExceeded": true
 }
