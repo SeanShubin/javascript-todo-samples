@@ -32,7 +32,7 @@
             <dependency>
                 <groupId>com.typesafe.akka</groupId>
                 <artifactId>akka-actor_2.11</artifactId>
-                <version>2.3.11</version>
+                <version>2.3.12</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
@@ -64,7 +64,7 @@
             <dependency>
                 <groupId>com.typesafe.akka</groupId>
                 <artifactId>akka-testkit_2.11</artifactId>
-                <version>2.3.11</version>
+                <version>2.3.12</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -75,7 +75,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
                 <!--<version>9.1.4.v20140401</version>-->
-                <version>9.2.11.v20150529</version>
+                <version>9.3.0.v20150612</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
