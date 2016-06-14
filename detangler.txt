@@ -1,0 +1,17 @@
+{
+  reportDir generated/detangled
+  searchPaths
+  [
+    server/target/server.jar
+  ]
+  level 2
+  startsWith
+  {
+    include [[com seanshubin todo sample]]
+    exclude []
+    drop [[com seanshubin todo sample]]
+  }
+  ignoreFiles []
+  canFailBuild false
+  allowedInCycle []
+}
