@@ -12,6 +12,6 @@
     drop [[com seanshubin todo sample]]
   }
   ignoreFiles []
-  canFailBuild false
+  canFailBuild true
   allowedInCycle []
 }
