@@ -56,22 +56,22 @@
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
-                <version>9.3.12.v20160915</version>
+                <version>9.3.13.v20161014</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
-                <version>2.53.1</version>
+                <version>3.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-chrome-driver</artifactId>
-                <version>2.53.1</version>
+                <version>3.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
-                <version>2.53.1</version>
+                <version>3.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
