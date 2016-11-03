@@ -2,7 +2,7 @@ package com.seanshubin.todo.sample.integration
 
 import java.io._
 import scala.annotation.tailrec
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 object IoUtil {
   def feedInputStreamToOutputStream(inputStream: InputStream, outputStream: OutputStream) {
@@ -29,7 +29,7 @@ object IoUtil {
     val bufferedReader = new BufferedReader(reader)
     val linesJavaStream = bufferedReader.lines()
     val linesJavaIterator = linesJavaStream.iterator()
-    val linesIterator = JavaConversions.asScalaIterator(linesJavaIterator)
+    val linesIterator = linesJavaIterator.asScala
     val lines = linesIterator.toSeq
     lines
   }

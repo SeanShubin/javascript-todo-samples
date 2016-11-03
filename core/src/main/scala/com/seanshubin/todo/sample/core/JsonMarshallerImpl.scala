@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.{SerializationFeature, DeserializationFeat
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.io.StringWriter
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 import com.fasterxml.jackson.core.JsonParseException
 
 class JsonMarshallerImpl extends JsonMarshaller {
@@ -35,7 +35,7 @@ class JsonMarshallerImpl extends JsonMarshaller {
   override def fromJsonArray[T](json: String, theElementClass: Class[T]): Seq[T] = {
     val collectionType = mapper.getTypeFactory.constructCollectionType(classOf[java.util.List[T]], theElementClass)
     val myObjects: java.util.List[T] = mapper.readValue(json, collectionType)
-    JavaConversions.collectionAsScalaIterable(myObjects).toSeq
+    myObjects.asScala
   }
 
   override def normalize(json: String): String = {
